@@ -21,7 +21,28 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@src/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@plugins/*": [
+        "src/plugins/*"
+      ]
+    },
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }
