@@ -1,18 +1,15 @@
-import {Route, Routes} from "react-router-dom"
-import Home from "@pages/index/Home.tsx";
+import {Route, Routes} from 'react-router-dom';
+import Home from '@pages/index/Home.tsx';
 
 function App() {
 
     return (
         <>
-
             <Routes>
-
                 <Route path="/" element={<Home/>}/>
-
             </Routes>
         </>
-    )
+    );
 }
 
-export default App
+export default App;
