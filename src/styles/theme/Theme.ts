@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components';
+import {DefaultTheme} from 'styled-components';
 
 const colors = {
   primary: '#a31432',
@@ -14,47 +14,52 @@ const colors = {
 };
 
 const texts = {
-    title: {
-        fontSize: '2.1rem',
-        fontWeight: '700',
-        color: '#222'
-    },
-    subtitle: {
-        fontSize: '1.4rem',
-        fontWeight: '600',
-        color: '#333'
-    },
-    content: {
-        fontSize: '1.2rem',
-        fontWeight: '400',
-        color: '#444'
-    },
-    warning: {
-        fontSize: '1.2rem',
-        fontWeight: '600',
-        color: '#FAEBEE'
-    },
-    tapTitle: {
-        fontSize: '1.3rem',
-        fontWeight: '400',
-        color: '#444'
-    },
-    tapTitleFocus: {
-        fontSize: '1.3rem',
-        fontWeight: '600',
-        color: '#a31432'
-    },
-    tableTitle: {
-        fontSize: '1.2rem',
-        fontWeight: '600',
-        color: '#444'
-    },
+  title: {
+    fontSize: '2.1rem',
+    fontWeight: '700',
+    color: '#222',
+  },
+  subtitle: {
+    fontSize: '1.4rem',
+    fontWeight: '600',
+    color: '#333',
+  },
+  content: {
+    fontSize: '1.2rem',
+    fontWeight: '400',
+    color: '#444',
+  },
+  warning: {
+    fontSize: '1.2rem',
+    fontWeight: '600',
+    color: '#FAEBEE',
+  },
+  tapTitle: {
+    fontSize: '1.3rem',
+    fontWeight: '400',
+    color: '#444',
+  },
+  tapTitleFocus: {
+    fontSize: '1.3rem',
+    fontWeight: '600',
+    color: '#a31432',
+  },
+  tableTitle: {
+    fontSize: '1.2rem',
+    fontWeight: '600',
+    color: '#444',
+  },
+  loginContent: {
+    fontSize: '1.35rem',
+    fontWeight: '600',
+    color: '#777',
+  },
 };
 
 export type ColorsType = typeof colors;
 export type TextsType = typeof texts;
 
 export const theme: DefaultTheme = {
-    colors,
-    texts
+  colors,
+  texts,
 };
