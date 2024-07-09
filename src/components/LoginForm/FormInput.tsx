@@ -20,7 +20,6 @@ function FormInput({value, setValue, type}: InputProps) {
 }
 
 const InputWrap = styled.input`
-  border: none;
   background-color: #a9d0f5;
   height: 4rem;
   width: 38rem;

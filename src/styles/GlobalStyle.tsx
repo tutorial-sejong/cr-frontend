@@ -31,6 +31,9 @@ const GlobalStyle = createGlobalStyle`
         cursor: pointer;
         outline: none;
         border-radius: 2px;
+        background:transparent;
+        border:none;
+        padding:0;
     }
 `;
 
