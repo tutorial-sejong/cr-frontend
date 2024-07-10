@@ -15,12 +15,17 @@ const colors = {
 
 const texts = {
   title: {
-    fontSize: '2.1rem',
+    fontSize: '2rem',
     fontWeight: '700',
     color: '#222',
   },
   subtitle: {
     fontSize: '1.4rem',
+    fontWeight: '600',
+    color: '#333',
+  },
+  menuTitle: {
+    fontSize: '1.3rem',
     fontWeight: '600',
     color: '#333',
   },
