@@ -1,0 +1,41 @@
+name: Deploy React App to Home Server
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Prepare deployment package
+        run: |
+          mkdir -p deployment_package
+          cp -r dist/* deployment_package/
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy to Home Server
+        env:
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r deployment_package/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/anhye0n/web/tutorial_sejong/frontend/
+          sshpass -e ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          sudo -S <<< "${{ secrets.SSH_PASSWORD }}" systemctl restart nginx
+          EOF
