@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Deploy React App to Home Server
 
 on:
   pull_request:
@@ -19,30 +19,23 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build project
         run: npm run build
 
       - name: Prepare deployment package
         run: |
-          mkdir -p build/deployment
-          cp -r dist/* build/deployment/
+          mkdir -p deployment_package
+          cp -r dist/* deployment_package/
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
 
       - name: Deploy to Home Server
-        uses: appleboy/scp-action@v0.0.1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "build/deployment/*"
-          target: "/home/anhye0n/web/tutorial_sejong/frontend/dist"
-
-      - name: Restart Nginx
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            sudo systemctl restart nginx
+        env:
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          sshpass -e scp -o StrictHostKeyChecking=no -r deployment_package/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/anhye0n/web/tutorial_sejong/frontend/
+          sshpass -e ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          sudo -S <<< "${{ secrets.SSH_PASSWORD }}" systemctl restart nginx
+          EOF
