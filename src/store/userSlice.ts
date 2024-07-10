@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface UserInfo {
     userName: string,
@@ -6,24 +6,24 @@ export interface UserInfo {
 }
 
 const userInfo = createSlice({
-    name: "userInfo",
+    name: 'userInfo',
     initialState: {
-        userName: "",
-        accessToken: ""
+        userName: '',
+        accessToken: ''
     },
     reducers: {
         setUserName(state: UserInfo, { payload }: { payload: string }) {
-            state.userName = payload
+            state.userName = payload;
         },
         setAccessToken(state: UserInfo, { payload }: { payload: string }) {
-            state.accessToken = payload
+            state.accessToken = payload;
         }
     }
-})
+});
 
 export const {
     setUserName,
     setAccessToken
-} = userInfo.actions
+} = userInfo.actions;
 
-export default userInfo
+export default userInfo;
