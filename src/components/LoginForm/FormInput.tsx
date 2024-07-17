@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {setType} from '.';
 
 interface InputProps {
-  value: string | number;
+  value: string | number | undefined;
   setValue: React.Dispatch<React.SetStateAction<setType>>;
   type: string;
 }
