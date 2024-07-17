@@ -57,7 +57,7 @@ const CheckboxWrap = styled.div`
 
 const FindWrap = styled.div`
   ${props => props.theme.texts.tableTitle};
-  color: #777;
+  color: ${props => props.theme.colors.neutral4};
   float: inline-end;
   margin-bottom: 2.5rem;
 `;
