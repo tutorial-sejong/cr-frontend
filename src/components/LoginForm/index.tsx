@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import FormInput from './FormInput';
 import {useState} from 'react';
 
-export type setType = string | number;
+export type setType = string | number | undefined;
 
 function LoginForm() {
-  const [id, setId] = useState<setType>(0);
+  const [id, setId] = useState<setType>(undefined);
   const [name, setName] = useState<setType>('');
 
   return (
@@ -57,7 +57,7 @@ const CheckboxWrap = styled.div`
 
 const FindWrap = styled.div`
   ${props => props.theme.texts.tableTitle};
-  color: #777;
+  color: ${props => props.theme.colors.neutral4};
   float: inline-end;
   margin-bottom: 2.5rem;
 `;

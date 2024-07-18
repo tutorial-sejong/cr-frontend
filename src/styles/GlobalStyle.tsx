@@ -26,6 +26,8 @@ const GlobalStyle = createGlobalStyle`
     }
     input {
         border-radius: 2px;
+        outline: none;
+        border: none;
     }
     button {
         cursor: pointer;
