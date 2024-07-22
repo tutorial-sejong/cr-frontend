@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Menubar from '@components/Menubar';
-import Header from '@components/Header.tsx';
+import Header from '@components/Header';
+import LectureList from '@components/LectureList';
 
 function Home() {
   return (
@@ -9,6 +10,7 @@ function Home() {
       <Box>
         <Menubar />
         강의시간표/수업계획서조회
+        <LectureList />
       </Box>
     </Container>
   );
