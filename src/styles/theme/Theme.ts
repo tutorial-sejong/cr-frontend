@@ -40,12 +40,12 @@ const texts = {
     fontWeight: '600',
     color: '#FAEBEE',
   },
-  tapTitle: {
+  tabTitle: {
     fontSize: '1.3rem',
     fontWeight: '400',
     color: '#444',
   },
-  tapTitleFocus: {
+  tabTitleFocus: {
     fontSize: '1.3rem',
     fontWeight: '600',
     color: '#a31432',
