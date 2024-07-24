@@ -9,7 +9,7 @@ const colors = {
   neutral4: '#777',
   neutral5: '#E8E8E8',
   neutral6: '#F7F7F7',
-  blue: '#A9D0F5',
+  blue: '#E5EFF7',
   black: '#000',
   white: '#FFF',
 };

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import close from '@assets/img/tab_close.png';
 
 interface TabProps {
@@ -27,26 +27,26 @@ function Tab({id, label, isActive, onClick}: TabProps) {
   return (
     <>
       {isOpen && (
-        <TabContainer onClick={() => onClick(id)} isactive={isActive}>
+        <TabContainer onClick={() => onClick(id)} $isactive={isActive}>
           <p>{label}</p>
-          <CloseBtn onClick={handleClose} isactive={isActive} />
+          <CloseBtn onClick={handleClose} />
         </TabContainer>
       )}
     </>
   );
 }
 
-const TabContainer = styled.a<{isactive: boolean}>`
+const TabContainer = styled.a<{$isactive: boolean}>`
   ${props =>
-    props.isactive
+    props.$isactive
       ? props.theme.texts.tabTitleFocus
       : props.theme.texts.tabTitle};
   background-color: ${props =>
-    props.isactive ? props.theme.colors.white : 'transparent'};
+    props.$isactive ? props.theme.colors.white : 'transparent'};
   width: calc(99% / 8);
   height: 100%;
   border-top: 0.3rem solid
-    ${props => (props.isactive ? props.theme.colors.primary : 'none')};
+    ${props => (props.$isactive ? props.theme.colors.primary : 'none')};
   border-right: 1px solid #ccc;
   border-radius: 0;
   padding: 0 1rem;
@@ -54,6 +54,7 @@ const TabContainer = styled.a<{isactive: boolean}>`
   align-items: center;
   text-align: center;
   cursor: pointer;
+  filter: ${props => (props.$isactive ? 'grayscale(0)' : 'grayscale(100%)')};
 
   > p {
     width: 100%;
@@ -63,16 +64,24 @@ const TabContainer = styled.a<{isactive: boolean}>`
     word-break: break-all;
     margin-right: 1.5rem;
   }
+
+  ${props =>
+    !props.$isactive &&
+    css`
+      &:hover {
+        background-color: white;
+        filter: grayscale(0);
+      }
+    `}
 `;
 
-const CloseBtn = styled.button<{isactive: boolean}>`
+const CloseBtn = styled.button`
   z-index: 5;
   width: 1rem;
   height: 100%;
   background-image: url(${close});
   background-repeat: no-repeat;
   background-position-y: center;
-  filter: ${props => (props.isactive ? 'grayscale(0)' : 'grayscale(100%)')};
 `;
 
 export default Tab;

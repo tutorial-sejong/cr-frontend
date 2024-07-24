@@ -9,8 +9,6 @@ function TabMenu() {
   const [close, setClose] = useState(false);
 
   const handleClick = (id: number) => {
-    console.log('click ' + id);
-
     setFocused(id);
   };
 
