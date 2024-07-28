@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import search from '@assets/img/search.png';
-import {LectureProps} from '@components/LectureList';
+import {LectureProps} from '@components/LectureList/Filters';
 
 interface ButtonProps {
   label: string;

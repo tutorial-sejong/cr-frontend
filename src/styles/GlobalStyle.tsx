@@ -48,6 +48,14 @@ const GlobalStyle = createGlobalStyle`
         appearance: none;
         outline: none;
     }
+    thead,
+    tbody {
+        white-space: nowrap;
+    }
+    thead {
+        position: sticky;
+        top: 0;
+    }
 `;
 
 export default GlobalStyle;

@@ -1,16 +1,21 @@
+import {useState} from 'react';
 import styled from 'styled-components';
 import FilterButton from '@components/common/FilterButton';
 import FilterInput from '@components/common/FilterInput';
 import SelectBox from '@components/common/SelectBox';
 import {completion, major, optional, term} from '@assets/data/filter';
-import {LectureProps} from '.';
 
-interface FiltersProps {
-  lecture: LectureProps | undefined;
-  setLecture: React.Dispatch<React.SetStateAction<LectureProps | undefined>>;
+export interface LectureProps {
+  schCollegeAlias?: string | undefined;
+  schDeptAlias?: string | undefined;
+  curiTypeCdNm?: string | undefined;
+  sltDomainCdNm?: string | undefined;
+  curiNm?: string | undefined;
+  lesnEmp?: string | undefined;
 }
 
-function Filters({lecture, setLecture}: FiltersProps) {
+function Filters() {
+  const [lecture, setLecture] = useState<LectureProps>();
   const handleSelect = (
     name: keyof LectureProps,
     value: string | undefined,
@@ -122,6 +127,7 @@ const FilterContainer = styled.div`
   border: 0.1rem solid #714656;
   border-radius: 2px;
   padding: 0.5rem 1.5rem;
+  margin-bottom: 2rem;
 `;
 
 const FilterBox = styled.div`
