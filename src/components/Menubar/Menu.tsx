@@ -11,9 +11,9 @@ interface ItemProps {
 }
 
 const menuItems: ItemProps[] = [
-  {id: 0, name: '수강신청', type: 'study'},
+  {id: 0, name: '강의시간표 조회', type: 'view'},
   {id: 1, name: '관심과목 담기', type: 'study'},
-  {id: 2, name: '강의시간표 조회', type: 'view'},
+  {id: 2, name: '수강신청', type: 'study'},
 ];
 
 function Menu() {
@@ -56,7 +56,7 @@ const MenuTitleBox = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
-  border-bottom: 1px solid ${props => props.theme.colors.neutral4};
+  border-bottom: 1px solid ${props => props.theme.colors.neutral5};
 `;
 const MenuTitleWrap = styled.div`
   ${props => props.theme.texts.menuTitle};
@@ -69,7 +69,7 @@ const MenuSubtitleBox = styled(MenuTitleBox)`
 `;
 
 const DetailBox = styled.div`
-  background-color: ${props => props.theme.colors.neutral5};
+  background-color: ${props => props.theme.colors.neutral6};
   display: flex;
   flex-direction: column;
   align-items: center;

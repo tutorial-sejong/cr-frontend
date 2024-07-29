@@ -12,14 +12,14 @@ interface DetailProps {
 
 function MenuItem({id, type, name, isActive, onClick}: DetailProps) {
   return (
-    <DetailWrap isactive={isActive} onClick={() => onClick(id)}>
+    <DetailWrap $isactive={isActive} onClick={() => onClick(id)}>
       {type === 'view' ? <View /> : <Study />}
       {name}
     </DetailWrap>
   );
 }
 
-const DetailWrap = styled.button<{isactive: boolean}>`
+const DetailWrap = styled.button<{$isactive: boolean}>`
   ${props => props.theme.texts.tableTitle};
   width: 17.5rem;
   height: 2.8rem;
@@ -29,8 +29,8 @@ const DetailWrap = styled.button<{isactive: boolean}>`
   padding-left: 10px;
 
   background-color: ${props =>
-    props.isactive ? props.theme.colors.primary : 'transparent'};
-  color: ${props => props.isactive && props.theme.colors.white};
+    props.$isactive ? props.theme.colors.primary : 'transparent'};
+  color: ${props => props.$isactive && props.theme.colors.white};
 `;
 
 export default MenuItem;
