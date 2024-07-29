@@ -54,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
     }
     thead {
         position: sticky;
-        top: 0;
+        top: -1px;
     }
 `;
 

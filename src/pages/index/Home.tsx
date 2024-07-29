@@ -31,7 +31,7 @@ const Box = styled.div`
 `;
 
 const Main = styled.div`
-  width: 100%;
+  width: calc(100% - 23rem);
 `;
 
 const Article = styled.div`

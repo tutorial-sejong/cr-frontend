@@ -23,14 +23,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"],
-      "@assets/*": ["src/assets/*"],
-      "@store/*": ["src/store/*"],
-      "@plugins/*": ["src/plugins/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@assets/*": ["assets/*"],
+      "@store/*": ["store/*"],
+      "@plugins/*": ["plugins/*"],
+      "@apis/*": ["apis/*"]
     },
     "allowSyntheticDefaultImports": true
   },
