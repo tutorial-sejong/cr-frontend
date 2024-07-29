@@ -28,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
         border-radius: 2px;
         outline: none;
         border: none;
+        padding: 0;
     }
     button {
         cursor: pointer;
@@ -36,6 +37,24 @@ const GlobalStyle = createGlobalStyle`
         background:transparent;
         border:none;
         padding:0;
+    }
+    select::-ms-expand { 
+	    display: none;
+    }
+    select {
+        -o-appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: none;
+    }
+    thead,
+    tbody {
+        white-space: nowrap;
+    }
+    thead {
+        position: sticky;
+        top: 0;
     }
 `;
 
