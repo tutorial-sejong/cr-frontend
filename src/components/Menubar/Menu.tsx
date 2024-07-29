@@ -11,9 +11,9 @@ interface ItemProps {
 }
 
 const menuItems: ItemProps[] = [
-  {id: 0, name: '수강신청', type: 'study'},
+  {id: 0, name: '강의시간표 조회', type: 'view'},
   {id: 1, name: '관심과목 담기', type: 'study'},
-  {id: 2, name: '강의시간표 조회', type: 'view'},
+  {id: 2, name: '수강신청', type: 'study'},
 ];
 
 function Menu() {

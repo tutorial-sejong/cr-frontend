@@ -23,7 +23,6 @@ function BarTitle({setIsOpen}: OpenProps) {
 }
 
 const BarTitleContainer = styled.div`
-  background: rgb(163, 20, 50);
   background: linear-gradient(
     90deg,
     rgba(163, 20, 50, 1) 0%,

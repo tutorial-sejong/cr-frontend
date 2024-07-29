@@ -9,7 +9,7 @@ const colors = {
   neutral4: '#777',
   neutral5: '#E8E8E8',
   neutral6: '#F7F7F7',
-  blue: '#A9D0F5',
+  blue: '#E5EFF7',
   black: '#000',
   white: '#FFF',
 };
@@ -40,12 +40,12 @@ const texts = {
     fontWeight: '600',
     color: '#FAEBEE',
   },
-  tapTitle: {
+  tabTitle: {
     fontSize: '1.3rem',
     fontWeight: '400',
     color: '#444',
   },
-  tapTitleFocus: {
+  tabTitleFocus: {
     fontSize: '1.3rem',
     fontWeight: '600',
     color: '#a31432',
