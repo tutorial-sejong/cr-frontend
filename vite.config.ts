@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'node:path';
+import {resolve} from 'node:path';
 import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
@@ -12,7 +12,7 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@src',
+        find: '@',
         replacement: resolve(__dirname, './src'),
       },
       {
@@ -34,6 +34,10 @@ export default defineConfig({
       {
         find: '@plugins',
         replacement: resolve(__dirname, './src/plugins'),
+      },
+      {
+        find: '@apis',
+        replacement: resolve(__dirname, './src/apis'),
       },
     ],
   },
