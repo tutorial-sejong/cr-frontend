@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { login } from '@/apis/api/auth';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setAccessToken, setUserName } from '@/store/userSlice';
+import { setUserInfo } from '@/store/userSlice';
 
 export type setType = string | number | undefined;
 
@@ -25,8 +25,11 @@ function LoginForm() {
       const response = await login({ studentId: id.toString(), password: password.toString() });
       console.log('Login successful', response);
 
-      dispatch(setUserName(response.userName));
-      dispatch(setAccessToken(response.accessToken));
+      dispatch(setUserInfo({
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
+        username: response.username,
+      }));
 
       navigate('/');
     } catch (error) {
