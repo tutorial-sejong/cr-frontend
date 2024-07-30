@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import arrow from '@assets/img/arrow_up.png';
 import hyphen from '@assets/img/menu2_close.png';
 import MenuItem from './MenuItem';
-import {useState} from 'react';
+import {addTab, setFocused} from '@/store/modules/tabSlice';
 
 interface ItemProps {
   id: number;
@@ -11,16 +12,18 @@ interface ItemProps {
 }
 
 const menuItems: ItemProps[] = [
-  {id: 0, name: '강의시간표 조회', type: 'view'},
+  {id: 0, name: '강의시간표/수업계획서조회', type: 'view'},
   {id: 1, name: '관심과목 담기', type: 'study'},
   {id: 2, name: '수강신청', type: 'study'},
 ];
 
 function Menu() {
-  const [focused, setFocused] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
+  const focused = useAppSelector(state => state.tabs.focused);
 
   const handleClick = (id: number) => {
-    setFocused(id);
+    dispatch(addTab({id: id, name: menuItems[id].name}));
+    dispatch(setFocused(id));
   };
 
   return (

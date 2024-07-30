@@ -21,7 +21,7 @@ function MenuItem({id, type, name, isActive, onClick}: DetailProps) {
 
 const DetailWrap = styled.button<{$isactive: boolean}>`
   ${props => props.theme.texts.tableTitle};
-  width: 17.5rem;
+  width: 19rem;
   height: 2.8rem;
   display: flex;
   align-items: center;
