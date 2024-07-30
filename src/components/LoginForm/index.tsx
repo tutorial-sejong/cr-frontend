@@ -110,7 +110,7 @@ const LoginBtnWrap = styled.button`
 `;
 
 const ErrorMessage = styled.div`
-  color: 'red';
+  color: red;
   margin-bottom: 1rem;
   text-align: center;
 `;
