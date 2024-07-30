@@ -1,12 +1,41 @@
 import styled from 'styled-components';
 import FormInput from './FormInput';
-import {useState} from 'react';
+import { useState } from 'react';
+import { login } from '@/apis/api/auth';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setUserInfo } from '@/store/userSlice';
 
 export type setType = string | number | undefined;
 
 function LoginForm() {
-  const [id, setId] = useState<setType>(undefined);
-  const [name, setName] = useState<setType>('');
+  const [id, setId] = useState<setType>('');
+  const [password, setPassword] = useState<setType>('');
+  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    if (!id || !password) {
+      setError('학번과 비밀번호를 모두 입력해주세요.');
+      return;
+    }
+
+    try {
+      const response = await login({ studentId: id.toString(), password: password.toString() });
+      console.log('Login successful', response);
+
+      dispatch(setUserInfo({
+        accessToken: response.accessToken,
+        username: response.username,
+      }));
+
+      navigate('/');
+    } catch (error) {
+      console.error('Login failed', error);
+      setError('로그인에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
 
   return (
     <FormContainer>
@@ -16,8 +45,8 @@ function LoginForm() {
           <FormInput value={id} setValue={setId} type='number' />
         </InputBox>
         <InputBox>
-          <LabelWrap>이름</LabelWrap>
-          <FormInput value={name} setValue={setName} type='text' />
+          <LabelWrap>비밀번호</LabelWrap>
+          <FormInput value={password} setValue={setPassword} type='password' />
         </InputBox>
         <CheckboxWrap>
           <input type='checkbox' id='keyboardSecurity' checked readOnly />
@@ -25,7 +54,8 @@ function LoginForm() {
         </CheckboxWrap>
       </InputContainer>
       <FindWrap>아이디 찾기 | 비밀번호 찾기</FindWrap>
-      <LoginBtnWrap>로그인</LoginBtnWrap>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <LoginBtnWrap onClick={handleLogin} type="button">로그인</LoginBtnWrap>
     </FormContainer>
   );
 }
@@ -77,6 +107,12 @@ const LoginBtnWrap = styled.button`
   &:hover {
     background-color: #c3002fc7;
   }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  margin-bottom: 1rem;
+  text-align: center;
 `;
 
 export default LoginForm;

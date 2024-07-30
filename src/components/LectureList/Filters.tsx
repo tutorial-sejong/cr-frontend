@@ -4,22 +4,16 @@ import FilterButton from '@components/common/FilterButton';
 import FilterInput from '@components/common/FilterInput';
 import SelectBox from '@components/common/SelectBox';
 import {completion, major, optional, term} from '@assets/data/filter';
+import {CourseTypes} from '@/assets/types/tableType';
 
-export interface LectureProps {
-  schCollegeAlias?: string | undefined;
-  schDeptAlias?: string | undefined;
-  curiTypeCdNm?: string | undefined;
-  sltDomainCdNm?: string | undefined;
-  curiNm?: string | undefined;
-  lesnEmp?: string | undefined;
+interface FiltersProps {
+  setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
 }
 
-function Filters() {
-  const [lecture, setLecture] = useState<LectureProps>();
-  const handleSelect = (
-    name: keyof LectureProps,
-    value: string | undefined,
-  ) => {
+function Filters({setList}: FiltersProps) {
+  const [filter, setFilter] = useState<CourseTypes>();
+
+  const handleSelect = (name: keyof CourseTypes, value: string | undefined) => {
     let dept = '';
     let colledge = '';
 
@@ -27,13 +21,13 @@ function Filters() {
       dept = value!.substring(0, value!.indexOf('【'));
       colledge = value!.substring(value!.indexOf('】') + 1);
 
-      setLecture(prevState => ({
+      setFilter(prevState => ({
         ...prevState,
         schDeptAlias: dept,
         schCollegeAlias: colledge,
       }));
     } else {
-      setLecture(prevState => ({
+      setFilter(prevState => ({
         ...prevState,
         [name]: value,
       }));
@@ -106,7 +100,7 @@ function Filters() {
             />
           </FilterWrap>
         </FilterBox>
-        <FilterButton label='조회' lecture={lecture} />
+        <FilterButton label='조회' filter={filter} setList={setList} />
       </FilterArea>
       <WarningWrap>
         <p>
