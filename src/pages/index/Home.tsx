@@ -7,10 +7,13 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { RootState } from '@/store/store';
+import { useAppSelector } from '@/store/hooks';
+import Wishlist from '@/components/Wishlist';
 
 function Home() {
   const { accessToken } = useSelector((state: RootState) => state.userInfo);
   const navigate = useNavigate();
+  const { tab, focused } = useAppSelector(state => state.tabs);
 
   useEffect(() => {
     if (!accessToken) {
@@ -22,6 +25,20 @@ function Home() {
     return null;
   }
 
+  const focusedTab = tab.find(tab => tab.id === focused);
+  const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';
+
+  const renderContent = () => {
+    switch (focused) {
+      case 0:
+        return <LectureList />;
+      case 1:
+        return <Wishlist />;
+      default:
+        return <div>선택된 탭이 없습니다.</div>;
+    }
+  };
+
   return (
     <Container>
       <Header />
@@ -30,8 +47,8 @@ function Home() {
         <Main>
           <TabMenu />
           <Article>
-            <p>강의시간표/수업계획서조회</p>
-            <LectureList />
+            <p>{focusedTabName}</p>
+            {renderContent()}
           </Article>
         </Main>
       </Box>

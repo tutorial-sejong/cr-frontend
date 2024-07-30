@@ -1,5 +1,5 @@
-import {useEffect, useRef, useState} from 'react';
-import styled, {css} from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 import arrow from '@assets/img/input_dropdown.png';
 import tag from '@assets/img/tag.png';
 
@@ -95,8 +95,13 @@ function SelectBox({
   );
 }
 
-const SelectContainer = styled.div<{sizes: string}>`
+const SelectContainer = styled.div<{ sizes: string }>`
   ${props => props.theme.texts.content};
+  ${props =>
+    props.sizes === 'ss' &&
+    css`
+      width: 11rem;
+    `};
   ${props =>
     props.sizes === 's' &&
     css`
@@ -117,7 +122,7 @@ const SelectContainer = styled.div<{sizes: string}>`
   display: inline-block;
 `;
 
-const InputContainer = styled.div<{disabled: boolean}>`
+const InputContainer = styled.div<{ disabled: boolean }>`
   position: relative;
   width: inherit;
   height: inherit;
@@ -132,7 +137,7 @@ const InputContainer = styled.div<{disabled: boolean}>`
   }
 `;
 
-const TagWrap = styled.img<{disabled: boolean}>`
+const TagWrap = styled.img<{ disabled: boolean }>`
   position: absolute;
   z-index: 2;
   filter: ${props => (props.disabled ? 'grayscale(100%)' : 'none')};
@@ -176,7 +181,7 @@ const SelectWrap = styled.ul`
   overflow-y: scroll;
 `;
 
-const OptionWrap = styled.li<{$isselected: boolean}>`
+const OptionWrap = styled.li<{ $isselected: boolean }>`
   height: 2.4rem;
   display: flex;
   align-items: center;

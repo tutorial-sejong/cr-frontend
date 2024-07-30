@@ -1,16 +1,17 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import TableHead from './TableHead';
-import {CourseTypes, TableHeadTypes} from '@assets/types/tableType';
+import { CourseTypes, TableHeadTypes } from '@assets/types/tableType';
 
 interface TableProps {
+  title: string;
   colData: TableHeadTypes[];
   data: CourseTypes[];
   width: string;
   height: string;
 }
 
-function Table({data, colData, width, height}: TableProps) {
+function Table({ title, data, colData, width, height }: TableProps) {
   const tableRef = useRef<HTMLTableElement>(null);
   const [columnWidths, setColumnWidths] = useState<number[]>([]);
   const [filters, setFilters] = useState<string[][]>(
@@ -77,12 +78,12 @@ function Table({data, colData, width, height}: TableProps) {
   return (
     <TableContainer>
       <TableTitleWrap>
-        <TableTitle>개설강좌</TableTitle>
+        <TableTitle>{title}</TableTitle>
       </TableTitleWrap>
       <TableBox width={width} height={height}>
         <TableWrap ref={tableRef}>
           <colgroup>
-            <col style={{width: 'auto'}} />
+            <col style={{ width: 'auto' }} />
             {colData.map((item, index) => (
               <col
                 key={index}
@@ -94,7 +95,7 @@ function Table({data, colData, width, height}: TableProps) {
           </colgroup>
           <thead>
             <RowWrap>
-              <th style={{minWidth: columnWidths[0]}}>순번</th>
+              <th style={{ minWidth: columnWidths[0] }}>순번</th>
               {colData.map((item, index) => (
                 <TableHead
                   key={index}
@@ -137,7 +138,7 @@ const TableTitle = styled.div`
   padding-left: 0.5rem;
 `;
 
-const TableBox = styled.div<{width: string; height: string}>`
+const TableBox = styled.div<{ width: string; height: string }>`
   width: ${props => props.width};
   height: ${props => props.height};
   overflow: scroll;
@@ -174,7 +175,7 @@ const IndexWrap = styled.td`
   text-align: center;
 `;
 
-const ContentWrap = styled(RowWrap)<{$isEven: boolean}>`
+const ContentWrap = styled(RowWrap) <{ $isEven: boolean }>`
   background-color: ${props =>
     props.$isEven ? 'rgb(252, 252, 252)' : props.theme.colors.white};
   text-align: center;

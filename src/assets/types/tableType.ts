@@ -11,7 +11,7 @@ export interface TableHeadTypes {
 export interface CourseTypes {
   schDeptAlias?: string;
   curiNo?: string;
-  class_?: string;
+  classNo?: string;
   schCollegeAlias?: string;
   curiNm?: string;
   curiLangNm?: string | null;
