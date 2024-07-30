@@ -18,3 +18,16 @@ export const getCourseList = async (filter: object) => {
     console.log('get course list fail: ', error);
   }
 };
+
+export const saveWishlist = async (studentId: string, wishListIdList: number[]) => {
+  try {
+    const { data } = await baseAPI.post('/wishlist/save', {
+      studentId,
+      wishListIdList,
+    });
+    return data;
+  } catch (error) {
+    console.error('Save wishlist fail: ', error);
+    throw error;
+  }
+};

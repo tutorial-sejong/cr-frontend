@@ -9,7 +9,7 @@ interface TableProps {
   data: CourseTypes[];
   width: string;
   height: string;
-  onAction?: (action: string, scheduleId: string | undefined) => void;
+  onAction?: (action: string, scheduleId: number | undefined) => void;
 }
 
 function Table({ title, data, colData, width, height, onAction }: TableProps) {
@@ -72,8 +72,8 @@ function Table({ title, data, colData, width, height, onAction }: TableProps) {
     colData.every(
       (col, index) =>
         filters[index].includes('빈값') ||
-        filters[index].includes(row[col.name as keyof CourseTypes] ?? ''),
-    ),
+        filters[index].includes(String(row[col.name as keyof CourseTypes] ?? ''))
+    )
   );
 
   const handleActionClick = (row: CourseTypes, action: string) => {

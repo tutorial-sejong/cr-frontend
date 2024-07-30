@@ -9,7 +9,7 @@ export interface TableHeadTypes {
 }
 
 export interface CourseTypes {
-  scheduleId?: string;
+  scheduleId?: number;
   schDeptAlias?: string;
   curiNo?: string;
   classNo?: string;

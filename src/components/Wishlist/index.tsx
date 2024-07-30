@@ -3,6 +3,9 @@ import Table from '@components/common/Table';
 import Filters from './Filters';
 import { CourseTypes } from '@/assets/types/tableType';
 import { useState } from 'react';
+import { saveWishlist } from '@/apis/api/course';
+import { RootState } from '@/store/store';
+import { useSelector } from 'react-redux';
 
 const searchResultColData = [
   { name: 'action', value: '신청', initialWidth: 30, enableFilters: false },
@@ -32,6 +35,20 @@ const wishlistColData = [
 
 function Wishlist() {
   const [searchResultsData, setSearchResultsData] = useState<CourseTypes[]>([]);
+  const { username } = useSelector((state: RootState) => state.userInfo);
+
+  const handleAction = async (action: string, scheduleId: number | undefined) => {
+    if (action === '신청' && scheduleId) {
+      try {
+        await saveWishlist(username, [scheduleId]);
+        console.log('관심과목 담기 성공:', scheduleId);
+      } catch (error) {
+        console.error('관심과목 담기 실패:', error);
+      }
+    } else if (action === '삭제') {
+      console.log('삭제 action:', scheduleId);
+    }
+  };
 
   return (
     <WishlistContainer>
@@ -52,10 +69,24 @@ function Wishlist() {
       </WishlistInfo>
       <TableWrapper>
         <TableSection>
-          <Table title='관심과목 대상교과목' colData={searchResultColData} data={searchResultsData} width='100%' height='calc(100vh - 200px)' />
+          <Table
+            title='관심과목 대상교과목'
+            colData={searchResultColData}
+            data={searchResultsData}
+            width='100%'
+            height='calc(100vh - 200px)'
+            onAction={handleAction}
+          />
         </TableSection>
         <TableSection>
-          <Table title='관심과목내역' colData={wishlistColData} data={searchResultsData} width='100%' height='calc(100vh - 200px)' />
+          <Table
+            title='관심과목내역'
+            colData={wishlistColData}
+            data={searchResultsData}
+            width='100%'
+            height='calc(100vh - 200px)'
+            onAction={handleAction}
+          />
         </TableSection>
       </TableWrapper>
     </WishlistContainer>
