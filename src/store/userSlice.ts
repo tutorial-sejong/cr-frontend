@@ -2,7 +2,6 @@ import {createSlice} from '@reduxjs/toolkit';
 
 export interface UserInfo {
   accessToken: string;
-  refreshToken: string;
   username: string;
 }
 
@@ -11,14 +10,9 @@ const userInfo = createSlice({
   initialState: {
     username: '',
     accessToken: '',
-    refreshToken: '',
   },
   reducers: {
     setAccessToken(state: UserInfo, {payload}: {payload: string}) {
-      state.accessToken = payload;
-    },
-
-    setRefreshToken(state: UserInfo, {payload}: {payload: string}) {
       state.accessToken = payload;
     },
 
@@ -28,13 +22,11 @@ const userInfo = createSlice({
 
     setUserInfo(state: UserInfo, {payload}: {payload: UserInfo}) {
       state.accessToken = payload.accessToken;
-      state.refreshToken = payload.refreshToken;
       state.username = payload.username;
     },
     
     clearUserInfo(state: UserInfo) {
       state.accessToken = '';
-      state.refreshToken = '';
       state.username = '';
     },
   },
@@ -42,7 +34,6 @@ const userInfo = createSlice({
 
 export const {
   setAccessToken,
-  setRefreshToken,
   setUsername,
   setUserInfo,
   clearUserInfo,

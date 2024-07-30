@@ -27,7 +27,6 @@ function LoginForm() {
 
       dispatch(setUserInfo({
         accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
         username: response.username,
       }));
 
@@ -56,7 +55,7 @@ function LoginForm() {
       </InputContainer>
       <FindWrap>아이디 찾기 | 비밀번호 찾기</FindWrap>
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      <LoginBtnWrap onClick={handleLogin}>로그인</LoginBtnWrap>
+      <LoginBtnWrap onClick={handleLogin} type="button">로그인</LoginBtnWrap>
     </FormContainer>
   );
 }
@@ -111,6 +110,7 @@ const LoginBtnWrap = styled.button`
 `;
 
 const ErrorMessage = styled.div`
+  color: 'red';
   margin-bottom: 1rem;
   text-align: center;
 `;
