@@ -1,22 +1,22 @@
 import {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import TableHead from './TableHead';
-import {TableHeadTypes, TableTypes} from '@assets/types/tableType';
+import {CourseTypes, TableHeadTypes} from '@assets/types/tableType';
 
 interface TableProps {
   colData: TableHeadTypes[];
-  data: TableTypes[];
-  initialWidth: string;
+  data: CourseTypes[];
+  width: string;
   height: string;
 }
 
-function Table({data, colData, initialWidth, height}: TableProps) {
+function Table({data, colData, width, height}: TableProps) {
   const tableRef = useRef<HTMLTableElement>(null);
   const [columnWidths, setColumnWidths] = useState<number[]>([]);
   const [filters, setFilters] = useState<string[][]>(
     colData.map(col => {
       const uniqueOptions = Array.from(
-        new Set(data.map(row => row[col.name])),
+        new Set(data?.map(row => row[col.name as keyof CourseTypes])),
       ).filter(option => option !== null) as string[];
       return uniqueOptions.length === 0 ? ['빈값'] : uniqueOptions.sort();
     }),
@@ -53,7 +53,7 @@ function Table({data, colData, initialWidth, height}: TableProps) {
 
   const getOptions = colData.map(col => {
     const uniqueOptions = Array.from(
-      new Set(data.map(row => row[col.name])),
+      new Set(data?.map(row => row[col.name as keyof CourseTypes])),
     ).filter(option => option !== null) as string[];
     return uniqueOptions.length === 0 ? ['빈값'] : uniqueOptions.sort();
   });
@@ -66,11 +66,11 @@ function Table({data, colData, initialWidth, height}: TableProps) {
     });
   };
 
-  const filteredData = data.filter(row =>
+  const filteredData = data?.filter(row =>
     colData.every(
       (col, index) =>
         filters[index].includes('빈값') ||
-        filters[index].includes(row[col.name] ?? ''),
+        filters[index].includes(row[col.name as keyof CourseTypes] ?? ''),
     ),
   );
 
@@ -79,7 +79,7 @@ function Table({data, colData, initialWidth, height}: TableProps) {
       <TableTitleWrap>
         <TableTitle>개설강좌</TableTitle>
       </TableTitleWrap>
-      <TableBox width={initialWidth} height={height}>
+      <TableBox width={width} height={height}>
         <TableWrap ref={tableRef}>
           <colgroup>
             <col style={{width: 'auto'}} />
@@ -110,11 +110,11 @@ function Table({data, colData, initialWidth, height}: TableProps) {
             </RowWrap>
           </thead>
           <tbody>
-            {filteredData.map((row, rowIdx) => (
+            {filteredData?.map((row, rowIdx) => (
               <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
                 <IndexWrap>{rowIdx + 1}</IndexWrap>
                 {colData.map((col, colIdx) => (
-                  <td key={colIdx}>{row[col.name]}</td>
+                  <td key={colIdx}>{row[col.name as keyof CourseTypes]}</td>
                 ))}
               </ContentWrap>
             ))}
@@ -143,18 +143,17 @@ const TableBox = styled.div<{width: string; height: string}>`
   overflow: scroll;
   border-left: 1px solid #c3c3c3;
   border-bottom: 1px solid #c3c3c3;
+  border-top: 1px solid ${props => props.theme.colors.black};
 `;
 
 const TableWrap = styled.table`
   ${props => props.theme.texts.content};
-  border-top: 1px solid ${props => props.theme.colors.black};
   white-space: nowrap;
   border-collapse: collapse;
 
   > thead > tr > th {
     ${props => props.theme.texts.tableTitle};
     position: relative;
-    border-top: 1px solid black;
     background-color: ${props => props.theme.colors.neutral5};
   }
 `;
