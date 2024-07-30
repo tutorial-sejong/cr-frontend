@@ -9,9 +9,10 @@ interface TableProps {
   data: CourseTypes[];
   width: string;
   height: string;
+  onAction?: (action: string, scheduleId: string | undefined) => void;
 }
 
-function Table({ title, data, colData, width, height }: TableProps) {
+function Table({ title, data, colData, width, height, onAction }: TableProps) {
   const tableRef = useRef<HTMLTableElement>(null);
   const [columnWidths, setColumnWidths] = useState<number[]>([]);
   const [filters, setFilters] = useState<string[][]>(
@@ -75,6 +76,25 @@ function Table({ title, data, colData, width, height }: TableProps) {
     ),
   );
 
+  const handleActionClick = (row: CourseTypes, action: string) => {
+    if (onAction) {
+      onAction(action, row.scheduleId);
+    } else {
+      console.log(`${action} action for scheduleId: ${row.scheduleId}`);
+    }
+  };
+
+  const renderCell = (row: CourseTypes, col: TableHeadTypes) => {
+    if (col.name === 'action') {
+      return (
+        <ActionButton onClick={() => handleActionClick(row, col.value)}>
+          {col.value}
+        </ActionButton>
+      );
+    }
+    return row[col.name as keyof CourseTypes];
+  };
+
   return (
     <TableContainer>
       <TableTitleWrap>
@@ -115,7 +135,7 @@ function Table({ title, data, colData, width, height }: TableProps) {
               <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
                 <IndexWrap>{rowIdx + 1}</IndexWrap>
                 {colData.map((col, colIdx) => (
-                  <td key={colIdx}>{row[col.name as keyof CourseTypes]}</td>
+                  <td key={colIdx}>{renderCell(row, col)}</td>
                 ))}
               </ContentWrap>
             ))}
@@ -185,6 +205,20 @@ const ContentWrap = styled(RowWrap) <{ $isEven: boolean }>`
 
   &:focus {
     background-color: rgb(252, 248, 227);
+  }
+`;
+
+const ActionButton = styled.button`
+  padding: 5px 10px;
+  background-color: ${props => props.theme.colors.primary};
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.primary};
   }
 `;
 
