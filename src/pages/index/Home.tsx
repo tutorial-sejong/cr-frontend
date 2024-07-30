@@ -3,8 +3,25 @@ import Menubar from '@components/Menubar';
 import Header from '@components/Header';
 import LectureList from '@components/LectureList';
 import TabMenu from '@components/TabMenu';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { RootState } from '@/store/store';
 
 function Home() {
+  const { accessToken } = useSelector((state: RootState) => state.userInfo);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate('/login');
+    }
+  }, [accessToken, navigate]);
+
+  if (!accessToken) {
+    return null;
+  }
+
   return (
     <Container>
       <Header />

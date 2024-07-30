@@ -8,12 +8,17 @@ import notice from '@assets/img/notice.png';
 import setting from '@assets/img/setitng.png';
 import menu from '@assets/img/menu.png';
 import Timer from './TImer';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { clearUserInfo } from '@/store/userSlice';
 
 function TopMenu() {
   const navigate = useNavigate();
-  const name = '세종대';
+  const dispatch = useDispatch();
+  const { username } = useSelector((state: RootState) => state.userInfo);
 
   const handleLogout = () => {
+    dispatch(clearUserInfo());
     navigate('/login');
   };
 
@@ -23,7 +28,7 @@ function TopMenu() {
         <StyledLeft />
         <StyledRight />
       </ArrowWrap>
-      <Timer name={name} />
+      <Timer name={username || '세종대'} />
       <LogoutBtn onClick={handleLogout} />
       <DropdownWrap>
         PC
