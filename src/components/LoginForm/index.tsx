@@ -1,12 +1,30 @@
 import styled from 'styled-components';
 import FormInput from './FormInput';
 import {useState} from 'react';
+import { login } from '@/apis/api/auth';
 
 export type setType = string | number | undefined;
 
 function LoginForm() {
-  const [id, setId] = useState<setType>(undefined);
-  const [name, setName] = useState<setType>('');
+  const [id, setId] = useState<setType>('');
+  const [password, setPassword] = useState<setType>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async () => {
+    if (!id || !password) {
+      setError('학번과 비밀번호를 모두 입력해주세요.');
+      return;
+    }
+
+    try {
+      const response = await login({ studentId: id.toString(), password: password.toString() });
+      console.log('Login successful', response);
+      // 로그인 성공 후 처리 (예: 리다이렉트, 상태 업데이트 등)
+    } catch (error) {
+      console.error('Login failed', error);
+      setError('로그인에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
 
   return (
     <FormContainer>
@@ -16,8 +34,8 @@ function LoginForm() {
           <FormInput value={id} setValue={setId} type='number' />
         </InputBox>
         <InputBox>
-          <LabelWrap>이름</LabelWrap>
-          <FormInput value={name} setValue={setName} type='text' />
+          <LabelWrap>비밀번호</LabelWrap>
+          <FormInput value={password} setValue={setPassword} type='password' />
         </InputBox>
         <CheckboxWrap>
           <input type='checkbox' id='keyboardSecurity' checked readOnly />
@@ -25,7 +43,8 @@ function LoginForm() {
         </CheckboxWrap>
       </InputContainer>
       <FindWrap>아이디 찾기 | 비밀번호 찾기</FindWrap>
-      <LoginBtnWrap>로그인</LoginBtnWrap>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <LoginBtnWrap onClick={handleLogin}>로그인</LoginBtnWrap>
     </FormContainer>
   );
 }
@@ -77,6 +96,12 @@ const LoginBtnWrap = styled.button`
   &:hover {
     background-color: #c3002fc7;
   }
+`;
+
+const ErrorMessage = styled.div`
+  color: ${props => props.theme.colors.error};
+  margin-bottom: 1rem;
+  text-align: center;
 `;
 
 export default LoginForm;
