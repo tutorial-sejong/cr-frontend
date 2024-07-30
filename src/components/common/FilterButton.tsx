@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 import search from '@assets/img/search.png';
-import {LectureProps} from '@components/LectureList/Filters';
+import {CourseTypes} from '@/assets/types/tableType';
+import {getCourseList} from '@/apis/api/course';
 
 interface ButtonProps {
   label: string;
-  lecture: LectureProps | undefined;
+  filter?: CourseTypes;
+  setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
 }
 
-function FilterButton({label, lecture}: ButtonProps) {
-  const handleClick = () => {
-    console.log(lecture);
+function FilterButton({label, filter = {}, setList}: ButtonProps) {
+  const handleClick = async () => {
+    await getCourseList(filter).then(res => {
+      setList(res);
+    });
   };
 
   return (
