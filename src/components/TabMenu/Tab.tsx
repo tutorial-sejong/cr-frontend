@@ -1,6 +1,7 @@
-import {useState} from 'react';
 import styled, {css} from 'styled-components';
 import close from '@assets/img/tab_close.png';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
+import {delTab, setFocused} from '@/store/modules/tabSlice';
 
 interface TabProps {
   id: number;
@@ -10,29 +11,25 @@ interface TabProps {
 }
 
 function Tab({id, label, isActive, onClick}: TabProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const dispatch = useAppDispatch();
+  const tabs = useAppSelector(state => state.tabs.tab);
+  const idx = tabs.findIndex(item => item.id === id);
 
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-
-    if (id > 0) {
-      onClick(id - 1);
+    if (idx === 0) {
+      dispatch(setFocused(tabs[idx + 1].id));
     } else {
-      onClick(1);
+      dispatch(setFocused(tabs[idx - 1].id));
     }
-
-    setIsOpen(false);
+    dispatch(delTab(id));
   };
 
   return (
-    <>
-      {isOpen && (
-        <TabContainer onClick={() => onClick(id)} $isactive={isActive}>
-          <p>{label}</p>
-          <CloseBtn onClick={handleClose} />
-        </TabContainer>
-      )}
-    </>
+    <TabContainer onClick={() => onClick(id)} $isactive={isActive}>
+      <p>{label}</p>
+      <CloseBtn onClick={handleClose} />
+    </TabContainer>
   );
 }
 

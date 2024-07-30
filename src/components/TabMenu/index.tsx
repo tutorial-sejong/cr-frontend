@@ -1,39 +1,39 @@
-import {useState} from 'react';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import styled from 'styled-components';
 import Tab from './Tab';
 import closeAll from '@assets/img/tab_close_all.png';
 import up from '@assets/img/btn_gnb_cu.png';
+import {deleteAll, setFocused} from '@/store/modules/tabSlice';
 
 function TabMenu() {
-  const [focused, setFocused] = useState<number>(0);
-  const [close, setClose] = useState(false);
+  const dispatch = useAppDispatch();
+  const tabs = useAppSelector(state => state.tabs.tab);
+  const focused = useAppSelector(state => state.tabs.focused);
+  console.log('focused: ', focused);
 
   const handleClick = (id: number) => {
-    setFocused(id);
+    dispatch(setFocused(id));
+  };
+
+  const handleCloseAll = () => {
+    dispatch(deleteAll());
   };
 
   return (
     <TabMenuContainer>
       <TabWrap>
-        {!close && (
-          <>
-            <Tab
-              id={0}
-              label='강의시간표/수업계획서'
-              onClick={handleClick}
-              isActive={focused === 0}
-            />
-            <Tab
-              id={1}
-              label='수강신청'
-              onClick={handleClick}
-              isActive={focused === 1}
-            />
-          </>
-        )}
+        {tabs.map(tab => (
+          <Tab
+            key={tab.id}
+            id={tab.id}
+            label={tab.name}
+            onClick={handleClick}
+            isActive={focused === tab.id}
+          />
+        ))}
       </TabWrap>
       <ButtonWrap>
-        <CloseAllBtn onClick={() => setClose(true)} />
+        <CloseAllBtn onClick={handleCloseAll} />
         <img src={up} />
       </ButtonWrap>
     </TabMenuContainer>
