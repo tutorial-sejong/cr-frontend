@@ -9,7 +9,6 @@ function TabMenu() {
   const dispatch = useAppDispatch();
   const tabs = useAppSelector(state => state.tabs.tab);
   const focused = useAppSelector(state => state.tabs.focused);
-  console.log('focused: ', focused);
 
   const handleClick = (id: number) => {
     dispatch(setFocused(id));
