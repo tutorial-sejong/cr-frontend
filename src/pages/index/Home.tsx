@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { RootState } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
-import WaitingModal from '@components/common/Modal/WaitingModal.tsx';
+import Wishlist from '@/components/Wishlist';
 
 function Home() {
-  const {accessToken} = useSelector((state: RootState) => state.userInfo);
+  const { accessToken } = useSelector((state: RootState) => state.userInfo);
   const navigate = useNavigate();
   const { tab, focused } = useAppSelector(state => state.tabs);
 
@@ -41,7 +41,6 @@ function Home() {
 
   return (
     <Container>
-      <WaitingModal progress={60}/>
       <Header />
       <Box>
         <Menubar />
