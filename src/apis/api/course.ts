@@ -1,3 +1,4 @@
+import { CourseTypes } from '@/assets/types/tableType';
 import {baseAPI} from '../utils/instance';
 
 export const getCourseList = async (filter: object) => {
@@ -19,15 +20,30 @@ export const getCourseList = async (filter: object) => {
   }
 };
 
-export const saveWishlist = async (studentId: string, wishListIdList: number[]) => {
+export const saveWishlist = async (
+  studentId: string,
+  wishListIdList: number[],
+) => {
   try {
-    const { data } = await baseAPI.post('/wishlist/save', {
+    const {data} = await baseAPI.post('/wishlist/save', {
       studentId,
       wishListIdList,
     });
     return data;
   } catch (error) {
     console.error('Save wishlist fail: ', error);
+    throw error;
+  }
+};
+
+export const getWishlist = async (
+  studentId: string,
+): Promise<CourseTypes[]> => {
+  try {
+    const {data} = await baseAPI.get(`/wishlist?studentId=${studentId}`);
+    return data;
+  } catch (error) {
+    console.error('Get wishlist fail: ', error);
     throw error;
   }
 };

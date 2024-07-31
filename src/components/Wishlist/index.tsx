@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import Table from '@components/common/Table';
 import Filters from './Filters';
 import { CourseTypes } from '@/assets/types/tableType';
-import { useState } from 'react';
-import { saveWishlist } from '@/apis/api/course';
+import { useCallback, useEffect, useState } from 'react';
+import { getWishlist, saveWishlist } from '@/apis/api/course';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 
@@ -35,18 +35,34 @@ const wishlistColData = [
 
 function Wishlist() {
   const [searchResultsData, setSearchResultsData] = useState<CourseTypes[]>([]);
+  const [wishlistData, setWishlistData] = useState<CourseTypes[]>([]);
   const { username } = useSelector((state: RootState) => state.userInfo);
+
+  const fetchWishlist = useCallback(async () => {
+    try {
+      const data = await getWishlist(username);
+      setWishlistData(data);
+    } catch (error) {
+      console.error('Failed to fetch wishlist:', error);
+    }
+  }, [username]);
+
+  useEffect(() => {
+    fetchWishlist();
+  }, [fetchWishlist]);
 
   const handleAction = async (action: string, scheduleId: number | undefined) => {
     if (action === '신청' && scheduleId) {
       try {
         await saveWishlist(username, [scheduleId]);
         console.log('관심과목 담기 성공:', scheduleId);
+        fetchWishlist();
       } catch (error) {
         console.error('관심과목 담기 실패:', error);
       }
     } else if (action === '삭제') {
       console.log('삭제 action:', scheduleId);
+      fetchWishlist();
     }
   };
 
@@ -82,7 +98,7 @@ function Wishlist() {
           <Table
             title='관심과목내역'
             colData={wishlistColData}
-            data={searchResultsData}
+            data={wishlistData}
             width='100%'
             height='calc(100vh - 200px)'
             onAction={handleAction}
