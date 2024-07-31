@@ -36,16 +36,32 @@ const wishlistColData = [
 function Wishlist() {
   const [searchResultsData, setSearchResultsData] = useState<CourseTypes[]>([]);
   const [wishlistData, setWishlistData] = useState<CourseTypes[]>([]);
+  const [registeredCourseCount, setRegisteredCourseCount] = useState(0);
+  const [registeredCredits, setRegisteredCredits] = useState(0);
   const { username } = useSelector((state: RootState) => state.userInfo);
 
   const fetchWishlist = useCallback(async () => {
     try {
       const data = await getWishlist(username);
       setWishlistData(data);
+      updateWishlistStats(data);
     } catch (error) {
       console.error('Failed to fetch wishlist:', error);
     }
   }, [username]);
+
+  const updateWishlistStats = (data: CourseTypes[]) => {
+    setRegisteredCourseCount(data.length);
+    const totalCredits = data.reduce((sum, course) => {
+      if (course.tmNum) {
+        const creditMatch = course.tmNum.match(/^(\d+)/);
+        const credit = creditMatch ? parseInt(creditMatch[1], 10) : 0;
+        return sum + (isNaN(credit) ? 0 : credit);
+      }
+      return sum;
+    }, 0);
+    setRegisteredCredits(totalCredits);
+  };
 
   useEffect(() => {
     fetchWishlist();
@@ -81,11 +97,11 @@ function Wishlist() {
         </InfoBox>
         <InfoBox>
           <InfoLabel>등록과목수:</InfoLabel>
-          <InfoValue>{ }</InfoValue>
+          <InfoValue>{registeredCourseCount}</InfoValue>
         </InfoBox>
         <InfoBox>
           <InfoLabel>등록학점:</InfoLabel>
-          <InfoValue>{ }</InfoValue>
+          <InfoValue>{registeredCredits}</InfoValue>
         </InfoBox>
       </WishlistInfo>
       <TableWrapper>
