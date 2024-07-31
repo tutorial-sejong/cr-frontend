@@ -1,5 +1,5 @@
 import {CourseTypes} from '@/assets/types/tableType';
-import {baseAPI} from '../utils/instance';
+import {authAPI, baseAPI} from '../utils/instance';
 
 export const getCourseList = async (filter: object) => {
   const queryParams = new URLSearchParams();
@@ -11,7 +11,7 @@ export const getCourseList = async (filter: object) => {
   });
 
   try {
-    const {data} = await baseAPI.get(
+    const {data} = await authAPI.get(
       `/schedules/search?${queryParams.toString()}`,
     );
     return data;

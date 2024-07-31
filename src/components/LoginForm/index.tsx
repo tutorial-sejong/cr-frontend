@@ -1,10 +1,11 @@
+import {useState} from 'react';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
 import FormInput from './FormInput';
-import { useState } from 'react';
-import { login } from '@/apis/api/auth';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setUserInfo } from '@/store/userSlice';
+import {login} from '@/apis/api/auth';
+import {useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {setUserInfo} from '@/store/userSlice';
 
 export type setType = string | number | undefined;
 
@@ -22,13 +23,19 @@ function LoginForm() {
     }
 
     try {
-      const response = await login({ studentId: id.toString(), password: password.toString() });
-      console.log('Login successful', response);
+      const response = await login({
+        studentId: id.toString(),
+        password: password.toString(),
+      });
+      console.log('Login successful');
 
-      dispatch(setUserInfo({
-        accessToken: response.accessToken,
-        username: response.username,
-      }));
+      Cookies.set('accessToken', response.accessToken, {expires: 0.5 / 24});
+
+      dispatch(
+        setUserInfo({
+          username: response.username,
+        }),
+      );
 
       navigate('/');
     } catch (error) {
@@ -55,7 +62,9 @@ function LoginForm() {
       </InputContainer>
       <FindWrap>아이디 찾기 | 비밀번호 찾기</FindWrap>
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      <LoginBtnWrap onClick={handleLogin} type="button">로그인</LoginBtnWrap>
+      <LoginBtnWrap onClick={handleLogin} type='button'>
+        로그인
+      </LoginBtnWrap>
     </FormContainer>
   );
 }

@@ -3,17 +3,17 @@ import Menubar from '@components/Menubar';
 import Header from '@components/Header';
 import LectureList from '@components/LectureList';
 import TabMenu from '@components/TabMenu';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { RootState } from '@/store/store';
-import { useAppSelector } from '@/store/hooks';
+import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
+import {useAppSelector} from '@/store/hooks';
+import CourseRegister from '@/components/CourseRegister';
 import Wishlist from '@/components/Wishlist';
+import Cookies from 'js-cookie';
 
 function Home() {
-  const { accessToken } = useSelector((state: RootState) => state.userInfo);
+  const accessToken = Cookies.get('accessToken');
   const navigate = useNavigate();
-  const { tab, focused } = useAppSelector(state => state.tabs);
+  const {tab, focused} = useAppSelector(state => state.tabs);
 
   useEffect(() => {
     if (!accessToken) {
@@ -34,6 +34,8 @@ function Home() {
         return <LectureList />;
       case 1:
         return <Wishlist />;
+      case 2:
+        return <CourseRegister />;
       default:
         return <div>선택된 탭이 없습니다.</div>;
     }

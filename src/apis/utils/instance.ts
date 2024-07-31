@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -10,11 +11,11 @@ export const baseAPI = axios.create({
   withCredentials: true,
 });
 
-// 토큰 받아오는 작업 필요
+const token = Cookies.get('accessToken');
 export const authAPI = axios.create({
   baseURL: baseURL,
   headers: {
-    // Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
   },
   withCredentials: true,
 });
