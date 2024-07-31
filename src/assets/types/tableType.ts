@@ -9,9 +9,10 @@ export interface TableHeadTypes {
 }
 
 export interface CourseTypes {
+  scheduleId?: number;
   schDeptAlias?: string;
   curiNo?: string;
-  class_?: string;
+  classNo?: string;
   schCollegeAlias?: string;
   curiNm?: string;
   curiLangNm?: string | null;

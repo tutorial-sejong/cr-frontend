@@ -24,7 +24,7 @@ const userInfo = createSlice({
       state.accessToken = payload.accessToken;
       state.username = payload.username;
     },
-    
+
     clearUserInfo(state: UserInfo) {
       state.accessToken = '';
       state.username = '';
@@ -32,11 +32,7 @@ const userInfo = createSlice({
   },
 });
 
-export const {
-  setAccessToken,
-  setUsername,
-  setUserInfo,
-  clearUserInfo,
-} = userInfo.actions;
+export const {setAccessToken, setUsername, setUserInfo, clearUserInfo} =
+  userInfo.actions;
 
-export default userInfo;
+export default userInfo.reducer;

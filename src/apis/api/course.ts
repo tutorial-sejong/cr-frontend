@@ -1,18 +1,64 @@
+import {CourseTypes} from '@/assets/types/tableType';
 import {baseAPI} from '../utils/instance';
 
 export const getCourseList = async (filter: object) => {
-  let query = '/schedules/search?';
+  const queryParams = new URLSearchParams();
 
-  Object.entries(filter).forEach(item => {
-    if (!item[1].includes('-') && item[1].length !== 0) {
-      query += `${item[0]}=${item[1]}&`;
+  Object.entries(filter).forEach(([key, value]) => {
+    if (value && value.length !== 0) {
+      queryParams.append(key, value.toString());
     }
   });
 
   try {
-    const {data} = await baseAPI.get(query);
+    const {data} = await baseAPI.get(
+      `/schedules/search?${queryParams.toString()}`,
+    );
     return data;
   } catch (error) {
     console.log('get course list fail: ', error);
+  }
+};
+
+export const saveWishlist = async (
+  studentId: string,
+  wishListIdList: number[],
+) => {
+  try {
+    const {data} = await baseAPI.post('/wishlist/save', {
+      studentId,
+      wishListIdList,
+    });
+    return data;
+  } catch (error) {
+    console.error('Save wishlist fail: ', error);
+    throw error;
+  }
+};
+
+export const getWishlist = async (
+  studentId: string,
+): Promise<CourseTypes[]> => {
+  try {
+    const {data} = await baseAPI.get(`/wishlist?studentId=${studentId}`);
+    return data;
+  } catch (error) {
+    console.error('Get wishlist fail: ', error);
+    throw error;
+  }
+};
+
+export const deleteWishlistItem = async (
+  studentId: string,
+  scheduleId: number,
+) => {
+  try {
+    const {data} = await baseAPI.delete(
+      `/wishlist?studentId=${studentId}&scheduleId=${scheduleId}`,
+    );
+    return data;
+  } catch (error) {
+    console.error('Delete wishlist item fail: ', error);
+    throw error;
   }
 };
