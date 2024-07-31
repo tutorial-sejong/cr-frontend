@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 import Cookies from 'js-cookie';
+import {baseAPI} from '@/apis/utils/instance';
+import {clearUserInfo} from '@/store/userSlice';
+import {useAppSelector} from '@/store/hooks';
 import Left from '@assets/img/btn_main_top_left.svg?react';
 import Right from '@assets/img/btn_main_top_right.svg?react';
 import logout from '@assets/img/logout.png';
@@ -9,17 +13,15 @@ import notice from '@assets/img/notice.png';
 import setting from '@assets/img/setitng.png';
 import menu from '@assets/img/menu.png';
 import Timer from './TImer';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '@/store/store';
-import {clearUserInfo} from '@/store/userSlice';
 
 function TopMenu() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {username} = useSelector((state: RootState) => state.userInfo);
+  const {username} = useAppSelector(state => state.userInfo);
 
   const handleLogout = () => {
     dispatch(clearUserInfo());
+    delete baseAPI.defaults.headers.common['Authorization'];
     Cookies.remove('accessToken');
     navigate('/login');
   };

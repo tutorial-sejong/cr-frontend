@@ -3,27 +3,12 @@ import Menubar from '@components/Menubar';
 import Header from '@components/Header';
 import LectureList from '@components/LectureList';
 import TabMenu from '@components/TabMenu';
-import {useNavigate} from 'react-router-dom';
-import {useEffect} from 'react';
 import {useAppSelector} from '@/store/hooks';
 import CourseRegister from '@/components/CourseRegister';
 import Wishlist from '@/components/Wishlist';
-import Cookies from 'js-cookie';
 
 function Home() {
-  const accessToken = Cookies.get('accessToken');
-  const navigate = useNavigate();
   const {tab, focused} = useAppSelector(state => state.tabs);
-
-  useEffect(() => {
-    if (!accessToken) {
-      navigate('/login');
-    }
-  }, [accessToken, navigate]);
-
-  if (!accessToken) {
-    return null;
-  }
 
   const focusedTab = tab.find(tab => tab.id === focused);
   const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';

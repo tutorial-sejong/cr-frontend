@@ -1,11 +1,12 @@
 import {useState} from 'react';
 import styled from 'styled-components';
-import Cookies from 'js-cookie';
 import FormInput from './FormInput';
 import {login} from '@/apis/api/auth';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {setUserInfo} from '@/store/userSlice';
+import {baseAPI} from '@/apis/utils/instance';
+import Cookies from 'js-cookie';
 
 export type setType = string | number | undefined;
 
@@ -15,6 +16,7 @@ function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const expiration = new Date(Date.now() + 600 * 1000);
 
   const handleLogin = async () => {
     if (!id || !password) {
@@ -29,7 +31,9 @@ function LoginForm() {
       });
       console.log('Login successful');
 
-      Cookies.set('accessToken', response.accessToken, {expires: 0.5 / 24});
+      Cookies.set('accessToken', response.accessToken, {expires: expiration});
+      baseAPI.defaults.headers.common['Authorization'] =
+        `Bearer ${response.accessToken}`;
 
       dispatch(
         setUserInfo({
