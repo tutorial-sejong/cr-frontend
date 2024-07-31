@@ -1,4 +1,4 @@
-import { CourseTypes } from '@/assets/types/tableType';
+import {CourseTypes} from '@/assets/types/tableType';
 import {baseAPI} from '../utils/instance';
 
 export const getCourseList = async (filter: object) => {
@@ -44,6 +44,21 @@ export const getWishlist = async (
     return data;
   } catch (error) {
     console.error('Get wishlist fail: ', error);
+    throw error;
+  }
+};
+
+export const deleteWishlistItem = async (
+  studentId: string,
+  scheduleId: number,
+) => {
+  try {
+    const {data} = await baseAPI.delete(
+      `/wishlist?studentId=${studentId}&scheduleId=${scheduleId}`,
+    );
+    return data;
+  } catch (error) {
+    console.error('Delete wishlist item fail: ', error);
     throw error;
   }
 };

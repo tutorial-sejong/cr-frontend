@@ -3,7 +3,7 @@ import Table from '@components/common/Table';
 import Filters from './Filters';
 import { CourseTypes } from '@/assets/types/tableType';
 import { useCallback, useEffect, useState } from 'react';
-import { getWishlist, saveWishlist } from '@/apis/api/course';
+import { deleteWishlistItem, getWishlist, saveWishlist } from '@/apis/api/course';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 
@@ -60,9 +60,14 @@ function Wishlist() {
       } catch (error) {
         console.error('관심과목 담기 실패:', error);
       }
-    } else if (action === '삭제') {
-      console.log('삭제 action:', scheduleId);
-      fetchWishlist();
+    } else if (action === '삭제' && scheduleId) {
+      try {
+        await deleteWishlistItem(username, scheduleId);
+        console.log('관심과목 삭제 성공:', scheduleId);
+        fetchWishlist();
+      } catch (error) {
+        console.error('관심과목 삭제 실패:', error);
+      }
     }
   };
 
