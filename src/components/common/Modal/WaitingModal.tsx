@@ -15,7 +15,7 @@ function WaitingModal({progress}) {
   };
 
   return (
-    <Background>
+    <ModalContainer>
       <Modal>
         <Logo />
         <Title>서비스 <TextStrong color="#838fe2" fontSize={2.5}>접속대기 중</TextStrong> 입니다.</Title>
@@ -37,11 +37,11 @@ function WaitingModal({progress}) {
           재 접속하시면 대기시간이 더 길어집니다.
         </Contents>
       </Modal>
-    </Background>
+    </ModalContainer>
   );
 }
 
-const Background = styled.div`
+const ModalContainer = styled.div`
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0);

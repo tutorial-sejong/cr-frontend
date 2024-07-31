@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { RootState } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
 import Wishlist from '@/components/Wishlist';
+import AntiMacroCodeModal from '@components/common/Modal/AntiMacroCodeModal.tsx';
 
 function Home() {
   const { accessToken } = useSelector((state: RootState) => state.userInfo);
