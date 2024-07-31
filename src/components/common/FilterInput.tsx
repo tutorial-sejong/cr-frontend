@@ -1,11 +1,11 @@
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface InputInterface {
   sizes: string;
   onChange: (value: string) => void;
 }
 
-function FilterInput({sizes, onChange}: InputInterface) {
+function FilterInput({ sizes, onChange }: InputInterface) {
   return (
     <>
       <InputWrap
@@ -18,7 +18,7 @@ function FilterInput({sizes, onChange}: InputInterface) {
   );
 }
 
-const InputWrap = styled.input<{sizes: string}>`
+const InputWrap = styled.input<{ sizes: string }>`
   ${props => props.theme.texts.content};
 
   ${props =>
@@ -31,6 +31,11 @@ const InputWrap = styled.input<{sizes: string}>`
     css`
       width: 19.5rem;
     `};
+    ${props =>
+    props.sizes === 'l' &&
+    css`
+        width: 25rem;
+      `};
   ${props =>
     props.sizes === 'xl' &&
     css`

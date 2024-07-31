@@ -1,16 +1,18 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import TableHead from './TableHead';
-import {CourseTypes, TableHeadTypes} from '@assets/types/tableType';
+import { CourseTypes, TableHeadTypes } from '@assets/types/tableType';
 
 interface TableProps {
+  title: string;
   colData: TableHeadTypes[];
   data: CourseTypes[];
   width: string;
   height: string;
+  onAction?: (action: string, scheduleId: number | undefined) => void;
 }
 
-function Table({data, colData, width, height}: TableProps) {
+function Table({ title, data, colData, width, height, onAction }: TableProps) {
   const tableRef = useRef<HTMLTableElement>(null);
   const [columnWidths, setColumnWidths] = useState<number[]>([]);
   const [filters, setFilters] = useState<string[][]>(
@@ -70,19 +72,38 @@ function Table({data, colData, width, height}: TableProps) {
     colData.every(
       (col, index) =>
         filters[index].includes('빈값') ||
-        filters[index].includes(row[col.name as keyof CourseTypes] ?? ''),
-    ),
+        filters[index].includes(String(row[col.name as keyof CourseTypes] ?? ''))
+    )
   );
+
+  const handleActionClick = (row: CourseTypes, action: string) => {
+    if (onAction) {
+      onAction(action, row.scheduleId);
+    } else {
+      console.log(`${action} action for scheduleId: ${row.scheduleId}`);
+    }
+  };
+
+  const renderCell = (row: CourseTypes, col: TableHeadTypes) => {
+    if (col.name === 'action') {
+      return (
+        <ActionButton onClick={() => handleActionClick(row, col.value)}>
+          {col.value}
+        </ActionButton>
+      );
+    }
+    return row[col.name as keyof CourseTypes];
+  };
 
   return (
     <TableContainer>
       <TableTitleWrap>
-        <TableTitle>개설강좌</TableTitle>
+        <TableTitle>{title}</TableTitle>
       </TableTitleWrap>
       <TableBox width={width} height={height}>
         <TableWrap ref={tableRef}>
           <colgroup>
-            <col style={{width: 'auto'}} />
+            <col style={{ width: 'auto' }} />
             {colData.map((item, index) => (
               <col
                 key={index}
@@ -94,7 +115,7 @@ function Table({data, colData, width, height}: TableProps) {
           </colgroup>
           <thead>
             <RowWrap>
-              <th style={{minWidth: columnWidths[0]}}>순번</th>
+              <th style={{ minWidth: columnWidths[0] }}>순번</th>
               {colData.map((item, index) => (
                 <TableHead
                   key={index}
@@ -114,7 +135,7 @@ function Table({data, colData, width, height}: TableProps) {
               <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
                 <IndexWrap>{rowIdx + 1}</IndexWrap>
                 {colData.map((col, colIdx) => (
-                  <td key={colIdx}>{row[col.name as keyof CourseTypes]}</td>
+                  <td key={colIdx}>{renderCell(row, col)}</td>
                 ))}
               </ContentWrap>
             ))}
@@ -137,7 +158,7 @@ const TableTitle = styled.div`
   padding-left: 0.5rem;
 `;
 
-const TableBox = styled.div<{width: string; height: string}>`
+const TableBox = styled.div<{ width: string; height: string }>`
   width: ${props => props.width};
   height: ${props => props.height};
   overflow: scroll;
@@ -174,7 +195,7 @@ const IndexWrap = styled.td`
   text-align: center;
 `;
 
-const ContentWrap = styled(RowWrap)<{$isEven: boolean}>`
+const ContentWrap = styled(RowWrap) <{ $isEven: boolean }>`
   background-color: ${props =>
     props.$isEven ? 'rgb(252, 252, 252)' : props.theme.colors.white};
   text-align: center;
@@ -184,6 +205,20 @@ const ContentWrap = styled(RowWrap)<{$isEven: boolean}>`
 
   &:focus {
     background-color: rgb(252, 248, 227);
+  }
+`;
+
+const ActionButton = styled.button`
+  padding: 5px 10px;
+  background-color: ${props => props.theme.colors.primary};
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.primary};
   }
 `;
 
