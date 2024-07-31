@@ -10,6 +10,7 @@ import { RootState } from '@/store/store';
 import { useAppSelector } from '@/store/hooks';
 import Wishlist from '@/components/Wishlist';
 import AntiMacroCodeModal from '@components/common/Modal/AntiMacroCodeModal.tsx';
+import InfoModal from '@components/common/Modal/InfoModal.tsx';
 
 function Home() {
   const { accessToken } = useSelector((state: RootState) => state.userInfo);
@@ -42,6 +43,8 @@ function Home() {
 
   return (
     <Container>
+
+      {/*<InfoModal curiNm="정치경제학의이해" type=""/>*/}
       <Header />
       <Box>
         <Menubar />

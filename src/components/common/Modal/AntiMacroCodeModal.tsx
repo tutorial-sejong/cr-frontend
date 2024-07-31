@@ -109,7 +109,7 @@ const ModalHeader = styled.div`
 const Title = styled.div`
     font-size: 2rem;
     font-weight: bolder;
-    padding: 20px 30px;
+    padding: 15px 30px;
 `;
 
 const CloseImage = styled.img.attrs({
