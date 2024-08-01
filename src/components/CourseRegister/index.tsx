@@ -42,8 +42,8 @@ function CourseRegister() {
     scheduleId: number | undefined,
   ) => {
     if (scheduleId) {
-      await postCourse(scheduleId).then(res => {
-        console.log('register success ', res);
+      await postCourse(scheduleId).then(() => {
+        console.log('register success');
       });
     }
   };

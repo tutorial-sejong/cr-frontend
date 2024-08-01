@@ -12,7 +12,7 @@ import down from '@assets/img/top_menu_down.png';
 import notice from '@assets/img/notice.png';
 import setting from '@assets/img/setitng.png';
 import menu from '@assets/img/menu.png';
-import Timer from './TImer';
+import Clock from './Clock';
 
 function TopMenu() {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function TopMenu() {
         <StyledLeft />
         <StyledRight />
       </ArrowWrap>
-      <Timer name={username || '세종대'} />
+      <Clock name={username || '세종대'} />
       <LogoutBtn onClick={handleLogout} />
       <DropdownWrap>
         PC
