@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import search from '@assets/img/search.png';
 import {CourseTypes} from '@/assets/types/tableType';
-import {getCourseList} from '@/apis/api/course';
+import {getCourseList, getWishlist} from '@/apis/api/course';
+import {useAppSelector} from '@/store/hooks';
 
 interface ButtonProps {
   label: string;
@@ -10,7 +11,14 @@ interface ButtonProps {
 }
 
 function FilterButton({label, filter = {}, setList}: ButtonProps) {
+  const studentId = useAppSelector(state => state.userInfo.username);
+
   const handleClick = async () => {
+    if (filter.curiNm === 'wish') {
+      await getWishlist(studentId).then(res => {
+        setList(res);
+      });
+    }
     await getCourseList(filter).then(res => {
       setList(res);
     });

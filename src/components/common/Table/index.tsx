@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import TableHead from './TableHead';
-import { CourseTypes, TableHeadTypes } from '@assets/types/tableType';
+import {CourseTypes, TableHeadTypes} from '@assets/types/tableType';
 
 interface TableProps {
-  title: string;
   colData: TableHeadTypes[];
   data: CourseTypes[];
   width: string;
@@ -12,14 +11,18 @@ interface TableProps {
   onAction?: (action: string, scheduleId: number | undefined) => void;
 }
 
-function Table({ title, data, colData, width, height, onAction }: TableProps) {
+function Table({data, colData, width, height, onAction}: TableProps) {
   const tableRef = useRef<HTMLTableElement>(null);
   const [columnWidths, setColumnWidths] = useState<number[]>([]);
+  let uniqueOptions: string[] = [];
   const [filters, setFilters] = useState<string[][]>(
     colData.map(col => {
-      const uniqueOptions = Array.from(
-        new Set(data?.map(row => row[col.name as keyof CourseTypes])),
-      ).filter(option => option !== null) as string[];
+      if (col.name !== 'action') {
+        uniqueOptions = Array.from(
+          new Set(data?.map(row => row[col.name as keyof CourseTypes])),
+        ).filter(option => option !== null) as string[];
+      }
+
       return uniqueOptions.length === 0 ? ['빈값'] : uniqueOptions.sort();
     }),
   );
@@ -54,9 +57,11 @@ function Table({ title, data, colData, width, height, onAction }: TableProps) {
   };
 
   const getOptions = colData.map(col => {
-    const uniqueOptions = Array.from(
-      new Set(data?.map(row => row[col.name as keyof CourseTypes])),
-    ).filter(option => option !== null) as string[];
+    if (col.name !== 'action') {
+      uniqueOptions = Array.from(
+        new Set(data?.map(row => row[col.name as keyof CourseTypes])),
+      ).filter(option => option !== null) as string[];
+    }
     return uniqueOptions.length === 0 ? ['빈값'] : uniqueOptions.sort();
   });
 
@@ -72,8 +77,12 @@ function Table({ title, data, colData, width, height, onAction }: TableProps) {
     colData.every(
       (col, index) =>
         filters[index].includes('빈값') ||
-        filters[index].includes(String(row[col.name as keyof CourseTypes] ?? ''))
-    )
+        filters[index].includes(
+          String(
+            col.name !== 'action' && (row[col.name as keyof CourseTypes] ?? ''),
+          ),
+        ),
+    ),
   );
 
   const handleActionClick = (row: CourseTypes, action: string) => {
@@ -96,69 +105,53 @@ function Table({ title, data, colData, width, height, onAction }: TableProps) {
   };
 
   return (
-    <TableContainer>
-      <TableTitleWrap>
-        <TableTitle>{title}</TableTitle>
-      </TableTitleWrap>
-      <TableBox width={width} height={height}>
-        <TableWrap ref={tableRef}>
-          <colgroup>
-            <col style={{ width: 'auto' }} />
+    <TableBox width={width} height={height}>
+      <TableWrap ref={tableRef}>
+        <colgroup>
+          <col style={{width: 'auto'}} />
+          {colData.map((item, index) => (
+            <col
+              key={index}
+              style={{
+                minWidth: item.initialWidth ? `${item.initialWidth}px` : 'auto',
+              }}
+            />
+          ))}
+        </colgroup>
+        <thead>
+          <RowWrap>
+            <th style={{minWidth: columnWidths[0]}}>순번</th>
             {colData.map((item, index) => (
-              <col
+              <TableHead
                 key={index}
-                style={{
-                  minWidth: item.initialWidth ? item.initialWidth : 'auto',
-                }}
+                label={item.value}
+                type={item.name}
+                width={columnWidths[index + 1]}
+                index={index}
+                options={getOptions[index]}
+                selectedOptions={filters[index]}
+                onFilterChange={handleFilterChange}
+                handleMouseDown={handleMouseDown}
               />
             ))}
-          </colgroup>
-          <thead>
-            <RowWrap>
-              <th style={{ minWidth: columnWidths[0] }}>순번</th>
-              {colData.map((item, index) => (
-                <TableHead
-                  key={index}
-                  label={item.value}
-                  width={columnWidths[index + 1]}
-                  index={index}
-                  options={getOptions[index]}
-                  selectedOptions={filters[index]}
-                  onFilterChange={handleFilterChange}
-                  handleMouseDown={handleMouseDown}
-                />
+          </RowWrap>
+        </thead>
+        <tbody>
+          {filteredData?.map((row, rowIdx) => (
+            <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
+              <IndexWrap>{rowIdx + 1}</IndexWrap>
+              {colData.map((col, colIdx) => (
+                <td key={colIdx}>{renderCell(row, col)}</td>
               ))}
-            </RowWrap>
-          </thead>
-          <tbody>
-            {filteredData?.map((row, rowIdx) => (
-              <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
-                <IndexWrap>{rowIdx + 1}</IndexWrap>
-                {colData.map((col, colIdx) => (
-                  <td key={colIdx}>{renderCell(row, col)}</td>
-                ))}
-              </ContentWrap>
-            ))}
-          </tbody>
-        </TableWrap>
-      </TableBox>
-    </TableContainer>
+            </ContentWrap>
+          ))}
+        </tbody>
+      </TableWrap>
+    </TableBox>
   );
 }
 
-const TableContainer = styled.div``;
-
-const TableTitleWrap = styled.div`
-  margin-bottom: 1rem;
-`;
-
-const TableTitle = styled.div`
-  ${props => props.theme.texts.subtitle};
-  border-left: 4px solid ${props => props.theme.colors.primary};
-  padding-left: 0.5rem;
-`;
-
-const TableBox = styled.div<{ width: string; height: string }>`
+const TableBox = styled.div<{width: string; height: string}>`
   width: ${props => props.width};
   height: ${props => props.height};
   overflow: scroll;
@@ -195,7 +188,7 @@ const IndexWrap = styled.td`
   text-align: center;
 `;
 
-const ContentWrap = styled(RowWrap) <{ $isEven: boolean }>`
+const ContentWrap = styled(RowWrap)<{$isEven: boolean}>`
   background-color: ${props =>
     props.$isEven ? 'rgb(252, 252, 252)' : props.theme.colors.white};
   text-align: center;
@@ -209,13 +202,12 @@ const ContentWrap = styled(RowWrap) <{ $isEven: boolean }>`
 `;
 
 const ActionButton = styled.button`
-  padding: 5px 10px;
+  ${props => props.theme.texts.content};
+  width: 4rem;
+  height: 2.4rem;
   background-color: ${props => props.theme.colors.primary};
-  color: white;
-  border: none;
-  border-radius: 4px;
+  color: ${props => props.theme.colors.white};
   cursor: pointer;
-  font-size: 12px;
 
   &:hover {
     background-color: ${props => props.theme.colors.primary};

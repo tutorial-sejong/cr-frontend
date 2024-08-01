@@ -1,36 +1,37 @@
 import styled from 'styled-components';
 import Table from '@components/common/Table';
 import Filters from './Filters';
-import { CourseTypes } from '@/assets/types/tableType';
-import { useCallback, useEffect, useState } from 'react';
-import { deleteWishlistItem, getWishlist, saveWishlist } from '@/apis/api/course';
-import { RootState } from '@/store/store';
-import { useSelector } from 'react-redux';
+import {CourseTypes} from '@/assets/types/tableType';
+import {useCallback, useEffect, useState} from 'react';
+import {deleteWishlistItem, getWishlist, saveWishlist} from '@/apis/api/course';
+import {RootState} from '@/store/store';
+import {useSelector} from 'react-redux';
+import {TableTitle, TableTitleWrap} from '../LectureList';
 
 const searchResultColData = [
-  { name: 'action', value: '신청', initialWidth: 30, enableFilters: false },
-  { name: 'schDeptAlias', value: '개설학과전공', initialWidth: 167 },
-  { name: 'curiNo', value: '학수번호', initialWidth: 92 },
-  { name: 'classNo', value: '분반', initialWidth: 58 },
-  { name: 'curiNm', value: '교과목명', initialWidth: 232 },
-  { name: 'curiTypeCdNm', value: '이수구분' },
-  { name: 'tmNum', value: '학점/이론/실습', initialWidth: 134 },
-  { name: 'lesnEmp', value: '교수명' },
-  { name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 130 },
-  { name: 'lesnRoom', value: '강의실', initialWidth: 114 },
+  {name: 'action', value: '신청', initialWidth: 30, enableFilters: false},
+  {name: 'schDeptAlias', value: '개설학과전공', initialWidth: 167},
+  {name: 'curiNo', value: '학수번호', initialWidth: 92},
+  {name: 'classNo', value: '분반', initialWidth: 58},
+  {name: 'curiNm', value: '교과목명', initialWidth: 232},
+  {name: 'curiTypeCdNm', value: '이수구분'},
+  {name: 'tmNum', value: '학점/이론/실습', initialWidth: 134},
+  {name: 'lesnEmp', value: '교수명'},
+  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 130},
+  {name: 'lesnRoom', value: '강의실', initialWidth: 114},
 ];
 
 const wishlistColData = [
-  { name: 'action', value: '삭제', initialWidth: 30, enableFilters: false },
-  { name: 'schDeptAlias', value: '개설학과전공', initialWidth: 167 },
-  { name: 'curiNo', value: '학수번호', initialWidth: 92 },
-  { name: 'classNo', value: '분반', initialWidth: 58 },
-  { name: 'curiNm', value: '교과목명', initialWidth: 232 },
-  { name: 'curiTypeCdNm', value: '이수구분' },
-  { name: 'tmNum', value: '학점/이론/실습', initialWidth: 134 },
-  { name: 'lesnEmp', value: '교수명' },
-  { name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 130 },
-  { name: 'lesnRoom', value: '강의실', initialWidth: 114 },
+  {name: 'action', value: '삭제', initialWidth: 30, enableFilters: false},
+  {name: 'schDeptAlias', value: '개설학과전공', initialWidth: 167},
+  {name: 'curiNo', value: '학수번호', initialWidth: 92},
+  {name: 'classNo', value: '분반', initialWidth: 58},
+  {name: 'curiNm', value: '교과목명', initialWidth: 232},
+  {name: 'curiTypeCdNm', value: '이수구분'},
+  {name: 'tmNum', value: '학점/이론/실습', initialWidth: 134},
+  {name: 'lesnEmp', value: '교수명'},
+  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 130},
+  {name: 'lesnRoom', value: '강의실', initialWidth: 114},
 ];
 
 function Wishlist() {
@@ -38,7 +39,7 @@ function Wishlist() {
   const [wishlistData, setWishlistData] = useState<CourseTypes[]>([]);
   const [registeredCourseCount, setRegisteredCourseCount] = useState(0);
   const [registeredCredits, setRegisteredCredits] = useState(0);
-  const { username } = useSelector((state: RootState) => state.userInfo);
+  const {username} = useSelector((state: RootState) => state.userInfo);
 
   const fetchWishlist = useCallback(async () => {
     try {
@@ -67,7 +68,10 @@ function Wishlist() {
     fetchWishlist();
   }, [fetchWishlist]);
 
-  const handleAction = async (action: string, scheduleId: number | undefined) => {
+  const handleAction = async (
+    action: string,
+    scheduleId: number | undefined,
+  ) => {
     if (action === '신청' && scheduleId) {
       try {
         await saveWishlist(username, [scheduleId]);
@@ -106,8 +110,10 @@ function Wishlist() {
       </WishlistInfo>
       <TableWrapper>
         <TableSection>
+          <TableTitleWrap>
+            <TableTitle>관심과목 대상교과목</TableTitle>
+          </TableTitleWrap>
           <Table
-            title='관심과목 대상교과목'
             colData={searchResultColData}
             data={searchResultsData}
             width='100%'
@@ -116,8 +122,10 @@ function Wishlist() {
           />
         </TableSection>
         <TableSection>
+          <TableTitleWrap>
+            <TableTitle>관심과목내역</TableTitle>
+          </TableTitleWrap>
           <Table
-            title='관심과목내역'
             colData={wishlistColData}
             data={wishlistData}
             width='100%'
@@ -149,7 +157,7 @@ const WishlistInfo = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
-  
+
   span {
     margin-left: 20px;
   }

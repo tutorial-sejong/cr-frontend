@@ -3,29 +3,14 @@ import Menubar from '@components/Menubar';
 import Header from '@components/Header';
 import LectureList from '@components/LectureList';
 import TabMenu from '@components/TabMenu';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { RootState } from '@/store/store';
-import { useAppSelector } from '@/store/hooks';
+import {useAppSelector} from '@/store/hooks';
+import CourseRegister from '@/components/CourseRegister';
 import Wishlist from '@/components/Wishlist';
 import AntiMacroCodeModal from '@components/common/Modal/AntiMacroCodeModal.tsx';
 import InfoModal from '@components/common/Modal/InfoModal.tsx';
 
 function Home() {
-  const { accessToken } = useSelector((state: RootState) => state.userInfo);
-  const navigate = useNavigate();
-  const { tab, focused } = useAppSelector(state => state.tabs);
-
-  useEffect(() => {
-    if (!accessToken) {
-      navigate('/login');
-    }
-  }, [accessToken, navigate]);
-
-  if (!accessToken) {
-    return null;
-  }
+  const {tab, focused} = useAppSelector(state => state.tabs);
 
   const focusedTab = tab.find(tab => tab.id === focused);
   const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';
@@ -36,6 +21,8 @@ function Home() {
         return <LectureList />;
       case 1:
         return <Wishlist />;
+      case 2:
+        return <CourseRegister />;
       default:
         return <div>선택된 탭이 없습니다.</div>;
     }

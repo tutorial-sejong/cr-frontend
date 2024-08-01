@@ -37,6 +37,11 @@ const InputWrap = styled.input<{ sizes: string }>`
         width: 25rem;
       `};
   ${props =>
+    props.sizes === 'l' &&
+    css`
+      width: 38.5rem;
+    `};
+  ${props =>
     props.sizes === 'xl' &&
     css`
       width: 48.5rem;
