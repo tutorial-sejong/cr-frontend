@@ -31,15 +31,6 @@ function CourseRegister() {
 
 
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   const getList = async () => {
-  //     await getWishlist(studentId).then(res => {
-  //       setList(res);
-  //     });
-  //   };
-  //
-  //   getList();
-  // }, []);
 
   const handleAction = async (
     action: string,
@@ -63,8 +54,8 @@ function CourseRegister() {
       <Table
         colData={colData}
         data={list}
-        width="100%"
-        height="35rem"
+        width='100%'
+        height='35rem'
         onAction={handleAction}
       />
       <RegisteredList />
