@@ -31,8 +31,8 @@ function InfoModal({scheduleId, curiNm, type}: {scheduleId: number, curiNm: stri
     }
 
     // 수강신청 완료 후 모달
-    alert('새로고침으로 수강신청 실패!');
     closeHandler(dispatch);
+    alert('새로고침으로 수강신청 실패!');
     location.reload();
   };
 

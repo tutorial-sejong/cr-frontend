@@ -56,6 +56,7 @@ function Home() {
 
   return (
     <Container>
+      {renderModal()}
       <Header />
       <Box>
         <Menubar />
