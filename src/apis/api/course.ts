@@ -62,3 +62,30 @@ export const deleteWishlistItem = async (
     throw error;
   }
 };
+
+export const getRegisterdList = async () => {
+  try {
+    const {data} = await baseAPI.get('/registrations');
+    return data;
+  } catch (error) {
+    console.error('get registerd List fail: ', error);
+  }
+};
+
+export const postCourse = async (id: number) => {
+  try {
+    const {data} = await baseAPI.post(`/registrations/${id}`);
+    return data;
+  } catch (error) {
+    console.error('post course fail: ', error);
+  }
+};
+
+export const deleteCourse = async (id: number) => {
+  try {
+    const {data} = await baseAPI.delete(`/registrations/${id}`);
+    return data;
+  } catch (error) {
+    console.error('delete course fail: ', error);
+  }
+};

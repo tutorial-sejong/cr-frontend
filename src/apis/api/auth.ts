@@ -1,4 +1,4 @@
-import { baseAPI } from '../utils/instance';
+import {baseAPI} from '../utils/instance';
 
 interface LoginCredentials {
   studentId: string;
@@ -9,9 +9,14 @@ interface LoginResponse {
   username: string;
 }
 
-export const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
+export const login = async (
+  credentials: LoginCredentials,
+): Promise<LoginResponse> => {
   try {
-    const { data } = await baseAPI.post<LoginResponse>('/api/auth/login', credentials);
+    const {data} = await baseAPI.post<LoginResponse>(
+      '/api/auth/login',
+      credentials,
+    );
     return data;
   } catch (error) {
     console.log('Login failed: ', error);
@@ -21,7 +26,9 @@ export const login = async (credentials: LoginCredentials): Promise<LoginRespons
 
 export const refreshAccessToken = async (): Promise<string> => {
   try {
-    const { data } = await baseAPI.post<{ accessToken: string }>('/api/auth/refresh');
+    const {data} = await baseAPI.post<{accessToken: string}>(
+      '/api/auth/refresh',
+    );
     return data.accessToken;
   } catch (error) {
     console.log('Failed to refresh access token: ', error);

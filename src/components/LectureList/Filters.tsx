@@ -6,7 +6,7 @@ import SelectBox from '@components/common/SelectBox';
 import {completion, major, optional, term} from '@assets/data/filter';
 import {CourseTypes} from '@/assets/types/tableType';
 
-interface FiltersProps {
+export interface FiltersProps {
   setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
 }
 
@@ -117,17 +117,11 @@ function Filters({setList}: FiltersProps) {
   );
 }
 
-const FilterContainer = styled.div`
+export const FilterContainer = styled.div`
   border: 0.1rem solid #714656;
   border-radius: 2px;
   padding: 0.5rem 1.5rem;
   margin-bottom: 2rem;
-`;
-
-const FilterBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem 3rem;
 `;
 
 const FilterArea = styled.div`
@@ -136,7 +130,13 @@ const FilterArea = styled.div`
   margin-bottom: 1rem;
 `;
 
-const FilterWrap = styled.div`
+export const FilterBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 3rem;
+`;
+
+export const FilterWrap = styled.div`
   ${props => props.theme.texts.tableTitle};
   > span {
     display: inline-block;

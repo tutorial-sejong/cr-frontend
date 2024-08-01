@@ -169,3 +169,10 @@ export const major = [
   {id: 89, value: '환경에너지공간융합학과【2790 학부】공과대학'},
   {id: 90, value: '환경에너지공간융합학과【2790 학부】공과대학'},
 ];
+
+export const searchOptions = [
+  {id: 0, value: '관심과목 검색'},
+  {id: 1, value: '학수번호 검색'},
+  {id: 2, value: '교과목명 검색'},
+  {id: 3, value: '강의교수 검색'},
+];
