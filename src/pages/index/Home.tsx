@@ -10,9 +10,12 @@ import AntiMacroCodeModal from '@components/common/Modal/AntiMacroCodeModal.tsx'
 import InfoModal from '@components/common/Modal/InfoModal.tsx';
 import EnrollmentInfoModal from '@components/common/Modal/EnrollmentInfoModal.tsx';
 import LoadingModal from '@components/common/Modal/LoadingModal.tsx';
+import WaitingModal from '@components/common/Modal/WaitingModal.tsx';
 
 function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
+
+  const {modalName, scheduleId, courseName} = useAppSelector(state => state.modalInfo);
 
   const focusedTab = tab.find(tab => tab.id === focused);
   const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';
@@ -30,8 +33,30 @@ function Home() {
     }
   };
 
+  const renderModal = () => {
+    switch (modalName) {
+      case 'waiting':
+        return <WaitingModal />;
+      case 'macro':
+        return <AntiMacroCodeModal />;
+      case 'check':
+        return <InfoModal scheduleId={scheduleId} curiNm={courseName} type={'check'} />;
+      case 'loading':
+        return <LoadingModal />;
+      case 'reload':
+        return <InfoModal scheduleId={scheduleId} curiNm={courseName} type={'reload'} />;
+      case 'fail':
+        return <InfoModal scheduleId={scheduleId} curiNm={courseName} type={''} />;
+      case 'enrollment':
+        return <EnrollmentInfoModal schDeptAlias={''} curiNo={''} classNo={''} curiNm={courseName} />;
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <Container>
+      {renderModal()}
       <Header />
       <Box>
         <Menubar />
@@ -48,22 +73,23 @@ function Home() {
 }
 
 const Container = styled.div`
-  ${props => props.theme.texts.title};
+    ${props => props.theme.texts.title};
 `;
 
 const Box = styled.div`
-  display: flex;
+    display: flex;
 `;
 
 const Main = styled.div`
-  width: calc(100% - 23rem);
+    width: calc(100% - 23rem);
 `;
 
 const Article = styled.div`
-  padding: 2rem 1rem;
-  > p {
-    margin-bottom: 1.5rem;
-  }
+    padding: 2rem 1rem;
+
+    > p {
+        margin-bottom: 1.5rem;
+    }
 `;
 
 export default Home;

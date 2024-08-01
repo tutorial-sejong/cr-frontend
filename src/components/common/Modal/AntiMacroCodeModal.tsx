@@ -2,8 +2,11 @@ import styled from 'styled-components';
 import close from '@assets/img/tab_close_all.png';
 import {useEffect, useState} from 'react';
 import {getMacroCode} from '@apis/api/course.ts';
-import {Simulate} from 'react-dom/test-utils';
-import input = Simulate.input;
+import Cookies from 'js-cookie';
+import {useDispatch} from 'react-redux';
+import {setModalName} from '@store/modalSlice.ts';
+import {openModalHandler, closeHandler} from '@components/common/Modal/handlers/handler.tsx';
+
 
 interface MacroTypes {
   url: string,
@@ -11,23 +14,35 @@ interface MacroTypes {
 }
 
 function AntiMacroCodeModal() {
-
   const [macroCode, setMacroCode] = useState<MacroTypes>({
     url: '',
     answer: 0,
   });
 
   const [inputCode, setInputCode] = useState<number>();
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  const dispatch = useDispatch();
 
   const fetchMacroCode = async () => {
     try {
       const {data} = await getMacroCode();
+      const response = await fetch(`https://api.tutorial-sejong.com${data.url}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('accessToken')}`,
+        },
+      });
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
 
       setMacroCode(prev => ({
         ...prev,
         url: `https://api.tutorial-sejong.com${data.url}`,
         answer: data.answer,
       }));
+      console.log(data);
+
+      setImageSrc(url);
 
     } catch (error) {
       console.error('매크로 코드 불러오기 실패: ', error);
@@ -35,13 +50,19 @@ function AntiMacroCodeModal() {
   };
 
   const checkCode = () => {
-    if (inputCode === macroCode.answer) {
-      alert('통과');
+    if (inputCode?.toString() === macroCode.answer) {
       setInputCode('');
+      openModalHandler(dispatch, 'check');
       return;
     }
-    alert('실패');
+
+    alert('코드가 일치하지 않습니다.');
+    fetchMacroCode();
     setInputCode('');
+  };
+
+  const closeButton = () => {
+    closeHandler(dispatch);
   };
 
   useEffect(() => {
@@ -53,7 +74,7 @@ function AntiMacroCodeModal() {
       <Modal>
         <ModalHeader>
           <Title>매크로방지 코드입력 (Anti-macro code input) </Title>
-          <CloseImage />
+          <CloseImage onClick={closeButton}/>
         </ModalHeader>
         <ModalBody>
           <MacroCodeBox>
@@ -61,19 +82,20 @@ function AntiMacroCodeModal() {
               <BoxTitle>생성된 코드</BoxTitle>
               <RegenerateCodeButton onClick={fetchMacroCode}>재생성</RegenerateCodeButton>
             </MacroCodHeader>
-            <MacroCodeImage src={macroCode.url} />
+            {imageSrc && <MacroCodeImage src={imageSrc} />}
           </MacroCodeBox>
           <MacroCodeInputBox>
             <MacroCodHeader>
               <BoxTitle>생성된 코드 입력</BoxTitle>
             </MacroCodHeader>
-            <MacroCodeInput type="number" value={inputCode || ''} onChange={e => setInputCode(e.target.value)} />
+            <MacroCodeInput type="number" value={inputCode || ''}
+                            onChange={e => setInputCode(Number(e.target.value))} />
           </MacroCodeInputBox>
         </ModalBody>
         <InfoMessage>※ 코드가 표시되지 않는 경우 잠시 기다리거나 매크로방지 코드 입력 창을 닫고 새로 열어주세요.</InfoMessage>
         <ModalFooter>
           <FooterBtn style={{marginRight: '10px'}} onClick={checkCode}>코드입력</FooterBtn>
-          <FooterBtn style={{marginRight: '20px'}}>닫기</FooterBtn>
+          <FooterBtn style={{marginRight: '20px'}} onClick={closeButton}>닫기</FooterBtn>
         </ModalFooter>
       </Modal>
     </ModalContainer>

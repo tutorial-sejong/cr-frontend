@@ -4,18 +4,51 @@ import {Simulate} from 'react-dom/test-utils';
 import close from '@assets/img/tab_close_all.png';
 import check from '@assets/img/check.png';
 import warning from '@assets/img/warning.png';
+import {useEffect} from 'react';
+import {setModalName} from '@store/modalSlice.ts';
+import {useDispatch} from 'react-redux';
+import {closeHandler, openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
+import {postCourse} from '@apis/api/course.ts';
 
-function InfoModal({curiNm, type}: {curiNm: string, type: string}) {
+function InfoModal({scheduleId, curiNm, type}: {scheduleId: number, curiNm: string, type: string}) {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(curiNm);
+  }, []);
+
+  const eventHandler = async () => {
+    // 수강신청 확인 모달
+    if (type === 'check') {
+      openModalHandler(dispatch, 'loading');
+
+      // 수강신청 요청
+      await postCourse(scheduleId).then(res => {
+        console.log('register success ', res);
+      });
+      return;
+    }
+
+    // 수강신청 완료 후 모달
+    alert('새로고침으로 수강신청 실패!');
+    closeHandler(dispatch);
+    location.reload();
+  };
+
+  const closeButton = () => {
+    closeHandler(dispatch);
+  };
 
   return (
     <ModalContainer>
       <Modal>
         <ModalHeader>
-          <CloseImage />
+          <CloseImage onClick={closeButton} />
         </ModalHeader>
         <ModalBody>
           {
-            type === 'check' || type === 'refresh'
+            type === 'check' || type === 'reload'
               ?
               <>
                 <CheckImage />
@@ -44,15 +77,15 @@ function InfoModal({curiNm, type}: {curiNm: string, type: string}) {
         </ModalBody>
         <ModalFooter>
           {
-            type === 'check' || type === 'refresh'
+            type === 'check' || type === 'reload'
               ?
               <>
-                <FooterBtn type="cancel" style={{marginRight: '10px'}}>취소</FooterBtn>
-                <FooterBtn type="check" style={{marginRight: '20px'}}>확인</FooterBtn>
+                <FooterBtn type="cancel" style={{marginRight: '10px'}} onClick={closeButton}>취소</FooterBtn>
+                <FooterBtn type="check" style={{marginRight: '20px'}} onClick={eventHandler}>확인</FooterBtn>
               </>
               :
               <>
-                <FooterBtn type="check" style={{marginRight: '20px'}}>확인</FooterBtn>
+                <FooterBtn type="check" style={{marginRight: '20px'}} onClick={closeButton}>확인</FooterBtn>
               </>
           }
 

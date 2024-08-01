@@ -1,12 +1,49 @@
-import styled from 'styled-components';
-
+import styled, { css, keyframes } from 'styled-components';
 import logo from '@/assets/img/logo.webp';
 import close from '@/assets/img/tab_close_all.png';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { clearModalInfo } from '@store/modalSlice.ts';
+import { getRandomInt } from '@/utils/randomUtils.ts';
 
-function WaitingModal({progress}) {
+function WaitingModal({ progress }) {
+  const dispatch = useDispatch();
+  const initialWaitingNumber = getRandomInt(100, 800);
+  const [waitingNumber, setWaitingNumber] = useState(initialWaitingNumber);
+  const initialEstimatedTime = getRandomInt(2, 5);
+  const [estimatedTime, setEstimatedTime] = useState(initialEstimatedTime);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setEstimatedTime(prev => {
+        if (prev - 1 <= 0) {
+          clearInterval(interval);
+          dispatch(clearModalInfo());
+          return 0;
+        }
+        return prev - 1;
+      });
 
-  const ProgressBar = ({value}) => {
+      setWaitingNumber(prev => {
+        const decrementValue = getRandomInt(20, 90);
+        const newWaitingNumber = prev - decrementValue;
+        if (newWaitingNumber <= 0) {
+          return 0;
+        }
+        return newWaitingNumber;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [dispatch]);
+
+  const stopButton = () => {
+    alert('수강신청에 실패하셨습니다. :(');
+    dispatch(clearModalInfo());
+    location.reload();
+  };
+
+  const ProgressBar = ({ value }) => {
     return (
       <ProgressBarContainer>
         <ProgressBarFill progress={value} />
@@ -19,18 +56,17 @@ function WaitingModal({progress}) {
       <Modal>
         <Logo />
         <Title>서비스 <TextStrong color="#838fe2" fontSize={2.5}>접속대기 중</TextStrong> 입니다.</Title>
-        <SubTitle>예상대기시간 <TextStrong fontSize={2}>:</TextStrong> <TextStrong color="#838fe2" fontSize={4.3} fontWeight="normal">03</TextStrong>
+        <SubTitle>예상대기시간 <TextStrong fontSize={2}>:</TextStrong> <TextStrong color="#838fe2" fontSize={4.3} fontWeight="normal">{estimatedTime}</TextStrong>
           <TextStrong fontSize={2.2} fontWeight="normal">초</TextStrong> </SubTitle>
         <ProgressBar value={progress} />
         <Contents>
-          고객님 앞에 <TextStrong fontSize={3} fontWeight="bold" color="#00cc09">733</TextStrong><TextStrong
-          color="#00cc09">명</TextStrong> , 뒤에 <TextStrong color="#00cc09" fontWeight="bold">1</TextStrong><TextStrong
+          고객님 앞에 <TextStrong fontSize={3} fontWeight="bold" color="#00cc09">{waitingNumber}</TextStrong><TextStrong
           color="#00cc09">명</TextStrong> 의 대기자가 있습니다.
         </Contents>
         <Contents>
           현재 접속 사용자가 많아 대기 중이며, 잠시만 기다리시면 서비스로 자동 접속 됩니다.
         </Contents>
-        <StopButton>
+        <StopButton onClick={stopButton}>
           <CloseImage src={close} /> 중지
         </StopButton>
         <Contents>
@@ -89,6 +125,7 @@ const SubTitle = styled.p`
     font-weight: bold;
     color: #676763;
 `;
+
 const ProgressBarContainer = styled.div`
     width: 100%;
     background-color: #e0e0e0;
@@ -142,6 +179,5 @@ const CloseImage = styled.img.attrs({
     width: 10px;
     margin-right: 10px;
 `;
-
 
 export default WaitingModal;

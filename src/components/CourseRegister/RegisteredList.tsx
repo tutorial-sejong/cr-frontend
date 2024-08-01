@@ -28,7 +28,10 @@ function RegisteredList() {
     await getRegisterdList().then(res => {
       if (res) {
         setList(res);
+        return;
       }
+
+      setList([]);
     });
   };
 

@@ -1,6 +1,24 @@
-import styled, {css, keyframes} from 'styled-components';
+import styled, {keyframes} from 'styled-components';
+import {useEffect} from 'react';
+import {getRandomInt} from '@/utils/randomUtils.ts';
+import {openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
+import {useDispatch} from 'react-redux';
 
 function LoadingModal() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    const endCount = getRandomInt(1, 4) * 1000;
+
+    console.log(endCount);
+
+    setTimeout(() => {
+      openModalHandler(dispatch, 'reload');
+    }, endCount);
+    
+  }, []);
+
   return (
     <ModalContainer>
       <LoadingContainer>

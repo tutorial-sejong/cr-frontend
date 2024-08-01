@@ -8,7 +8,7 @@ interface TableProps {
   data: CourseTypes[];
   width: string;
   height: string;
-  onAction?: (action: string, scheduleId: number | undefined) => void;
+  onAction?: (action: string, scheduleId: number | undefined, curiNm: string | undefined) => void;
 }
 
 function Table({data, colData, width, height, onAction}: TableProps) {
@@ -87,7 +87,7 @@ function Table({data, colData, width, height, onAction}: TableProps) {
 
   const handleActionClick = (row: CourseTypes, action: string) => {
     if (onAction) {
-      onAction(action, row.scheduleId);
+      onAction(action, row.scheduleId, row.curiNm);
     } else {
       console.log(`${action} action for scheduleId: ${row.scheduleId}`);
     }

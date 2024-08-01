@@ -6,6 +6,8 @@ import Table from '../common/Table';
 import {TableTitle, TableTitleWrap} from '../LectureList';
 import {getWishlist, postCourse} from '@/apis/api/course';
 import RegisteredList from './RegisteredList';
+import {useDispatch} from 'react-redux';
+import {setCourseName, setModalName, setScheduleId} from '@store/modalSlice.ts';
 
 const colData = [
   {name: 'action', value: '신청', initialWidth: 30, enableFilters: false},
@@ -27,24 +29,28 @@ function CourseRegister() {
   const studentId = useAppSelector(state => state.userInfo.username);
   const [list, setList] = useState<CourseTypes[]>([]);
 
-  useEffect(() => {
-    const getList = async () => {
-      await getWishlist(studentId).then(res => {
-        setList(res);
-      });
-    };
 
-    getList();
-  }, []);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   const getList = async () => {
+  //     await getWishlist(studentId).then(res => {
+  //       setList(res);
+  //     });
+  //   };
+  //
+  //   getList();
+  // }, []);
 
   const handleAction = async (
     action: string,
     scheduleId: number | undefined,
+    curiNm: string | undefined,
   ) => {
     if (scheduleId) {
-      await postCourse(scheduleId).then(res => {
-        console.log('register success ', res);
-      });
+      // 접속 대기 띄우기
+      dispatch(setScheduleId(scheduleId));
+      dispatch(setCourseName(curiNm));
+      dispatch(setModalName('macro'));
     }
   };
 
@@ -57,8 +63,8 @@ function CourseRegister() {
       <Table
         colData={colData}
         data={list}
-        width='100%'
-        height='35rem'
+        width="100%"
+        height="35rem"
         onAction={handleAction}
       />
       <RegisteredList />
