@@ -75,7 +75,7 @@ function Wishlist() {
     if (action === '신청' && scheduleId) {
       try {
         await saveWishlist(username, [scheduleId]);
-        console.log('관심과목 담기 성공:', scheduleId);
+        console.log('관심과목 담기 성공');
         fetchWishlist();
       } catch (error) {
         console.error('관심과목 담기 실패:', error);
@@ -83,7 +83,7 @@ function Wishlist() {
     } else if (action === '삭제' && scheduleId) {
       try {
         await deleteWishlistItem(username, scheduleId);
-        console.log('관심과목 삭제 성공:', scheduleId);
+        console.log('관심과목 삭제 성공');
         fetchWishlist();
       } catch (error) {
         console.error('관심과목 삭제 실패:', error);
