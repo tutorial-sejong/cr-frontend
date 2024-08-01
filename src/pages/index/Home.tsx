@@ -8,6 +8,8 @@ import CourseRegister from '@/components/CourseRegister';
 import Wishlist from '@/components/Wishlist';
 import AntiMacroCodeModal from '@components/common/Modal/AntiMacroCodeModal.tsx';
 import InfoModal from '@components/common/Modal/InfoModal.tsx';
+import EnrollmentInfoModal from '@components/common/Modal/EnrollmentInfoModal.tsx';
+import LoadingModal from '@components/common/Modal/LoadingModal.tsx';
 
 function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
@@ -30,8 +32,6 @@ function Home() {
 
   return (
     <Container>
-
-      {/*<InfoModal curiNm="정치경제학의이해" type=""/>*/}
       <Header />
       <Box>
         <Menubar />
