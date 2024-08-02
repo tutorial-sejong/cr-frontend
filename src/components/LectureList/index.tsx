@@ -32,7 +32,9 @@ function LectureList() {
   useEffect(() => {
     const getList = async () => {
       await getCourseList({}).then(res => {
-        setList(res);
+        if (res) {
+          setList(res);
+        }
       });
     };
 

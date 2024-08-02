@@ -16,7 +16,6 @@ function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const expiration = new Date(Date.now() + 600 * 1000);
 
   const handleLogin = async () => {
     if (!id || !password) {
@@ -31,7 +30,7 @@ function LoginForm() {
       });
       console.log('Login successful');
 
-      Cookies.set('accessToken', response.accessToken, {expires: expiration});
+      Cookies.set('accessToken', response.accessToken, {expires: 0.5 / 24});
       baseAPI.defaults.headers.common['Authorization'] =
         `Bearer ${response.accessToken}`;
 

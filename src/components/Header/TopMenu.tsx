@@ -3,8 +3,9 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import Cookies from 'js-cookie';
 import {baseAPI} from '@/apis/utils/instance';
-import {clearUserInfo} from '@/store/userSlice';
 import {useAppSelector} from '@/store/hooks';
+import {clearUserInfo} from '@/store/userSlice';
+import {deleteAll} from '@/store/modules/tabSlice';
 import Left from '@assets/img/btn_main_top_left.svg?react';
 import Right from '@assets/img/btn_main_top_right.svg?react';
 import logout from '@assets/img/logout.png';
@@ -12,7 +13,7 @@ import down from '@assets/img/top_menu_down.png';
 import notice from '@assets/img/notice.png';
 import setting from '@assets/img/setitng.png';
 import menu from '@assets/img/menu.png';
-import Timer from './TImer';
+import Clock from './Clock';
 
 function TopMenu() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function TopMenu() {
 
   const handleLogout = () => {
     dispatch(clearUserInfo());
+    dispatch(deleteAll());
     delete baseAPI.defaults.headers.common['Authorization'];
     Cookies.remove('accessToken');
     navigate('/login');
@@ -32,7 +34,7 @@ function TopMenu() {
         <StyledLeft />
         <StyledRight />
       </ArrowWrap>
-      <Timer name={username || '세종대'} />
+      <Clock name={username || '세종대'} />
       <LogoutBtn onClick={handleLogout} />
       <DropdownWrap>
         PC
