@@ -13,7 +13,6 @@ export const baseAPI = axios.create({
 
 let isRefreshing = false;
 let subscribers: ((token: string) => void)[] = [];
-const expiration = new Date(Date.now() + 600 * 1000);
 
 function onAccessTokenFetched(accessToken: string) {
   subscribers.forEach(callback => callback(accessToken));
@@ -24,19 +23,30 @@ function addSubscriber(callback: (token: string) => void) {
   subscribers.push(callback);
 }
 
+baseAPI.interceptors.request.use(
+  config => {
+    if (!config.headers['Authorization']) {
+      config.headers['Authorization'] = Cookies.get('accessToken');
+    }
+
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
+
 baseAPI.interceptors.response.use(
-  response => response,
+  response => {
+    return response;
+  },
   async error => {
     const {
       config,
       response: {status},
     } = error;
     const originalRequest = config;
-
-    if (
-      (status === 401 || status === 403 || status === 500) &&
-      !originalRequest._retry
-    ) {
+    if (status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise(resolve => {
           addSubscriber((token: string) => {
@@ -54,9 +64,11 @@ baseAPI.interceptors.response.use(
 
         baseAPI.defaults.headers.common['Authorization'] =
           `Bearer ${data.accessToken}`;
-        Cookies.set('accessToken', data.accessToken, {expires: expiration});
-        isRefreshing = false;
+        Cookies.set('accessToken', data.accessToken, {expires: 0.5 / 24});
         onAccessTokenFetched(data.accessToken);
+        isRefreshing = false;
+
+        originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
 
         return baseAPI(originalRequest);
       } catch (err) {
