@@ -1,10 +1,8 @@
-import {useEffect, useState} from 'react';
-import {useAppSelector} from '@/store/hooks';
+import {useState} from 'react';
 import {CourseTypes} from '@/assets/types/tableType';
 import RegisterFilters from './RegisterFilters';
 import Table from '../common/Table';
 import {TableTitle, TableTitleWrap} from '../LectureList';
-import {getWishlist, postCourse} from '@/apis/api/course';
 import RegisteredList from './RegisteredList';
 import {useDispatch} from 'react-redux';
 import {setCourseName, setModalName, setScheduleId} from '@store/modalSlice.ts';
@@ -26,14 +24,12 @@ const colData = [
 ];
 
 function CourseRegister() {
-  const studentId = useAppSelector(state => state.userInfo.username);
   const [list, setList] = useState<CourseTypes[]>([]);
 
 
   const dispatch = useDispatch();
 
   const handleAction = async (
-    action: string,
     scheduleId: number | undefined,
     curiNm: string | undefined,
   ) => {

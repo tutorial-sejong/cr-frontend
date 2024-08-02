@@ -40,7 +40,6 @@ function RegisteredList() {
   }, []);
 
   const handleAction = async (
-    action: string,
     scheduleId: number | undefined,
   ) => {
     if (scheduleId) {

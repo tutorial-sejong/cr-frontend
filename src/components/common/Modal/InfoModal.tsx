@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import {Simulate} from 'react-dom/test-utils';
-
 import close from '@assets/img/tab_close_all.png';
 import check from '@assets/img/check.png';
 import warning from '@assets/img/warning.png';
 import {useEffect} from 'react';
-import {setModalName} from '@store/modalSlice.ts';
 import {useDispatch} from 'react-redux';
 import {closeHandler, openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
 import {postCourse} from '@apis/api/course.ts';
@@ -169,7 +166,7 @@ const ModalFooter = styled.div`
     height: 50px;
 `;
 
-const FooterBtn = styled.div`
+const FooterBtn = styled.div<{type: string}>`
     font-size: 1.4rem;
     border: 1px solid #000000;
     background: ${props => props.type === 'check' ? props.theme.colors.primary : '#ffffff'};

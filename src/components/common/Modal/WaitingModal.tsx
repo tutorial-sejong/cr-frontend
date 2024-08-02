@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { clearModalInfo } from '@store/modalSlice.ts';
 import { getRandomInt } from '@/utils/randomUtils.ts';
 
-function WaitingModal({ progress }) {
+function WaitingModal() {
   const dispatch = useDispatch();
   const initialWaitingNumber = getRandomInt(100, 800);
   const [waitingNumber, setWaitingNumber] = useState(initialWaitingNumber);
@@ -43,13 +43,15 @@ function WaitingModal({ progress }) {
     location.reload();
   };
 
-  const ProgressBar = ({ value }) => {
+  const ProgressBar = ({ value }: { value: number }) => {
     return (
       <ProgressBarContainer>
-        <ProgressBarFill progress={value} />
+        <ProgressBarFill $progress={value} />
       </ProgressBarContainer>
     );
   };
+
+  const progressBarValue = ((initialEstimatedTime - estimatedTime) / initialEstimatedTime) * 100;
 
   return (
     <ModalContainer>
@@ -58,7 +60,7 @@ function WaitingModal({ progress }) {
         <Title>서비스 <TextStrong color="#838fe2" fontSize={2.5}>접속대기 중</TextStrong> 입니다.</Title>
         <SubTitle>예상대기시간 <TextStrong fontSize={2}>:</TextStrong> <TextStrong color="#838fe2" fontSize={4.3} fontWeight="normal">{estimatedTime}</TextStrong>
           <TextStrong fontSize={2.2} fontWeight="normal">초</TextStrong> </SubTitle>
-        <ProgressBar value={progress} />
+        <ProgressBar value={progressBarValue} />
         <Contents>
           고객님 앞에 <TextStrong fontSize={3} fontWeight="bold" color="#00cc09">{waitingNumber}</TextStrong><TextStrong
           color="#00cc09">명</TextStrong> 의 대기자가 있습니다.
@@ -135,10 +137,10 @@ const ProgressBarContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-const ProgressBarFill = styled.div`
+const ProgressBarFill = styled.div<{ $progress: number }>`
     height: 10px;
     background-color: #a0a0a0;
-    width: ${props => `${props.progress}%`};
+    width: ${props => `${props.$progress}%`};
     border-radius: 10px 0 0 10px;
     transition: width 0.3s ease;
 `;
@@ -149,7 +151,7 @@ const Contents = styled.p`
     line-height: 3rem;
 `;
 
-const TextStrong = styled.span`
+const TextStrong = styled.span<{ color?: string; fontSize?: number; fontWeight?: string }>`
     color: ${props => props.color};
     font-size: ${props => `${props.fontSize}rem`};
     font-weight: ${props => props.fontWeight};

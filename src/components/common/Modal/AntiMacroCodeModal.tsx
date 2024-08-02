@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react';
 import {getMacroCode} from '@apis/api/course.ts';
 import Cookies from 'js-cookie';
 import {useDispatch} from 'react-redux';
-import {setModalName} from '@store/modalSlice.ts';
 import {openModalHandler, closeHandler} from '@components/common/Modal/handlers/handler.tsx';
 
 
@@ -20,7 +19,7 @@ function AntiMacroCodeModal() {
   });
 
   const [inputCode, setInputCode] = useState<number>();
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [imageSrc, setImageSrc] = useState<string>(null);
 
   const dispatch = useDispatch();
 
@@ -50,15 +49,15 @@ function AntiMacroCodeModal() {
   };
 
   const checkCode = () => {
-    if (inputCode?.toString() === macroCode.answer) {
-      setInputCode('');
+    if (inputCode === macroCode.answer) {
+      setInputCode(null);
       openModalHandler(dispatch, 'check');
       return;
     }
 
     alert('코드가 일치하지 않습니다.');
     fetchMacroCode();
-    setInputCode('');
+    setInputCode(null);
   };
 
   const closeButton = () => {
@@ -89,7 +88,7 @@ function AntiMacroCodeModal() {
               <BoxTitle>생성된 코드 입력</BoxTitle>
             </MacroCodHeader>
             <MacroCodeInput type="number" value={inputCode || ''}
-                            onChange={e => setInputCode(Number(e.target.value))} />
+                            onChange={e => setInputCode(e.target.value)} />
           </MacroCodeInputBox>
         </ModalBody>
         <InfoMessage>※ 코드가 표시되지 않는 경우 잠시 기다리거나 매크로방지 코드 입력 창을 닫고 새로 열어주세요.</InfoMessage>
