@@ -36,7 +36,7 @@ function EnrollmentInfoModal({schDeptAlias, curiNo, curiNm, classNo}: Enrollment
                 </LectureInfoWrap>
                 <LectureInfoWrap>
                   <span>학기</span>
-                  <InputWrap sizes={'s'}><p>1학기</p></InputWrap>
+                  <InputWrap sizes={'s'}><p>2학기</p></InputWrap>
                 </LectureInfoWrap>
                 <LectureInfoWrap>
                   <span>개설학과전공</span>
