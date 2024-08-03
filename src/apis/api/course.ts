@@ -89,3 +89,13 @@ export const deleteCourse = async (id: number) => {
     console.error('delete course fail: ', error);
   }
 };
+
+export const getMacroCode = async () => {
+  try {
+    const {data} = await baseAPI.get('/api/auth/macro');
+    return data;
+  } catch (error) {
+    console.error('Get macro code fail', error);
+    throw error;
+  }
+};

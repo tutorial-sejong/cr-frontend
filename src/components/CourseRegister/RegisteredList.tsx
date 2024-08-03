@@ -28,7 +28,10 @@ function RegisteredList() {
     await getRegisterdList().then(res => {
       if (res) {
         setList(res);
+        return;
       }
+
+      setList([]);
     });
   };
 
@@ -37,7 +40,6 @@ function RegisteredList() {
   }, []);
 
   const handleAction = async (
-    action: string,
     scheduleId: number | undefined,
   ) => {
     if (scheduleId) {

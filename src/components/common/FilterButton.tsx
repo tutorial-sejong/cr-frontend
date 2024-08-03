@@ -3,17 +3,37 @@ import search from '@assets/img/search.png';
 import {CourseTypes} from '@/assets/types/tableType';
 import {getCourseList, getWishlist} from '@/apis/api/course';
 import {useAppSelector} from '@/store/hooks';
+import {openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
+import {useDispatch} from 'react-redux';
 
 interface ButtonProps {
   label: string;
+  page?: string;
   filter?: CourseTypes;
   setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
 }
 
-function FilterButton({label, filter = {}, setList}: ButtonProps) {
+function FilterButton({label, page, filter = {}, setList}: ButtonProps) {
   const studentId = useAppSelector(state => state.userInfo.username);
 
+  const dispatch = useDispatch();
   const handleClick = async () => {
+
+    if (page === '수강신청') {
+      if (!confirm('수강신청 연습 시작하시겠습니까?')) return;
+
+      openModalHandler(dispatch, 'waiting');
+
+      const getList = async () => {
+        await getWishlist(studentId).then(res => {
+          setList(res);
+        });
+      };
+
+      getList();
+      return;
+    }
+
     if (filter.curiNm === 'wish') {
       await getWishlist(studentId).then(res => {
         setList(res);
