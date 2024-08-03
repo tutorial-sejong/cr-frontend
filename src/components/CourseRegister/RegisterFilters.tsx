@@ -134,7 +134,6 @@ function RegisterFilters({setList}: FiltersProps) {
       </FilterBox>
       <FilterButton
         label='검색'
-        page='수강신청'
         filter={filter}
         setList={setList}
       />

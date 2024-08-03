@@ -6,6 +6,7 @@ import {TableTitle, TableTitleWrap} from '../LectureList';
 import RegisteredList from './RegisteredList';
 import {useDispatch} from 'react-redux';
 import {setCourseName, setModalName, setScheduleId} from '@store/modalSlice.ts';
+import StartButton from '@components/CourseRegister/StartButton.tsx';
 
 const colData = [
   {name: 'action', value: '신청', initialWidth: 30, enableFilters: false},
@@ -26,6 +27,8 @@ const colData = [
 function CourseRegister() {
   const [list, setList] = useState<CourseTypes[]>([]);
 
+  const [startVisible, setStartVisible] = useState<boolean>(true);
+
   const dispatch = useDispatch();
 
   const handleAction = async (
@@ -43,6 +46,7 @@ function CourseRegister() {
 
   return (
     <>
+      {startVisible && <StartButton setList={setList} setStartVisible={setStartVisible}/>}
       <RegisterFilters setList={setList} />
       <TableTitleWrap>
         <TableTitle>수강대상교과목</TableTitle>

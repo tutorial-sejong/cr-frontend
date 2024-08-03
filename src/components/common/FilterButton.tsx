@@ -30,13 +30,7 @@ function FilterButton({label, page, filter = {}, setList}: ButtonProps) {
   };
 
   const handleClick = async () => {
-    if (page === '수강신청') {
-      if (!confirm('수강신청 연습 시작하시겠습니까?')) return;
 
-      openModalHandler(dispatch, 'waiting');
-      searchLecture();
-      return;
-    }
     searchLecture();
   };
 
