@@ -40,10 +40,11 @@ function Login() {
 }
 
 const Container = styled.div`
-  background-image: url(${Bg});
-  background-repeat: no-repeat;
-  background-color: #fafafa;
-  width: 100%;
+    background: url(${Bg}) 50% 50% no-repeat;
+    background-size: cover;
+    height: 480px;
+    background-color: #fafafa;
+    width: 100%;
 `;
 
 const Box = styled.div`
