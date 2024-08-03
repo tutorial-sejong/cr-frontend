@@ -8,18 +8,17 @@ import {CourseTypes} from '@/assets/types/tableType';
 interface StartBtnProps {
   setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
   setStartVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  refreshRegisteredList: () => void;
+  refreshAll: () => Promise<void>;
 }
 
-function StartButton({setList, setStartVisible, refreshRegisteredList}: StartBtnProps) {
+function StartButton({setList, setStartVisible, refreshAll}: StartBtnProps) {
   const studentId = useAppSelector(state => state.userInfo.username);
 
   const dispatch = useDispatch();
 
   const searchLecture = async () => {
-    await getWishlist(studentId).then(res => {
-      setList(res);
-    });
+    const res = await getWishlist(studentId);
+    setList(res);
   };
 
   const handleClick = async () => {
@@ -29,7 +28,7 @@ function StartButton({setList, setStartVisible, refreshRegisteredList}: StartBtn
     openModalHandler(dispatch, 'waiting');
     setStartVisible(false);
     await searchLecture();
-    refreshRegisteredList();
+    await refreshAll();
   };
 
   return (

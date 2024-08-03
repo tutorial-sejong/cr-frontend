@@ -8,11 +8,14 @@ import {term, searchOptions} from '@assets/data/filter';
 import {
   FilterBox,
   FilterContainer,
-  FiltersProps,
   FilterWrap,
 } from '../LectureList/Filters';
 
-function RegisterFilters({setList}: FiltersProps) {
+interface FiltersProps {
+  onSearch: (newList: CourseTypes[], filter: CourseTypes, searchOption: string) => Promise<void>;
+}
+
+function RegisterFilters({onSearch}: FiltersProps) {
   const [filter, setFilter] = useState<CourseTypes>({});
   const [searchOption, setSearchOption] = useState<string>('관심과목');
 
@@ -127,7 +130,7 @@ function RegisterFilters({setList}: FiltersProps) {
       <FilterButton
         label='검색'
         filter={filter}
-        setList={setList}
+        onSearch={onSearch}
         searchOption={searchOption}
       />
     </RegisterFilterContainer>
