@@ -6,15 +6,16 @@ import {useAppSelector} from '@/store/hooks';
 
 interface ButtonProps {
   label: string;
-  filter?: CourseTypes;
+  filter: CourseTypes;
   setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
+  searchOption: string;
 }
 
-function FilterButton({label, filter = {}, setList}: ButtonProps) {
+function FilterButton({label, filter, setList, searchOption}: ButtonProps) {
   const studentId = useAppSelector(state => state.userInfo.username);
 
   const searchLecture = async () => {
-    if (filter.curiNm === 'wish') {
+    if (searchOption === '관심과목') {
       await getWishlist(studentId).then(res => {
         setList(res);
       });

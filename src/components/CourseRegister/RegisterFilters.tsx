@@ -13,13 +13,10 @@ import {
 } from '../LectureList/Filters';
 
 function RegisterFilters({setList}: FiltersProps) {
-  const [filter, setFilter] = useState<CourseTypes>({curiNm: 'wish'});
+  const [filter, setFilter] = useState<CourseTypes>({});
   const [searchOption, setSearchOption] = useState<string>('관심과목');
 
   const handleSelect = (name: keyof CourseTypes, value: string | undefined) => {
-    if (filter?.curiNm || filter?.lesnEmp) {
-      setFilter({});
-    }
     setFilter(prevState => ({
       ...prevState,
       [name]: value,
@@ -27,29 +24,24 @@ function RegisterFilters({setList}: FiltersProps) {
   };
 
   const handleSearchOptions = (name: string) => {
-    const label = name.split(' ');
-
-    if (label[0] === '관심과목') {
-      setFilter({
-        curiNm: 'wish',
-      });
-    } else {
-      setFilter({});
-    }
-
-    setSearchOption(label[0]);
+    const label = name.split(' ')[0];
+    setSearchOption(label);
+    setFilter({});
   };
 
   const handleInput = (value: string | undefined) => {
     switch (searchOption) {
       case '관심과목':
-        setFilter({curiNm: 'wish'});
+        setFilter({});
         break;
       case '교과목명':
         setFilter({curiNm: value});
         break;
       case '강의교수':
         setFilter({lesnEmp: value});
+        break;
+      case '학수번호':
+        setFilter(prevState => ({...prevState, curiNo: value}));
         break;
       default:
         break;
@@ -136,6 +128,7 @@ function RegisterFilters({setList}: FiltersProps) {
         label='검색'
         filter={filter}
         setList={setList}
+        searchOption={searchOption}
       />
     </RegisterFilterContainer>
   );
