@@ -28,6 +28,13 @@ function RegisterFilters({setList}: FiltersProps) {
 
   const handleSearchOptions = (name: string) => {
     const label = name.split(' ');
+
+    if (label[0] === '관심과목') {
+      setFilter({
+        curiNm: 'wish',
+      });
+    }
+
     setSearchOption(label[0]);
   };
 
@@ -71,7 +78,13 @@ function RegisterFilters({setList}: FiltersProps) {
         </CuriNoWrap>
       );
     } else {
-      return <FilterInput disabled={searchOption === '관심과목'} sizes='l' onChange={value => handleInput(value)} />;
+      return (
+        <FilterInput
+          disabled={searchOption === '관심과목'}
+          sizes='l'
+          onChange={value => handleInput(value)}
+        />
+      );
     }
   };
 
@@ -121,7 +134,12 @@ function RegisterFilters({setList}: FiltersProps) {
           </SearchWrap>
         </SearchBox>
       </FilterBox>
-      <FilterButton label='검색' page='수강신청' filter={filter} setList={setList} />
+      <FilterButton
+        label='검색'
+        page='수강신청'
+        filter={filter}
+        setList={setList}
+      />
     </RegisterFilterContainer>
   );
 }

@@ -15,33 +15,29 @@ interface ButtonProps {
 
 function FilterButton({label, page, filter = {}, setList}: ButtonProps) {
   const studentId = useAppSelector(state => state.userInfo.username);
-
   const dispatch = useDispatch();
-  const handleClick = async () => {
 
-    if (page === '수강신청') {
-      if (!confirm('수강신청 연습 시작하시겠습니까?')) return;
-
-      openModalHandler(dispatch, 'waiting');
-
-      const getList = async () => {
-        await getWishlist(studentId).then(res => {
-          setList(res);
-        });
-      };
-
-      getList();
-      return;
-    }
-
+  const searchLecture = async () => {
     if (filter.curiNm === 'wish') {
       await getWishlist(studentId).then(res => {
         setList(res);
       });
+    } else {
+      await getCourseList(filter).then(res => {
+        setList(res);
+      });
     }
-    await getCourseList(filter).then(res => {
-      setList(res);
-    });
+  };
+
+  const handleClick = async () => {
+    if (page === '수강신청') {
+      if (!confirm('수강신청 연습 시작하시겠습니까?')) return;
+
+      openModalHandler(dispatch, 'waiting');
+      searchLecture();
+      return;
+    }
+    searchLecture();
   };
 
   return (
