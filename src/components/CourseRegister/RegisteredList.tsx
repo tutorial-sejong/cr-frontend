@@ -21,23 +21,21 @@ const colData = [
   {name: 'remark', value: '수강대상및유의사항', initialWidth: 230},
 ];
 
-function RegisteredList() {
+function RegisteredList({ refreshTrigger }: { refreshTrigger: number }) {
   const [list, setList] = useState<CourseTypes[]>([]);
 
   const getList = async () => {
-    await getRegisterdList().then(res => {
-      if (res) {
-        setList(res);
-        return;
-      }
-
+    const res = await getRegisterdList();
+    if (res) {
+      setList(res);
+    } else {
       setList([]);
-    });
+    }
   };
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [refreshTrigger]);
 
   const handleAction = async (
     _action: string,

@@ -26,10 +26,14 @@ const colData = [
 
 function CourseRegister() {
   const [list, setList] = useState<CourseTypes[]>([]);
-
   const [startVisible, setStartVisible] = useState<boolean>(true);
+  const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
 
   const dispatch = useDispatch();
+
+  const refreshRegisteredList = () => {
+    setRefreshTrigger(prev => prev + 1);
+  };
 
   const handleAction = async (
     _action: string,
@@ -46,7 +50,13 @@ function CourseRegister() {
 
   return (
     <>
-      {startVisible && <StartButton setList={setList} setStartVisible={setStartVisible}/>}
+      {startVisible && (
+        <StartButton
+          setList={setList}
+          setStartVisible={setStartVisible}
+          refreshRegisteredList={refreshRegisteredList}
+        />
+      )}
       <RegisterFilters setList={setList} />
       <TableTitleWrap>
         <TableTitle>수강대상교과목</TableTitle>
@@ -58,7 +68,7 @@ function CourseRegister() {
         height='35rem'
         onAction={handleAction}
       />
-      <RegisteredList />
+      <RegisteredList refreshTrigger={refreshTrigger} />
     </>
   );
 }
