@@ -1,10 +1,10 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, {css, keyframes} from 'styled-components';
 import logo from '@/assets/img/logo.webp';
 import close from '@/assets/img/tab_close_all.png';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { clearModalInfo } from '@store/modalSlice.ts';
-import { getRandomInt } from '@/utils/randomUtils.ts';
+import {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {clearModalInfo} from '@store/modalSlice.ts';
+import {getRandomInt} from '@/utils/randomUtils.ts';
 
 function WaitingModal() {
   const dispatch = useDispatch();
@@ -12,6 +12,8 @@ function WaitingModal() {
   const [waitingNumber, setWaitingNumber] = useState(initialWaitingNumber);
   const initialEstimatedTime = getRandomInt(2, 5);
   const [estimatedTime, setEstimatedTime] = useState(initialEstimatedTime);
+
+  const [progressBarValue, setProgressBarValue] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,7 +45,7 @@ function WaitingModal() {
     location.reload();
   };
 
-  const ProgressBar = ({ value }: { value: number }) => {
+  const ProgressBar = ({value}: {value: number}) => {
     return (
       <ProgressBarContainer>
         <ProgressBarFill $progress={value} />
@@ -51,14 +53,17 @@ function WaitingModal() {
     );
   };
 
-  const progressBarValue = ((initialEstimatedTime - estimatedTime) / initialEstimatedTime) * 100;
+  useEffect(() => {
+    setProgressBarValue(((initialEstimatedTime - estimatedTime) / initialEstimatedTime) * 100);
+  }, [estimatedTime]);
 
   return (
     <ModalContainer>
       <Modal>
         <Logo />
         <Title>서비스 <TextStrong color="#838fe2" fontSize={2.5}>접속대기 중</TextStrong> 입니다.</Title>
-        <SubTitle>예상대기시간 <TextStrong fontSize={2}>:</TextStrong> <TextStrong color="#838fe2" fontSize={4.3} fontWeight="normal">{estimatedTime}</TextStrong>
+        <SubTitle>예상대기시간 <TextStrong fontSize={2}>:</TextStrong> <TextStrong color="#838fe2" fontSize={4.3}
+                                                                             fontWeight="normal">{estimatedTime}</TextStrong>
           <TextStrong fontSize={2.2} fontWeight="normal">초</TextStrong> </SubTitle>
         <ProgressBar value={progressBarValue} />
         <Contents>
@@ -137,7 +142,7 @@ const ProgressBarContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-const ProgressBarFill = styled.div<{ $progress: number }>`
+const ProgressBarFill = styled.div<{$progress: number}>`
     height: 10px;
     background-color: #a0a0a0;
     width: ${props => `${props.$progress}%`};
@@ -151,7 +156,7 @@ const Contents = styled.p`
     line-height: 3rem;
 `;
 
-const TextStrong = styled.span<{ color?: string; fontSize?: number; fontWeight?: string }>`
+const TextStrong = styled.span<{color?: string; fontSize?: number; fontWeight?: string}>`
     color: ${props => props.color};
     font-size: ${props => `${props.fontSize}rem`};
     font-weight: ${props => props.fontWeight};
@@ -169,6 +174,7 @@ const StopButton = styled.div`
     cursor: pointer;
     margin-top: 30px;
     margin-bottom: 10px;
+
     &:hover {
         border: 1px solid #a6a69e;
         color: #a6a69e;

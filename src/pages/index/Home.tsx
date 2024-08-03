@@ -11,6 +11,8 @@ import InfoModal from '@components/common/Modal/InfoModal.tsx';
 import EnrollmentInfoModal from '@components/common/Modal/EnrollmentInfoModal.tsx';
 import LoadingModal from '@components/common/Modal/LoadingModal.tsx';
 import WaitingModal from '@components/common/Modal/WaitingModal.tsx';
+import {useDispatch} from 'react-redux';
+import {clearModalInfo} from '@store/modalSlice.ts';
 
 function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
@@ -20,6 +22,11 @@ function Home() {
   const focusedTab = tab.find(tab => tab.id === focused);
   const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';
 
+  const dispatch = useDispatch();
+
+  window.addEventListener('beforeunload', (event) => {
+    dispatch(clearModalInfo());
+  });
   const renderContent = () => {
     switch (focused) {
       case 0:
