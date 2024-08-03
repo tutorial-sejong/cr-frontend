@@ -26,18 +26,17 @@ const colData = [
 function CourseRegister() {
   const [list, setList] = useState<CourseTypes[]>([]);
 
-
   const dispatch = useDispatch();
 
   const handleAction = async (
     _action: string,
     scheduleId: number | undefined,
-    curiNm: string | undefined
+    curiNm: string | undefined,
   ) => {
     if (scheduleId && curiNm) {
       // 접속 대기 띄우기
       dispatch(setScheduleId(scheduleId));
-      dispatch(setCourseName(curiNm));
+      dispatch(setCourseName(curiNm ? curiNm : ''));
       dispatch(setModalName('macro'));
     }
   };

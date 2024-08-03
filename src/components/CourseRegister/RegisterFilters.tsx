@@ -13,7 +13,7 @@ import {
 } from '../LectureList/Filters';
 
 function RegisterFilters({setList}: FiltersProps) {
-  const [filter, setFilter] = useState<CourseTypes>();
+  const [filter, setFilter] = useState<CourseTypes>({curiNm: 'wish'});
   const [searchOption, setSearchOption] = useState<string>('관심과목');
 
   const handleSelect = (name: keyof CourseTypes, value: string | undefined) => {
@@ -28,20 +28,25 @@ function RegisterFilters({setList}: FiltersProps) {
 
   const handleSearchOptions = (name: string) => {
     const label = name.split(' ');
+
+    if (label[0] === '관심과목') {
+      setFilter({
+        curiNm: 'wish',
+      });
+    } else {
+      setFilter({});
+    }
+
     setSearchOption(label[0]);
   };
 
   const handleInput = (value: string | undefined) => {
     switch (searchOption) {
       case '관심과목':
-        setFilter({
-          curiNm: 'wish',
-        });
+        setFilter({curiNm: 'wish'});
         break;
       case '교과목명':
-        setFilter({
-          curiNm: value,
-        });
+        setFilter({curiNm: value});
         break;
       case '강의교수':
         setFilter({lesnEmp: value});
@@ -71,7 +76,13 @@ function RegisterFilters({setList}: FiltersProps) {
         </CuriNoWrap>
       );
     } else {
-      return <FilterInput disabled={searchOption === '관심과목'} sizes='l' onChange={value => handleInput(value)} />;
+      return (
+        <FilterInput
+          disabled={searchOption === '관심과목'}
+          sizes='l'
+          onChange={value => handleInput(value)}
+        />
+      );
     }
   };
 
@@ -96,7 +107,6 @@ function RegisterFilters({setList}: FiltersProps) {
             disabled={true}
             sizes='m'
             onSelect={value => handleInput(value)}
-            defaultValue={term[1].value}
           />
         </FilterWrap>
         <SearchBox>
@@ -122,7 +132,12 @@ function RegisterFilters({setList}: FiltersProps) {
           </SearchWrap>
         </SearchBox>
       </FilterBox>
-      <FilterButton label='검색' page='수강신청' filter={filter} setList={setList} />
+      <FilterButton
+        label='검색'
+        page='수강신청'
+        filter={filter}
+        setList={setList}
+      />
     </RegisterFilterContainer>
   );
 }
