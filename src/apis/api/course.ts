@@ -74,12 +74,7 @@ export const getRegisterdList = async () => {
 
 export const postCourse = async (id: number) => {
   try {
-
-
     const {data} = await baseAPI.post(`/registrations/${id}`);
-
-    console.log('asdff: '+ id);
-    console.log('asdff: '+ data);
     return data;
   } catch (error) {
     console.error('post course fail: ', error);

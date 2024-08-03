@@ -42,7 +42,6 @@ function RegisteredList() {
   const handleAction = async (
     _action: string,
     scheduleId: number | undefined,
-    _curiNm: string | undefined
   ) => {
     if (scheduleId) {
       await deleteCourse(scheduleId).then(() => {

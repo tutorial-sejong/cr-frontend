@@ -13,7 +13,7 @@ import {
 } from '../LectureList/Filters';
 
 function RegisterFilters({setList}: FiltersProps) {
-  const [filter, setFilter] = useState<CourseTypes>();
+  const [filter, setFilter] = useState<CourseTypes>({curiNm: 'wish'});
   const [searchOption, setSearchOption] = useState<string>('관심과목');
 
   const handleSelect = (name: keyof CourseTypes, value: string | undefined) => {
@@ -33,6 +33,8 @@ function RegisterFilters({setList}: FiltersProps) {
       setFilter({
         curiNm: 'wish',
       });
+    } else {
+      setFilter({});
     }
 
     setSearchOption(label[0]);
@@ -41,14 +43,10 @@ function RegisterFilters({setList}: FiltersProps) {
   const handleInput = (value: string | undefined) => {
     switch (searchOption) {
       case '관심과목':
-        setFilter({
-          curiNm: 'wish',
-        });
+        setFilter({curiNm: 'wish'});
         break;
       case '교과목명':
-        setFilter({
-          curiNm: value,
-        });
+        setFilter({curiNm: value});
         break;
       case '강의교수':
         setFilter({lesnEmp: value});
@@ -109,7 +107,6 @@ function RegisterFilters({setList}: FiltersProps) {
             disabled={true}
             sizes='m'
             onSelect={value => handleInput(value)}
-            defaultValue={term[1].value}
           />
         </FilterWrap>
         <SearchBox>
