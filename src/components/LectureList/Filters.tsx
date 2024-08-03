@@ -56,7 +56,6 @@ function Filters({setList}: FiltersProps) {
               disabled={true}
               sizes='m'
               onSelect={value => handleSelect('curiTypeCdNm', value)}
-              defaultValue={term[1].value}
             />
           </FilterWrap>
           <FilterWrap>

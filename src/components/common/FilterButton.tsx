@@ -3,19 +3,15 @@ import search from '@assets/img/search.png';
 import {CourseTypes} from '@/assets/types/tableType';
 import {getCourseList, getWishlist} from '@/apis/api/course';
 import {useAppSelector} from '@/store/hooks';
-import {openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
-import {useDispatch} from 'react-redux';
 
 interface ButtonProps {
   label: string;
-  page?: string;
   filter?: CourseTypes;
   setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
 }
 
-function FilterButton({label, page, filter = {}, setList}: ButtonProps) {
+function FilterButton({label, filter = {}, setList}: ButtonProps) {
   const studentId = useAppSelector(state => state.userInfo.username);
-  const dispatch = useDispatch();
 
   const searchLecture = async () => {
     if (filter.curiNm === 'wish') {
@@ -30,7 +26,6 @@ function FilterButton({label, page, filter = {}, setList}: ButtonProps) {
   };
 
   const handleClick = async () => {
-
     searchLecture();
   };
 
