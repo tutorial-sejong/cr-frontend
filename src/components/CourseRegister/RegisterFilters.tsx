@@ -109,6 +109,7 @@ function RegisterFilters({setList}: FiltersProps) {
             disabled={true}
             sizes='m'
             onSelect={value => handleInput(value)}
+            defaultValue={term[1].value}
           />
         </FilterWrap>
         <SearchBox>

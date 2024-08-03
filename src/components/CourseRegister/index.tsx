@@ -29,11 +29,11 @@ function CourseRegister() {
   const dispatch = useDispatch();
 
   const handleAction = async (
-    action: string,
+    _action: string,
     scheduleId: number | undefined,
     curiNm: string | undefined,
   ) => {
-    if (scheduleId) {
+    if (scheduleId && curiNm) {
       // 접속 대기 띄우기
       dispatch(setScheduleId(scheduleId));
       dispatch(setCourseName(curiNm ? curiNm : ''));

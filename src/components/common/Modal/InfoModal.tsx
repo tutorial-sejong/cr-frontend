@@ -12,6 +12,7 @@ function InfoModal({scheduleId, curiNm, type}: {scheduleId: number, curiNm: stri
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(scheduleId);
     console.log(curiNm);
   }, []);
 
