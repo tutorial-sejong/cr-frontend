@@ -71,7 +71,6 @@ function Wishlist() {
   const handleAction = async (
     action: string,
     scheduleId: number | undefined,
-    _curiNm: string | undefined
   ) => {
     if (action === '신청' && scheduleId) {
       try {

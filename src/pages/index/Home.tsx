@@ -17,14 +17,16 @@ import {clearModalInfo} from '@store/modalSlice.ts';
 function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
 
-  const {modalName, scheduleId, courseName} = useAppSelector(state => state.modalInfo);
+  const {modalName, scheduleId, courseName} = useAppSelector(
+    state => state.modalInfo,
+  );
 
   const focusedTab = tab.find(tab => tab.id === focused);
   const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';
 
   const dispatch = useDispatch();
 
-  window.addEventListener('beforeunload', (event) => {
+  window.addEventListener('beforeunload', () => {
     dispatch(clearModalInfo());
   });
   const renderContent = () => {
@@ -47,15 +49,36 @@ function Home() {
       case 'macro':
         return <AntiMacroCodeModal />;
       case 'check':
-        return <InfoModal scheduleId={scheduleId} curiNm={courseName} type={'check'} />;
+        return (
+          <InfoModal
+            scheduleId={scheduleId}
+            curiNm={courseName}
+            type={'check'}
+          />
+        );
       case 'loading':
         return <LoadingModal />;
       case 'reload':
-        return <InfoModal scheduleId={scheduleId} curiNm={courseName} type={'reload'} />;
+        return (
+          <InfoModal
+            scheduleId={scheduleId}
+            curiNm={courseName}
+            type={'reload'}
+          />
+        );
       case 'fail':
-        return <InfoModal scheduleId={scheduleId} curiNm={courseName} type={''} />;
+        return (
+          <InfoModal scheduleId={scheduleId} curiNm={courseName} type={''} />
+        );
       case 'enrollment':
-        return <EnrollmentInfoModal schDeptAlias={''} curiNo={''} classNo={''} curiNm={courseName} />;
+        return (
+          <EnrollmentInfoModal
+            schDeptAlias={''}
+            curiNo={''}
+            classNo={''}
+            curiNm={courseName}
+          />
+        );
       default:
         return <></>;
     }
