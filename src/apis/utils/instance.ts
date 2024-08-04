@@ -1,3 +1,5 @@
+import {setLoader} from '@/store/modules/loaderSlice';
+import {store} from '@/store/store';
 import axios, {AxiosResponse} from 'axios';
 import Cookies from 'js-cookie';
 
@@ -9,6 +11,7 @@ export const baseAPI = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true,
+  timeout: 2000,
 });
 
 let isRefreshing = false;
@@ -29,15 +32,19 @@ baseAPI.interceptors.request.use(
       config.headers['Authorization'] = Cookies.get('accessToken');
     }
 
+    store.dispatch(setLoader(true));
     return config;
   },
   error => {
+    store.dispatch(setLoader(false));
     return Promise.reject(error);
   },
 );
 
 baseAPI.interceptors.response.use(
   response => {
+    store.dispatch(setLoader(false));
+
     return response;
   },
   async error => {
@@ -45,6 +52,7 @@ baseAPI.interceptors.response.use(
       config,
       response: {status},
     } = error;
+    store.dispatch(setLoader(false));
     const originalRequest = config;
     if (status === 401 && !originalRequest._retry) {
       if (isRefreshing) {

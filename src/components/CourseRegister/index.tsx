@@ -33,8 +33,10 @@ function CourseRegister() {
   const [registeredList, setRegisteredList] = useState<CourseTypes[]>([]);
   const [startVisible, setStartVisible] = useState<boolean>(true);
   const [currentFilter, setCurrentFilter] = useState<CourseTypes>({});
-  const [currentSearchOption, setCurrentSearchOption] = useState<string>('관심과목');
-  const [isRegistrationStarted, setIsRegistrationStarted] = useState<boolean>(false);
+  const [currentSearchOption, setCurrentSearchOption] =
+    useState<string>('관심과목');
+  const [isRegistrationStarted, setIsRegistrationStarted] =
+    useState<boolean>(false);
   const [isFirstSearch, setIsFirstSearch] = useState<boolean>(true);
 
   const dispatch = useDispatch();
@@ -57,7 +59,11 @@ function CourseRegister() {
     setList(searchResult);
   }, [currentFilter, currentSearchOption, studentId]);
 
-  const handleSearch = async (newList: CourseTypes[], filter: CourseTypes, searchOption: string) => {
+  const handleSearch = async (
+    newList: CourseTypes[],
+    filter: CourseTypes,
+    searchOption: string,
+  ) => {
     if (isRegistrationStarted && isFirstSearch) {
       openModalHandler(dispatch, 'waiting');
       setIsFirstSearch(false);
@@ -80,7 +86,6 @@ function CourseRegister() {
       console.log('17초 지남');
       dispatch(setEndCount(true));
     }, 17000);
-
   };
 
   const handleAction = async (
@@ -97,11 +102,7 @@ function CourseRegister() {
 
   return (
     <>
-      {startVisible && (
-        <StartButton
-          onClick={handleStartButtonClick}
-        />
-      )}
+      {startVisible && <StartButton onClick={handleStartButtonClick} />}
       <RegisterFilters onSearch={handleSearch} />
       <TableTitleWrap>
         <TableTitle>수강대상교과목</TableTitle>
@@ -113,10 +114,7 @@ function CourseRegister() {
         height='35rem'
         onAction={handleAction}
       />
-      <RegisteredList
-        list={registeredList}
-        refreshAll={refreshAll}
-      />
+      <RegisteredList list={registeredList} refreshAll={refreshAll} />
     </>
   );
 }

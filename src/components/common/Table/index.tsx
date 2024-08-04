@@ -146,23 +146,22 @@ function Table({data, colData, width, height, onAction}: TableProps) {
             ))}
           </RowWrap>
         </thead>
-
-        {filteredData?.length === 0 ? (
-          <NoresultWrap width={tableWidth} height={height}>
-            <Noresult>조회된 내역이 없습니다.</Noresult>
-          </NoresultWrap>
-        ) : (
-          <tbody>
-            {filteredData?.map((row, rowIdx) => (
+        <tbody>
+          {filteredData?.length === 0 ? (
+            <NoresultWrap width={tableWidth} height={height}>
+              <Noresult>조회된 내역이 없습니다.</Noresult>
+            </NoresultWrap>
+          ) : (
+            filteredData?.map((row, rowIdx) => (
               <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
                 <IndexWrap>{rowIdx + 1}</IndexWrap>
                 {colData.map((col, colIdx) => (
                   <td key={colIdx}>{renderCell(row, col)}</td>
                 ))}
               </ContentWrap>
-            ))}
-          </tbody>
-        )}
+            ))
+          )}
+        </tbody>
       </TableWrap>
     </TableBox>
   );
@@ -231,7 +230,7 @@ const ActionButton = styled.button`
   }
 `;
 
-const NoresultWrap = styled.div<{width: number; height: string}>`
+const NoresultWrap = styled.tr<{width: number; height: string}>`
   width: ${props => props.width}px;
   height: calc(${props => props.height} - 5rem);
   position: absolute;
@@ -240,7 +239,7 @@ const NoresultWrap = styled.div<{width: number; height: string}>`
   justify-content: center;
 `;
 
-const Noresult = styled.div`
+const Noresult = styled.td`
   ${props => props.theme.texts.content};
   background-color: ${props => props.theme.colors.neutral6};
   border: 1px solid #c3c3c3;

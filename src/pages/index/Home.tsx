@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {useDispatch} from 'react-redux';
 import Menubar from '@components/Menubar';
 import Header from '@components/Header';
 import LectureList from '@components/LectureList';
@@ -11,11 +12,11 @@ import InfoModal from '@components/common/Modal/InfoModal.tsx';
 import EnrollmentInfoModal from '@components/common/Modal/EnrollmentInfoModal.tsx';
 import LoadingModal from '@components/common/Modal/LoadingModal.tsx';
 import WaitingModal from '@components/common/Modal/WaitingModal.tsx';
-import {useDispatch} from 'react-redux';
 import {clearModalInfo} from '@store/modalSlice.ts';
 
 function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
+  const loading = useAppSelector(state => state.loader.status);
 
   const {modalName, scheduleId, courseName} = useAppSelector(
     state => state.modalInfo,
@@ -49,25 +50,13 @@ function Home() {
       case 'macro':
         return <AntiMacroCodeModal />;
       case 'check':
-        return (
-          <InfoModal
-            curiNm={courseName}
-            type={'check'}
-          />
-        );
+        return <InfoModal curiNm={courseName} type={'check'} />;
       case 'loading':
         return <LoadingModal scheduleId={scheduleId} />;
       case 'reload':
-        return (
-          <InfoModal
-            curiNm={courseName}
-            type={'reload'}
-          />
-        );
+        return <InfoModal curiNm={courseName} type={'reload'} />;
       case 'fail':
-        return (
-          <InfoModal curiNm={courseName} type={''} />
-        );
+        return <InfoModal curiNm={courseName} type={''} />;
       case 'enrollment':
         return (
           <EnrollmentInfoModal
@@ -84,7 +73,7 @@ function Home() {
 
   return (
     <Container>
-      {renderModal()}
+      {loading ? <LoadingModal scheduleId={-1} /> : renderModal()}
       <Header />
       <Box>
         <Menubar />

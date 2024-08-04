@@ -8,6 +8,7 @@ import {
   openModalHandler,
   closeHandler,
 } from '@components/common/Modal/handlers/handler.tsx';
+import {setLoader} from '@/store/modules/loaderSlice';
 
 interface MacroTypes {
   url: string;
@@ -20,7 +21,7 @@ function AntiMacroCodeModal() {
     answer: 0,
   });
   const baseURL = import.meta.env.VITE_BASE_URL;
-  const [inputCode, setInputCode] = useState<number | string>();
+  const [inputCode, setInputCode] = useState<number | string>('');
   const [imageSrc, setImageSrc] = useState<string>('');
 
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ function AntiMacroCodeModal() {
           Authorization: `Bearer ${Cookies.get('accessToken')}`,
         },
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
 
@@ -46,6 +52,8 @@ function AntiMacroCodeModal() {
       setImageSrc(url);
     } catch (error) {
       console.error('매크로 코드 불러오기 실패: ', error);
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
