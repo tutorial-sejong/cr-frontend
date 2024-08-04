@@ -7,14 +7,11 @@ import {
   closeHandler,
   openModalHandler,
 } from '@components/common/Modal/handlers/handler.tsx';
-import {postCourse} from '@apis/api/course.ts';
 
 function InfoModal({
-  scheduleId,
   curiNm,
   type,
 }: {
-  scheduleId: number;
   curiNm: string;
   type: string;
 }) {
@@ -25,10 +22,6 @@ function InfoModal({
     if (type === 'check') {
       openModalHandler(dispatch, 'loading');
 
-      // 수강신청 요청
-      await postCourse(scheduleId).then(res => {
-        console.log('register success ', res);
-      });
       return;
     }
 

@@ -11,7 +11,7 @@ function WaitingModal() {
   const initialWaitingNumber = getRandomInt(100, 800);
   const [waitingNumber, setWaitingNumber] =
     useState<number>(initialWaitingNumber);
-  const initialEstimatedTime = getRandomInt(2, 5);
+  const initialEstimatedTime = getRandomInt(1, 3);
   const [estimatedTime, setEstimatedTime] =
     useState<number>(initialEstimatedTime);
   const [progressBarValue, setProgressBarValue] = useState(0);

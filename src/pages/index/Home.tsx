@@ -51,24 +51,22 @@ function Home() {
       case 'check':
         return (
           <InfoModal
-            scheduleId={scheduleId}
             curiNm={courseName}
             type={'check'}
           />
         );
       case 'loading':
-        return <LoadingModal />;
+        return <LoadingModal scheduleId={scheduleId} />;
       case 'reload':
         return (
           <InfoModal
-            scheduleId={scheduleId}
             curiNm={courseName}
             type={'reload'}
           />
         );
       case 'fail':
         return (
-          <InfoModal scheduleId={scheduleId} curiNm={courseName} type={''} />
+          <InfoModal curiNm={courseName} type={''} />
         );
       case 'enrollment':
         return (
