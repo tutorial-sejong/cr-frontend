@@ -66,7 +66,6 @@ function CourseRegister() {
       dispatch(setScheduleId(scheduleId));
       dispatch(setCourseName(curiNm));
       dispatch(setModalName('macro'));
-      await refreshAll();
     }
   };
 
