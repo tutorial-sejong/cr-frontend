@@ -1,4 +1,7 @@
-import axios, {AxiosResponse} from 'axios';
+import {setModalName} from '@/store/modalSlice';
+import {setType} from '@/store/modules/errorSlice';
+import {store} from '@/store/store';
+import axios, {AxiosError, AxiosResponse} from 'axios';
 import Cookies from 'js-cookie';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
@@ -77,6 +80,11 @@ baseAPI.interceptors.response.use(
       }
     } else if (status === 404) {
       return Promise.resolve({...error.response, data: []} as AxiosResponse);
+    } else if (status === 409) {
+      store.dispatch(setModalName('fail'));
+      store.dispatch(setType(409));
+
+      return Promise.resolve({...error.response} as AxiosError);
     }
 
     return Promise.reject(error);

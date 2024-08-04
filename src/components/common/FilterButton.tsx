@@ -2,23 +2,56 @@ import styled from 'styled-components';
 import search from '@assets/img/search.png';
 import {CourseTypes} from '@/assets/types/tableType';
 import {getCourseList, getWishlist} from '@/apis/api/course';
-import {useAppSelector} from '@/store/hooks';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
+import {setField, setType} from '@/store/modules/errorSlice';
+import {openModalHandler} from './Modal/handlers/handler';
 
 interface ButtonProps {
   label: string;
   filter: CourseTypes;
-  onSearch: (newList: CourseTypes[], filter: CourseTypes, searchOption: string) => Promise<void>;
+  isRegister?: boolean;
+  onSearch: (
+    newList: CourseTypes[],
+    filter: CourseTypes,
+    searchOption: string,
+  ) => Promise<void>;
   searchOption: string;
 }
 
-function FilterButton({label, filter, onSearch, searchOption}: ButtonProps) {
+function FilterButton({
+  label,
+  filter,
+  onSearch,
+  searchOption,
+  isRegister = false,
+}: ButtonProps) {
+  const dispatch = useAppDispatch();
   const studentId = useAppSelector(state => state.userInfo.username);
+
+  const setError = () => {
+    openModalHandler(dispatch, 'fail');
+    dispatch(setType(422));
+    dispatch(setField(searchOption));
+  };
 
   const searchLecture = async () => {
     let result: CourseTypes[] = [];
+
     if (searchOption === '관심과목') {
       result = await getWishlist(studentId);
     } else {
+      if (isRegister) {
+        if (Object.keys(filter).length == 0 && filter.constructor === Object) {
+          setError();
+          return;
+        } else {
+          const checked = Object.values(filter).filter(item => item.length < 2);
+          if (checked.length !== 0) {
+            setError();
+            return;
+          }
+        }
+      }
       result = await getCourseList(filter);
     }
     onSearch(result, filter, searchOption);

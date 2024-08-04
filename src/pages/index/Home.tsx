@@ -50,25 +50,13 @@ function Home() {
       case 'macro':
         return <AntiMacroCodeModal />;
       case 'check':
-        return (
-          <InfoModal
-            curiNm={courseName}
-            type={'check'}
-          />
-        );
+        return <InfoModal curiNm={courseName} type={'check'} />;
       case 'loading':
         return <LoadingModal scheduleId={scheduleId} />;
       case 'reload':
-        return (
-          <InfoModal
-            curiNm={courseName}
-            type={'reload'}
-          />
-        );
+        return <InfoModal curiNm={courseName} type={'reload'} />;
       case 'fail':
-        return (
-          <ErrorModal type={410} />
-        );
+        return <ErrorModal />;
       case 'enrollment':
         return (
           <EnrollmentInfoModal

@@ -78,6 +78,7 @@ export const postCourse = async (id: number) => {
     return data;
   } catch (error) {
     console.error('post course fail: ', error);
+    return error;
   }
 };
 
@@ -92,7 +93,7 @@ export const deleteCourse = async (id: number) => {
 
 export const deleteAllRegistrations = async () => {
   try {
-    const { data } = await baseAPI.delete('/registrations/all');
+    const {data} = await baseAPI.delete('/registrations/all');
     return data;
   } catch (error) {
     console.error('모든 수강신청 내역 삭제 실패: ', error);
