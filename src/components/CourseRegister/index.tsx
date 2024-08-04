@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {CourseTypes} from '@/assets/types/tableType';
 import RegisterFilters from './RegisterFilters';
 import Table from '../common/Table';
@@ -7,6 +7,8 @@ import RegisteredList from './RegisteredList';
 import {useDispatch} from 'react-redux';
 import {setCourseName, setModalName, setScheduleId} from '@store/modalSlice.ts';
 import StartButton from '@components/CourseRegister/StartButton.tsx';
+import { getCourseList, getRegisterdList, getWishlist } from '@/apis/api/course';
+import { useAppSelector } from '@/store/hooks';
 
 const colData = [
   {name: 'action', value: '신청', initialWidth: 30, enableFilters: false},
@@ -26,10 +28,34 @@ const colData = [
 
 function CourseRegister() {
   const [list, setList] = useState<CourseTypes[]>([]);
-
+  const [registeredList, setRegisteredList] = useState<CourseTypes[]>([]);
   const [startVisible, setStartVisible] = useState<boolean>(true);
+  const [currentFilter, setCurrentFilter] = useState<CourseTypes>({});
+  const [currentSearchOption, setCurrentSearchOption] = useState<string>('관심과목');
 
   const dispatch = useDispatch();
+  const studentId = useAppSelector(state => state.userInfo.username);
+
+  const refreshAll = useCallback(async () => {
+    const registeredCourses = await getRegisterdList();
+    setRegisteredList(registeredCourses || []);
+
+    let searchResult: CourseTypes[] = [];
+    if (currentSearchOption === '관심과목') {
+      searchResult = await getWishlist(studentId);
+    } else {
+      searchResult = await getCourseList(currentFilter);
+    }
+    setList(searchResult);
+  }, [currentFilter, currentSearchOption, studentId]);
+
+  const handleSearch = async (newList: CourseTypes[], filter: CourseTypes, searchOption: string) => {
+    setList(newList);
+    setCurrentFilter(filter);
+    setCurrentSearchOption(searchOption);
+    const registeredCourses = await getRegisterdList();
+    setRegisteredList(registeredCourses || []);
+  };
 
   const handleAction = async (
     _action: string,
@@ -37,17 +63,22 @@ function CourseRegister() {
     curiNm: string | undefined,
   ) => {
     if (scheduleId && curiNm) {
-      // 접속 대기 띄우기
       dispatch(setScheduleId(scheduleId));
-      dispatch(setCourseName(curiNm ? curiNm : ''));
+      dispatch(setCourseName(curiNm));
       dispatch(setModalName('macro'));
     }
   };
 
   return (
     <>
-      {startVisible && <StartButton setList={setList} setStartVisible={setStartVisible}/>}
-      <RegisterFilters setList={setList} />
+      {startVisible && (
+        <StartButton
+          setList={setList}
+          setStartVisible={setStartVisible}
+          refreshAll={refreshAll}
+        />
+      )}
+      <RegisterFilters onSearch={handleSearch} />
       <TableTitleWrap>
         <TableTitle>수강대상교과목</TableTitle>
       </TableTitleWrap>
@@ -58,7 +89,10 @@ function CourseRegister() {
         height='35rem'
         onAction={handleAction}
       />
-      <RegisteredList />
+      <RegisteredList 
+        list={registeredList} 
+        refreshAll={refreshAll} 
+      />
     </>
   );
 }

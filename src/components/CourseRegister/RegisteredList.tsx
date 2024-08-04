@@ -1,6 +1,5 @@
-import {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {deleteCourse, getRegisterdList} from '@/apis/api/course';
+import {deleteCourse} from '@/apis/api/course';
 import {CourseTypes} from '@/assets/types/tableType';
 import {TableTitle, TableTitleWrap} from '../LectureList';
 import Table from '../common/Table';
@@ -21,32 +20,19 @@ const colData = [
   {name: 'remark', value: '수강대상및유의사항', initialWidth: 230},
 ];
 
-function RegisteredList() {
-  const [list, setList] = useState<CourseTypes[]>([]);
+interface RegisteredListProps {
+  list: CourseTypes[];
+  refreshAll: () => Promise<void>;
+}
 
-  const getList = async () => {
-    await getRegisterdList().then(res => {
-      if (res) {
-        setList(res);
-        return;
-      }
-
-      setList([]);
-    });
-  };
-
-  useEffect(() => {
-    getList();
-  }, []);
-
+function RegisteredList({ list, refreshAll }: RegisteredListProps) {
   const handleAction = async (
     _action: string,
     scheduleId: number | undefined,
   ) => {
     if (scheduleId) {
-      await deleteCourse(scheduleId).then(() => {
-        getList();
-      });
+      await deleteCourse(scheduleId);
+      await refreshAll();
     }
   };
 
@@ -54,7 +40,7 @@ function RegisteredList() {
     <ListContainer>
       <RegisteredTitleWrap>
         <TableTitle>수강신청내역</TableTitle>
-        <ButtonWrap onClick={getList}>재조회</ButtonWrap>
+        <ButtonWrap onClick={refreshAll}>재조회</ButtonWrap>
       </RegisteredTitleWrap>
       <Table
         data={list}

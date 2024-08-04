@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
-import {getWishlist} from '@apis/api/course.ts';
+import {deleteAllRegistrations, getWishlist} from '@apis/api/course.ts';
 import {useAppSelector} from '@store/hooks';
 import {useDispatch} from 'react-redux';
 import {CourseTypes} from '@/assets/types/tableType';
@@ -8,25 +8,27 @@ import {CourseTypes} from '@/assets/types/tableType';
 interface StartBtnProps {
   setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
   setStartVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  refreshAll: () => Promise<void>;
 }
 
-function StartButton({setList, setStartVisible}: StartBtnProps) {
+function StartButton({setList, setStartVisible, refreshAll}: StartBtnProps) {
   const studentId = useAppSelector(state => state.userInfo.username);
 
   const dispatch = useDispatch();
 
   const searchLecture = async () => {
-    await getWishlist(studentId).then(res => {
-      setList(res);
-    });
+    const res = await getWishlist(studentId);
+    setList(res);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!confirm('수강신청 연습 시작하시겠습니까?')) return;
 
+    await deleteAllRegistrations();
     openModalHandler(dispatch, 'waiting');
     setStartVisible(false);
-    searchLecture();
+    await searchLecture();
+    await refreshAll();
   };
 
   return (
