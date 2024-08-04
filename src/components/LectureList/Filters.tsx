@@ -6,12 +6,12 @@ import SelectBox from '@components/common/SelectBox';
 import {completion, major, optional, term} from '@assets/data/filter';
 import {CourseTypes} from '@/assets/types/tableType';
 
-export interface FiltersProps {
-  setList: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
+interface FiltersProps {
+  onSearch: (newList: CourseTypes[]) => Promise<void>;
 }
 
-function Filters({setList}: FiltersProps) {
-  const [filter, setFilter] = useState<CourseTypes>();
+function Filters({onSearch}: FiltersProps) {
+  const [filter, setFilter] = useState<CourseTypes>({});
 
   const handleSelect = (name: keyof CourseTypes, value: string | undefined) => {
     let dept = '';
@@ -100,7 +100,12 @@ function Filters({setList}: FiltersProps) {
             />
           </FilterWrap>
         </FilterBox>
-        <FilterButton label='조회' filter={filter} setList={setList} />
+        <FilterButton 
+          label='조회' 
+          filter={filter} 
+          onSearch={onSearch} 
+          searchOption='강좌조회'
+        />
       </FilterArea>
       <WarningWrap>
         <p>
