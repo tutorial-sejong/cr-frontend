@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import Cookies from 'js-cookie';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
@@ -75,6 +75,8 @@ baseAPI.interceptors.response.use(
         isRefreshing = false;
         return Promise.reject(err);
       }
+    } else if (status === 404) {
+      return Promise.resolve({...error.response, data: []} as AxiosResponse);
     }
 
     return Promise.reject(error);
