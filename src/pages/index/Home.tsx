@@ -13,6 +13,7 @@ import LoadingModal from '@components/common/Modal/LoadingModal.tsx';
 import WaitingModal from '@components/common/Modal/WaitingModal.tsx';
 import {useDispatch} from 'react-redux';
 import {clearModalInfo} from '@store/modalSlice.ts';
+import ErrorModal from '@components/common/Modal/ErrorModal.tsx';
 
 function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
@@ -51,24 +52,22 @@ function Home() {
       case 'check':
         return (
           <InfoModal
-            scheduleId={scheduleId}
             curiNm={courseName}
             type={'check'}
           />
         );
       case 'loading':
-        return <LoadingModal />;
+        return <LoadingModal scheduleId={scheduleId} />;
       case 'reload':
         return (
           <InfoModal
-            scheduleId={scheduleId}
             curiNm={courseName}
             type={'reload'}
           />
         );
       case 'fail':
         return (
-          <InfoModal scheduleId={scheduleId} curiNm={courseName} type={''} />
+          <ErrorModal type={410} />
         );
       case 'enrollment':
         return (

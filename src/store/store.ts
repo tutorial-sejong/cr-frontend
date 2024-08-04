@@ -4,18 +4,20 @@ import storage from 'redux-persist/lib/storage';
 
 import userSlice from '@store/userSlice.ts';
 import modalSlice from '@store/modalSlice.ts';
+import courseRegisteredSlice from '@store/courseRegisteredSlice.ts';
 import tabSlice from './modules/tabSlice';
 
 const reducers = combineReducers({
   userInfo: userSlice,
   modalInfo: modalSlice,
+  courseRegistered: courseRegisteredSlice,
   tabs: tabSlice,
 });
 
 const persistConfig = {
   key: 'root', // localStorage key
   storage, // localStorage
-  whitelist: ['userInfo', 'modalInfo'],
+  whitelist: ['userInfo', 'modalInfo', 'courseRegistered'],
   blacklist: ['tabs'],
 };
 

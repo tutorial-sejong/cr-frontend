@@ -3,20 +3,41 @@ import {useEffect} from 'react';
 import {getRandomInt} from '@/utils/randomUtils.ts';
 import {openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
 import {useDispatch} from 'react-redux';
+import {useAppSelector} from '@store/hooks';
+import {postCourse} from '@apis/api/course.ts';
 
-function LoadingModal() {
+function LoadingModal({
+                        scheduleId,
+                      }: {
+  scheduleId: number;
+}) {
+
   const dispatch = useDispatch();
+
+  const endCount = useAppSelector(state => state.courseRegistered.endCount);
 
   useEffect(() => {
 
-    const endCount = getRandomInt(1, 4) * 1000;
+    const endRandomCount = getRandomInt(1, 3) * 1000;
 
-    console.log(endCount);
+    // 시간 이내여도 10%의 확률로 실패
+    const randomFailNumber = getRandomInt(1, 10);
 
-    setTimeout(() => {
+    setTimeout(async () => {
+      // 17초 지난 뒤 신청
+      if (endCount || randomFailNumber === 1) {
+        openModalHandler(dispatch, 'fail');
+        return;
+      }
+
+      // 수강신청 요청
+      await postCourse(scheduleId).then(res => {
+        console.log('register success ', res);
+      });
       openModalHandler(dispatch, 'reload');
-    }, endCount);
-    
+
+    }, endRandomCount);
+
   }, []);
 
   return (
