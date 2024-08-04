@@ -8,11 +8,17 @@ interface TableProps {
   data: CourseTypes[];
   width: string;
   height: string;
-  onAction?: (action: string, scheduleId: number | undefined, curiNm: string | undefined) => void;
+  onAction?: (
+    action: string,
+    scheduleId: number | undefined,
+    curiNm: string | undefined,
+  ) => void;
 }
 
 function Table({data, colData, width, height, onAction}: TableProps) {
+  const widthRef = useRef<HTMLTableElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
+  const [tableWidth, setTableWidth] = useState(0);
   const [columnWidths, setColumnWidths] = useState<number[]>([]);
   let uniqueOptions: string[] = [];
   const [filters, setFilters] = useState<string[][]>(
@@ -33,6 +39,10 @@ function Table({data, colData, width, height, onAction}: TableProps) {
         tableRef.current.querySelectorAll('th'),
       ).map(th => th.getBoundingClientRect().width);
       setColumnWidths(initialWidths);
+    }
+
+    if (widthRef.current) {
+      setTableWidth(widthRef.current.offsetWidth);
     }
   }, [tableRef]);
 
@@ -105,7 +115,7 @@ function Table({data, colData, width, height, onAction}: TableProps) {
   };
 
   return (
-    <TableBox width={width} height={height}>
+    <TableBox width={width} height={height} ref={widthRef}>
       <TableWrap ref={tableRef}>
         <colgroup>
           <col style={{width: 'auto'}} />
@@ -136,16 +146,23 @@ function Table({data, colData, width, height, onAction}: TableProps) {
             ))}
           </RowWrap>
         </thead>
-        <tbody>
-          {filteredData?.map((row, rowIdx) => (
-            <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
-              <IndexWrap>{rowIdx + 1}</IndexWrap>
-              {colData.map((col, colIdx) => (
-                <td key={colIdx}>{renderCell(row, col)}</td>
-              ))}
-            </ContentWrap>
-          ))}
-        </tbody>
+
+        {filteredData?.length === 0 ? (
+          <NoresultWrap width={tableWidth} height={height}>
+            <Noresult>조회된 내역이 없습니다.</Noresult>
+          </NoresultWrap>
+        ) : (
+          <tbody>
+            {filteredData?.map((row, rowIdx) => (
+              <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
+                <IndexWrap>{rowIdx + 1}</IndexWrap>
+                {colData.map((col, colIdx) => (
+                  <td key={colIdx}>{renderCell(row, col)}</td>
+                ))}
+              </ContentWrap>
+            ))}
+          </tbody>
+        )}
       </TableWrap>
     </TableBox>
   );
@@ -212,6 +229,24 @@ const ActionButton = styled.button`
   &:hover {
     background-color: ${props => props.theme.colors.primary};
   }
+`;
+
+const NoresultWrap = styled.div<{width: number; height: string}>`
+  width: ${props => props.width}px;
+  height: calc(${props => props.height} - 5rem);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Noresult = styled.div`
+  ${props => props.theme.texts.content};
+  background-color: ${props => props.theme.colors.neutral6};
+  border: 1px solid #c3c3c3;
+  text-align: center;
+  padding: 0.7rem 0;
+  width: 30rem;
 `;
 
 export default Table;
