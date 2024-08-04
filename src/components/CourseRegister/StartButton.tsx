@@ -15,7 +15,7 @@ function StartButton({onClick}: StartBtnProps) {
 
   return (
     <Container>
-      <p>시작 버튼을 누르면, 수강 신청이 시작됩니다.</p>
+      <p>시작 버튼을 누르면, 수강 신청이 시작됩니다. 연습이 끝나면 탭을 변경하고 다시 접속해주세요.</p>
       <ButtonWrap onClick={handleClick}>시작</ButtonWrap>
     </Container>
   );
