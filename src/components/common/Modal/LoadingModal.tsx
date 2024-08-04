@@ -5,6 +5,7 @@ import {openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '@store/hooks';
 import {postCourse} from '@apis/api/course.ts';
+import {setScheduleId} from '@/store/modalSlice';
 
 function LoadingModal({scheduleId}: {scheduleId: number}) {
   const dispatch = useDispatch();
@@ -13,8 +14,6 @@ function LoadingModal({scheduleId}: {scheduleId: number}) {
 
   useEffect(() => {
     if (scheduleId >= 0) {
-      console.log(scheduleId);
-
       const endRandomCount = getRandomInt(1, 3) * 1000;
 
       // 시간 이내여도 10%의 확률로 실패
@@ -30,11 +29,12 @@ function LoadingModal({scheduleId}: {scheduleId: number}) {
         // 수강신청 요청
         await postCourse(scheduleId).then(res => {
           console.log('register success ', res);
+          dispatch(setScheduleId(-1));
         });
         openModalHandler(dispatch, 'reload');
       }, endRandomCount);
     }
-  }, []);
+  }, [dispatch, endCount, scheduleId]);
 
   return (
     <ModalContainer>

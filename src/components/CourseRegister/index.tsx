@@ -5,9 +5,20 @@ import Table from '../common/Table';
 import {TableTitle, TableTitleWrap} from '../LectureList';
 import RegisteredList from './RegisteredList';
 import {useDispatch} from 'react-redux';
-import {setCourseName, setModalName, setScheduleId} from '@store/modalSlice.ts';
+import {
+  setAnswer,
+  setCourseName,
+  setModalName,
+  setScheduleId,
+  setUrl,
+} from '@store/modalSlice.ts';
 import StartButton from '@components/CourseRegister/StartButton.tsx';
-import {getCourseList, getRegisterdList, getWishlist} from '@/apis/api/course';
+import {
+  getCourseList,
+  getMacroCode,
+  getRegisterdList,
+  getWishlist,
+} from '@/apis/api/course';
 import {useAppSelector} from '@/store/hooks';
 import {openModalHandler} from '../common/Modal/handlers/handler';
 import {setEndCount} from '@store/courseRegisteredSlice.ts';
@@ -94,6 +105,9 @@ function CourseRegister() {
     curiNm: string | undefined,
   ) => {
     if (scheduleId && curiNm) {
+      const {data} = await getMacroCode();
+      dispatch(setAnswer(data.answer));
+      dispatch(setUrl(data.url));
       dispatch(setScheduleId(scheduleId));
       dispatch(setCourseName(curiNm));
       dispatch(setModalName('macro'));

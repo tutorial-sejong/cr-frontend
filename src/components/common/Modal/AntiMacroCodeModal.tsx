@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import close from '@assets/img/tab_close_all.png';
-import {useEffect, useState} from 'react';
-import {getMacroCode} from '@apis/api/course.ts';
+import {useCallback, useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 import {useDispatch} from 'react-redux';
 import {
@@ -9,27 +8,20 @@ import {
   closeHandler,
 } from '@components/common/Modal/handlers/handler.tsx';
 import {setLoader} from '@/store/modules/loaderSlice';
-
-interface MacroTypes {
-  url: string;
-  answer: number;
-}
+import {useAppSelector} from '@/store/hooks';
 
 function AntiMacroCodeModal() {
-  const [macroCode, setMacroCode] = useState<MacroTypes>({
-    url: '',
-    answer: 0,
-  });
   const baseURL = import.meta.env.VITE_BASE_URL;
   const [inputCode, setInputCode] = useState<number | string>('');
   const [imageSrc, setImageSrc] = useState<string>('');
+  const answer = useAppSelector(state => state.modalInfo.answer);
+  const macroUrl = useAppSelector(state => state.modalInfo.url);
 
   const dispatch = useDispatch();
 
-  const fetchMacroCode = async () => {
+  const fetchMacroCode = useCallback(async () => {
     try {
-      const {data} = await getMacroCode();
-      const response = await fetch(`${baseURL}${data.url}`, {
+      const response = await fetch(`${baseURL}${macroUrl}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('accessToken')}`,
         },
@@ -42,23 +34,16 @@ function AntiMacroCodeModal() {
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
 
-      setMacroCode(prev => ({
-        ...prev,
-        url: `${baseURL}${data.url}`,
-        answer: data.answer,
-      }));
-      console.log(data);
-
       setImageSrc(url);
     } catch (error) {
       console.error('매크로 코드 불러오기 실패: ', error);
     } finally {
       dispatch(setLoader(false));
     }
-  };
+  }, [baseURL, dispatch]);
 
   const checkCode = () => {
-    if (inputCode === macroCode.answer) {
+    if (inputCode === answer) {
       setInputCode('');
       openModalHandler(dispatch, 'check');
       return;
@@ -75,7 +60,9 @@ function AntiMacroCodeModal() {
 
   useEffect(() => {
     fetchMacroCode();
-  }, []);
+
+    return () => {};
+  }, [fetchMacroCode]);
 
   return (
     <ModalContainer>
