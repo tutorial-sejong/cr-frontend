@@ -7,7 +7,6 @@ import {
   closeHandler,
   openModalHandler,
 } from '@components/common/Modal/handlers/handler.tsx';
-import {postCourse} from '@apis/api/course.ts';
 
 function InfoModal({
   curiNm,
