@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Filters from './Filters';
 import Table from '@components/common/Table';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {CourseTypes} from '@assets/types/tableType';
 import {getCourseList} from '@/apis/api/course';
 
@@ -31,19 +31,22 @@ function LectureList() {
 
   useEffect(() => {
     const getList = async () => {
-      await getCourseList({}).then(res => {
-        if (res) {
-          setList(res);
-        }
-      });
+      const res = await getCourseList({});
+      if (res) {
+        setList(res);
+      }
     };
 
     getList();
   }, []);
 
+  const handleSearch = useCallback(async (newList: CourseTypes[]) => {
+    setList(newList);
+  }, []);
+
   return (
     <ListContainer>
-      <Filters setList={setList} />
+      <Filters onSearch={handleSearch} />
       <TableTitleWrap>
         <TableTitle>개설강좌</TableTitle>
       </TableTitleWrap>
