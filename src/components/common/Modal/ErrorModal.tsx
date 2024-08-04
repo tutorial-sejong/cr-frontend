@@ -1,38 +1,50 @@
 import styled from 'styled-components';
 import close from '@assets/img/tab_close_all.png';
-import check from '@assets/img/check.png';
+import warning from '@assets/img/warning.png';
 import {useDispatch} from 'react-redux';
 import {
   closeHandler,
-  openModalHandler,
 } from '@components/common/Modal/handlers/handler.tsx';
 
-function InfoModal({
-                     curiNm,
-                     type,
-                   }: {
-  curiNm: string;
-  type: string;
+function ErrorModal({
+                      type,
+                      errorField,
+                    }: {
+  type: number;
+  errorField?: string;
 }) {
   const dispatch = useDispatch();
-
-  const eventHandler = async () => {
-    // 수강신청 확인 모달
-    if (type === 'check') {
-      openModalHandler(dispatch, 'loading');
-
-      return;
-    }
-
-    // 수강신청 완료 후 모달
-    closeHandler(dispatch);
-    alert('새로고침으로 수강신청 실패!');
-    location.reload();
-  };
 
   const closeButton = () => {
     closeHandler(dispatch);
   };
+
+  const errorMessage = () => {
+    switch (type) {
+      case 404:
+        return '조회된 내역이 없습니다.';
+      case 409:
+        return '이미 신청된 정보가 존재하므로 신청할 수 없습니다.';
+      case 410:
+        return '수강여석이 없습니다!';
+      case 422:
+        switch (errorField) {
+          case '교수명':
+            return '강의 교수명은 2자 이상 반드시 입력하십시오!';
+          case '교과목명':
+            return '교과목명은 2자 이상 반드시 입력하십시오!';
+          case '학수번호':
+            return '학수번호를 정확하게 입력하십시오!';
+          case '분반':
+            return '분반을 정확하게 입력하십시오!';
+          default:
+            return '422 알 수 없는 오류';
+        }
+      default:
+        return '알 수 없는 오류';
+    }
+  };
+
 
   return (
     <ModalContainer>
@@ -41,46 +53,19 @@ function InfoModal({
           <CloseImage onClick={closeButton} />
         </ModalHeader>
         <ModalBody>
-          <CheckImage />
-          {type === 'check' ? (
-            <>
-              <InfoMessage>
-                선택한 과목을 수강신청 하시겠습니까?
-              </InfoMessage>
-              <InfoMessage>교과목명(Course Title) : {curiNm}</InfoMessage>
-            </>
-          ) : (
-            <>
-              <InfoMessage>
-                과목이 신청 되었습니다. 수강신청내역을 재 조회 하시겠습니까?
-              </InfoMessage>
-              <InfoMessage>
-                ※ 취소를 선택하실 경우 [수강신청내역]이 갱신되지 않습니다.
-              </InfoMessage>
-              <InfoMessage>
-                취소를 선택하실 경우 수강신청 최종 완료 후 반드시
-                [수강신청내역] 재조회를 눌러 신청내역을 확인하세요.
-                [수강신청내역]에 조회된 과목만이 정상적으로 수강신청된
-                과목입니다.
-              </InfoMessage>
-            </>
-          )}
+          <WarningImage />
+          <InfoMessage>{errorMessage()}</InfoMessage>
         </ModalBody>
         <ModalFooter>
-          <FooterBtn
-            type="cancel"
-            style={{marginRight: '10px'}}
-            onClick={closeButton}
-          >
-            취소
-          </FooterBtn>
-          <FooterBtn
-            type="check"
-            style={{marginRight: '20px'}}
-            onClick={eventHandler}
-          >
-            확인
-          </FooterBtn>
+          <>
+            <FooterBtn
+              type="check"
+              style={{marginRight: '20px'}}
+              onClick={closeButton}
+            >
+              확인
+            </FooterBtn>
+          </>
         </ModalFooter>
       </Modal>
     </ModalContainer>
@@ -124,8 +109,9 @@ const CloseImage = styled.img.attrs({
     margin-top: 15px;
     margin-right: 10px;
 `;
-const CheckImage = styled.img.attrs({
-  src: `${check}`,
+
+const WarningImage = styled.img.attrs({
+  src: `${warning}`,
 })`
     display: block;
     width: 50px;
@@ -168,4 +154,4 @@ const FooterBtn = styled.div<{type: string}>`
     }
 `;
 
-export default InfoModal;
+export default ErrorModal;
