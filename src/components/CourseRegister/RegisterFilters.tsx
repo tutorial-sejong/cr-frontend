@@ -8,6 +8,7 @@ import {term, searchOptions} from '@assets/data/filter';
 import {FilterBox, FilterContainer, FilterWrap} from '../LectureList/Filters';
 
 interface FiltersProps {
+  isRegistrationStarted: boolean;
   onSearch: (
     newList: CourseTypes[],
     filter: CourseTypes,
@@ -15,7 +16,7 @@ interface FiltersProps {
   ) => Promise<void>;
 }
 
-function RegisterFilters({onSearch}: FiltersProps) {
+function RegisterFilters({onSearch, isRegistrationStarted}: FiltersProps) {
   const [filter, setFilter] = useState<CourseTypes>({});
   const [searchOption, setSearchOption] = useState<string>('관심과목');
 
@@ -132,6 +133,7 @@ function RegisterFilters({onSearch}: FiltersProps) {
         filter={filter}
         onSearch={onSearch}
         searchOption={searchOption}
+        isRegistrationStarted={isRegistrationStarted}
         isRegister={true}
       />
     </RegisterFilterContainer>
