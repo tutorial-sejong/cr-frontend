@@ -28,7 +28,7 @@ function Login() {
           <WarningWrap>
             비밀번호도 임의의 비밀번호를 입력해주시면 됩니다.
           </WarningWrap>
-          <FaqWrap>[장애 문의]: tutorial-sejong@gmail.com</FaqWrap>
+          <FaqWrap>[ 장애 문의 ]: tutorialsejong@gmail.com</FaqWrap>
           <FaqWrap><img src={githubIcon} alt="github" onClick={() =>  window.open('https://github.com/tutorial-sejong')}/></FaqWrap>
         </FormWrap>
         {/*<FooterWrap>*/}
