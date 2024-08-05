@@ -15,24 +15,26 @@ function StartButton({onClick}: StartBtnProps) {
 
   return (
     <Container>
-      <p>시작 버튼을 누르면, 수강 신청이 시작됩니다. 연습이 끝나면 탭을 변경하고 다시 접속해주세요.</p>
-      <ButtonWrap onClick={handleClick}>시작</ButtonWrap>
+      <p>시작 버튼을 누르면 수강 신청이 시작됩니다. 다시 연습하고 싶다면 한번 더 버튼을 눌러주세요.</p>
+      <p>시작 후, 35초가 지나면 모든 과목이 수강여석 없음으로 변경됩니다.</p>
+      <p>현재 상태를 확인하고 싶다면, 재조회 버튼을 눌러주세요.</p>
+      <ButtonWrap onClick={handleClick}>시작 / 초기화</ButtonWrap>
     </Container>
   );
 }
 
 const Container = styled.div`
-  > p {
-    font-weight: normal;
-    font-size: 1.6rem;
-    margin-bottom: 5px;
-  }
+    > p {
+        font-weight: normal;
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
 `;
 const ButtonWrap = styled.button`
   ${props => props.theme.texts.content};
   background-color: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.white};
-  width: 6rem;
+  width: 8rem;
   height: 2.4rem;
   margin-bottom: 10px;
 

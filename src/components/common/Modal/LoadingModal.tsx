@@ -19,10 +19,10 @@ function LoadingModal({scheduleId}: {scheduleId: number}) {
     const randomFailNumber = getRandomInt(1, 10);
 
     setTimeout(async () => {
-      // 17초 지난 뒤 신청
+      // 35초 지난 뒤 신청
       if (endCount || randomFailNumber === 1) {
-        openModalHandler(dispatch, 'fail');
         dispatch(setType(410));
+        openModalHandler(dispatch, 'fail');
         return;
       }
 

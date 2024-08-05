@@ -31,7 +31,6 @@ const colData = [
 function CourseRegister() {
   const [list, setList] = useState<CourseTypes[]>([]);
   const [registeredList, setRegisteredList] = useState<CourseTypes[]>([]);
-  const [startVisible, setStartVisible] = useState<boolean>(true);
   const [currentFilter, setCurrentFilter] = useState<CourseTypes>({});
   const [currentSearchOption, setCurrentSearchOption] = useState<string>('관심과목');
   const [isRegistrationStarted, setIsRegistrationStarted] = useState<boolean>(false);
@@ -72,14 +71,14 @@ function CourseRegister() {
   const handleStartButtonClick = () => {
     setList([]);
     setRegisteredList([]);
-    setStartVisible(false);
     setIsRegistrationStarted(true);
     setIsFirstSearch(true);
+    dispatch(setEndCount(false));
 
     setTimeout(() => {
-      console.log('17초 지남');
+      console.log('35초 지남');
       dispatch(setEndCount(true));
-    }, 17000);
+    }, 35000);
 
   };
 
@@ -97,12 +96,10 @@ function CourseRegister() {
 
   return (
     <>
-      {startVisible && (
-        <StartButton
-          onClick={handleStartButtonClick}
-        />
-      )}
-      <RegisterFilters onSearch={handleSearch} />
+      <StartButton
+        onClick={handleStartButtonClick}
+      />
+      <RegisterFilters onSearch={handleSearch} isRegistrationStarted={isRegistrationStarted} />
       <TableTitleWrap>
         <TableTitle>수강대상교과목</TableTitle>
       </TableTitleWrap>

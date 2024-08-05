@@ -92,7 +92,7 @@ function AntiMacroCodeModal() {
             </MacroCodHeader>
             <MacroCodeInput
               type='number'
-              value={inputCode}
+              value={inputCode || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setInputCode(e.target.value);
               }}
