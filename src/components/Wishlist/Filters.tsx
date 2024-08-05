@@ -56,11 +56,13 @@ function Filters({setSearchResults}: FiltersProps) {
       case '학수번호 검색':
         if (!searchParams.curiNo || searchParams.curiNo.length < 2) {
           setError('학수번호');
+          return;
         } else {
           filter.curiNm = searchParams.curiNm;
         }
         if (!searchParams.classNo || searchParams.classNo.length < 2) {
           setError('분반');
+          return;
         } else {
           filter.curiNm = searchParams.curiNm;
         }
@@ -68,6 +70,7 @@ function Filters({setSearchResults}: FiltersProps) {
       case '교과목명 검색':
         if (!searchParams.curiNm || searchParams.curiNm.length < 2) {
           setError('교과목명');
+          return;
         } else {
           filter.curiNm = searchParams.curiNm;
         }
@@ -75,6 +78,7 @@ function Filters({setSearchResults}: FiltersProps) {
       case '강의교수 검색':
         if (!searchParams.lesnEmp || searchParams.lesnEmp.length < 2) {
           setError('강의교수');
+          return;
         } else {
           filter.curiNm = searchParams.curiNm;
         }
