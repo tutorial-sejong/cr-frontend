@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Bg from '@assets/img/login_bg.png';
 import Logo from '@assets/img/logo.png';
 import LoginForm from '@components/LoginForm/index';
-
+import githubIcon from '@assets/img/github-fill.svg';
 function Login() {
   return (
     <Container>
@@ -23,17 +23,21 @@ function Login() {
         <FormWrap>
           <LoginForm />
           <WarningWrap>
-            동일한 학번과 이름으로 로그인하면 이전의 데이터를 불러옵니다.
+            동일한 학번으로 로그인하면 이전의 관심과목을 불러옵니다.
           </WarningWrap>
-          <FaqWrap>[장애 문의]</FaqWrap>
+          <WarningWrap>
+            비밀번호도 임의의 비밀번호를 입력해주시면 됩니다.
+          </WarningWrap>
+          <FaqWrap>[장애 문의]: tutorial-sejong@gmail.com</FaqWrap>
+          <FaqWrap><img src={githubIcon} alt="github" onClick={() =>  window.open('https://github.com/tutorial-sejong')}/></FaqWrap>
         </FormWrap>
-        <FooterWrap>
-          <em>세종대학교</em> 05006 서울특별시 광진구 능동로 209 (군자동) |{' '}
-          <em>TEL </em>
-          02.3408.3114 | <em>E-MAIL</em> itservice@sejong.ac.kr
-          <br />
-          <p>COPYRIGHT 2012 SEJONG UNIVERSITY. ALL RIGHTS RESVERED.</p>
-        </FooterWrap>
+        {/*<FooterWrap>*/}
+        {/*  <em>세종대학교</em> 05006 서울특별시 광진구 능동로 209 (군자동) |{' '}*/}
+        {/*  <em>TEL </em>*/}
+        {/*  02.3408.3114 | <em>E-MAIL</em> itservice@sejong.ac.kr*/}
+        {/*  <br />*/}
+        {/*  <p>COPYRIGHT 2012 SEJONG UNIVERSITY. ALL RIGHTS RESVERED.</p>*/}
+        {/*</FooterWrap>*/}
       </Box>
     </Container>
   );
@@ -88,6 +92,13 @@ const WarningWrap = styled.p`
 
 const FaqWrap = styled.div`
   ${props => props.theme.texts.loginContent};
+    > img {
+        width: 30px;
+        cursor: pointer;
+        display: block;
+        text-align: center;
+        margin: 20px auto;
+    }
 `;
 
 const FooterWrap = styled.div`
