@@ -5,8 +5,18 @@ import {theme} from './styles/theme/Theme';
 import Home from '@pages/index/Home';
 import Login from '@pages/index/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import {useEffect} from 'react';
 
+import ReactGA from 'react-ga4';
+
+function initializeAnalytics() {
+  ReactGA.initialize(import.meta.env.VITE_GTM_ID);
+  ReactGA.send({ hitType: 'pageview', page: '/' });
+}
 function App() {
+  useEffect(() => {
+    initializeAnalytics();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

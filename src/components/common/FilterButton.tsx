@@ -16,7 +16,7 @@ interface ButtonProps {
     searchOption: string,
   ) => Promise<void>;
   searchOption: string;
-  isRegistrationStarted: boolean;
+  isRegistrationStarted?: boolean;
 }
 
 function FilterButton({
