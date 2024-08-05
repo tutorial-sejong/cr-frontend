@@ -28,7 +28,7 @@ function LoginForm() {
     setRandomStudentId(generateRandomStudentId);
   };
   const handleCopyStudentId = () => {
-    navigator.clipboard.writeText(randomStudentId)
+    navigator.clipboard.writeText(randomStudentId.toString())
       .then(() => {
         alert('복사 완료!');
       })

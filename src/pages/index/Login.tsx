@@ -101,7 +101,7 @@ const FaqWrap = styled.div`
     }
 `;
 
-const FooterWrap = styled.div`
+/*const FooterWrap = styled.div`
   ${props => props.theme.texts.loginContent};
   letter-spacing: 0;
   > em {
@@ -114,6 +114,6 @@ const FooterWrap = styled.div`
     font-size: 1.2rem;
     margin: 0.7rem 0 3rem 0;
   }
-`;
+`;*/
 
 export default Login;
