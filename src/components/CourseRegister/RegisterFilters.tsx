@@ -5,14 +5,14 @@ import FilterButton from '../common/FilterButton';
 import FilterInput from '../common/FilterInput';
 import SelectBox from '../common/SelectBox';
 import {term, searchOptions} from '@assets/data/filter';
-import {
-  FilterBox,
-  FilterContainer,
-  FilterWrap,
-} from '../LectureList/Filters';
+import {FilterBox, FilterContainer, FilterWrap} from '../LectureList/Filters';
 
 interface FiltersProps {
-  onSearch: (newList: CourseTypes[], filter: CourseTypes, searchOption: string) => Promise<void>;
+  onSearch: (
+    newList: CourseTypes[],
+    filter: CourseTypes,
+    searchOption: string,
+  ) => Promise<void>;
 }
 
 function RegisterFilters({onSearch}: FiltersProps) {
@@ -132,6 +132,7 @@ function RegisterFilters({onSearch}: FiltersProps) {
         filter={filter}
         onSearch={onSearch}
         searchOption={searchOption}
+        isRegister={true}
       />
     </RegisterFilterContainer>
   );

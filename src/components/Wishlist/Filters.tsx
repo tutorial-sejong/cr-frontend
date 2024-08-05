@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import search from '@assets/img/search.png';
 import styled from 'styled-components';
 import SelectBox from '@components/common/SelectBox';
 import FilterInput from '@components/common/FilterInput';
-import { getCourseList } from '@/apis/api/course';
-import { CourseTypes } from '@/assets/types/tableType';
+import {getCourseList} from '@/apis/api/course';
+import {CourseTypes} from '@/assets/types/tableType';
+import {openModalHandler} from '../common/Modal/handlers/handler';
+import {useDispatch} from 'react-redux';
+import {setField, setType} from '@/store/modules/errorSlice';
 
 const searchOptions = [
-  { id: 0, value: '학수번호 검색' },
-  { id: 1, value: '교과목명 검색' },
-  { id: 2, value: '강의교수 검색' },
+  {id: 0, value: '학수번호 검색'},
+  {id: 1, value: '교과목명 검색'},
+  {id: 2, value: '강의교수 검색'},
 ];
 
 interface SearchParams {
@@ -31,7 +34,8 @@ interface FiltersProps {
   setSearchResults: React.Dispatch<React.SetStateAction<CourseTypes[]>>;
 }
 
-function Filters({ setSearchResults }: FiltersProps) {
+function Filters({setSearchResults}: FiltersProps) {
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useState({
     searchType: '학수번호 검색',
     curiNo: '',
@@ -40,18 +44,40 @@ function Filters({ setSearchResults }: FiltersProps) {
     lesnEmp: '',
   });
 
+  const setError = (option: string) => {
+    openModalHandler(dispatch, 'fail');
+    dispatch(setType(422));
+    dispatch(setField(option));
+  };
+
   const handleSearch = async () => {
     const filter: FilterParams = {};
     switch (searchParams.searchType) {
       case '학수번호 검색':
-        if (searchParams.curiNo) filter.curiNo = searchParams.curiNo;
-        if (searchParams.classNo) filter.classNo = searchParams.classNo;
+        if (!searchParams.curiNo || searchParams.curiNo.length < 2) {
+          setError('학수번호');
+        } else {
+          filter.curiNm = searchParams.curiNm;
+        }
+        if (!searchParams.classNo || searchParams.classNo.length < 2) {
+          setError('분반');
+        } else {
+          filter.curiNm = searchParams.curiNm;
+        }
         break;
       case '교과목명 검색':
-        if (searchParams.curiNm) filter.curiNm = searchParams.curiNm;
+        if (!searchParams.curiNm || searchParams.curiNm.length < 2) {
+          setError('교과목명');
+        } else {
+          filter.curiNm = searchParams.curiNm;
+        }
         break;
       case '강의교수 검색':
-        if (searchParams.lesnEmp) filter.lesnEmp = searchParams.lesnEmp;
+        if (!searchParams.lesnEmp || searchParams.lesnEmp.length < 2) {
+          setError('강의교수');
+        } else {
+          filter.curiNm = searchParams.curiNm;
+        }
         break;
     }
 
@@ -65,7 +91,7 @@ function Filters({ setSearchResults }: FiltersProps) {
   };
 
   const handleInputChange = (name: keyof SearchParams, value: string) => {
-    setSearchParams(prev => ({ ...prev, [name]: value }));
+    setSearchParams(prev => ({...prev, [name]: value}));
   };
 
   const renderSearchForm = () => {
@@ -121,21 +147,21 @@ function Filters({ setSearchResults }: FiltersProps) {
           <FilterWrap>
             <span>조직분류</span>
             <SelectBox
-              options={[{ id: 0, value: '학부' }]}
+              options={[{id: 0, value: '학부'}]}
               tagged={true}
               disabled={true}
               sizes='m'
-              onSelect={() => { }}
+              onSelect={() => {}}
             />
           </FilterWrap>
           <FilterWrap>
             <span>년도/학기</span>
             <SelectBox
-              options={[{ id: 0, value: '2024/2학기' }]}
+              options={[{id: 0, value: '2024/2학기'}]}
               tagged={true}
               disabled={true}
               sizes='m'
-              onSelect={() => { }}
+              onSelect={() => {}}
             />
           </FilterWrap>
           <FilterBreak />
@@ -152,7 +178,8 @@ function Filters({ setSearchResults }: FiltersProps) {
         </FilterBox>
         <SearchButton onClick={handleSearch}>
           <img src={search} />
-          검색</SearchButton>
+          검색
+        </SearchButton>
       </FilterArea>
     </FilterContainer>
   );
