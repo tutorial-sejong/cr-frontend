@@ -60,10 +60,13 @@ function FilterButton({
   };
 
   const handleClick = async () => {
-    if (isRegistrationStarted) {
+    if (label === '조회') {
       searchLecture();
-
+      return;
     }
+
+    if (label === '검색' && isRegistrationStarted) searchLecture();
+    return;
   };
 
   return (
