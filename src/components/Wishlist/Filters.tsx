@@ -58,13 +58,15 @@ function Filters({setSearchResults}: FiltersProps) {
           setError('학수번호');
           return;
         } else {
-          filter.curiNm = searchParams.curiNm;
+          // filter.curiNm = searchParams.curiNm;
+          filter.curiNo = searchParams.curiNo;
+
         }
         if (!searchParams.classNo || searchParams.classNo.length < 2) {
           setError('분반');
           return;
         } else {
-          filter.curiNm = searchParams.curiNm;
+          filter.classNo = searchParams.classNo;
         }
         break;
       case '교과목명 검색':
@@ -80,12 +82,14 @@ function Filters({setSearchResults}: FiltersProps) {
           setError('강의교수');
           return;
         } else {
-          filter.curiNm = searchParams.curiNm;
+          filter.lesnEmp = searchParams.lesnEmp;
         }
         break;
     }
 
     try {
+
+      console.log(filter);
       const data = await getCourseList(filter);
       setSearchResults(Array.isArray(data) ? data : []);
     } catch (error) {
