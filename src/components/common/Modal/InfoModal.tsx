@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import close from '@assets/img/tab_close_all.png';
+import close from '@assets/img/close-line.png';
 import check from '@assets/img/check.png';
 import {useDispatch} from 'react-redux';
 import {
@@ -118,10 +118,10 @@ const CloseImage = styled.img.attrs({
   src: `${close}`,
 })`
     display: block;
-    width: 18px;
-    height: 17px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-right: 10px;
 `;
 const CheckImage = styled.img.attrs({

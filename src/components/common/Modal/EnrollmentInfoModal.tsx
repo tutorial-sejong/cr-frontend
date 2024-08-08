@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components';
-import close from '@assets/img/tab_close_all.png';
+import close from '@assets/img/close-line.png';
 
 interface EnrollmentsProps {
   schDeptAlias: string;
@@ -161,12 +161,12 @@ const Title = styled.div`
 const CloseImage = styled.img.attrs({
   src: `${close}`,
 })`
-  display: block;
-  width: 18px;
-  height: 17px;
-  cursor: pointer;
-  margin-top: 15px;
-  margin-right: 10px;
+    display: block;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
 `;
 
 const ModalBody = styled.div``;

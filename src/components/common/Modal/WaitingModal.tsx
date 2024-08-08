@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import logo from '@/assets/img/logo.webp';
-import close from '@/assets/img/tab_close_all.png';
+import close from '@/assets/img/close-line.png';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {clearModalInfo} from '@store/modalSlice.ts';
@@ -205,7 +205,7 @@ const StopButton = styled.div`
 const CloseImage = styled.img.attrs({
   src: `${close}`,
 })`
-  width: 10px;
+  width: 15px;
   margin-right: 10px;
 `;
 

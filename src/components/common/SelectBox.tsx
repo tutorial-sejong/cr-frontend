@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import styled, {css} from 'styled-components';
-import arrow from '@assets/img/input_dropdown.png';
-import tag from '@assets/img/tag.png';
+import arrow from '@assets/img/arrow-down-s-fill.png';
 
 interface OptionsInterface {
   id: number;
@@ -73,7 +72,7 @@ function SelectBox({
   return (
     <SelectContainer ref={dropdownRef} sizes={sizes}>
       <InputContainer disabled={disabled}>
-        {tagged && <TagWrap src={tag} disabled={disabled} />}
+        {/*{tagged && <TagWrap src={tag} disabled={disabled} />}*/}
         <InputWrap readOnly={disabled} value={input} onChange={handleInput} />
         <ArrowWrap src={arrow} onClick={handleBtnClick} />
       </InputContainer>
@@ -156,13 +155,7 @@ const InputWrap = styled.input`
 const ArrowWrap = styled.img`
   position: absolute;
   right: 0.3rem;
-  top: 10%;
-  border: 1px solid transparent;
-  border-radius: 5px;
 
-  &:hover {
-    border: 1px solid ${props => props.theme.colors.neutral5};
-  }
 `;
 
 const SelectWrap = styled.ul`

@@ -6,13 +6,7 @@ import {baseAPI} from '@/apis/utils/instance';
 import {useAppSelector} from '@/store/hooks';
 import {clearUserInfo} from '@/store/userSlice';
 import {deleteAll} from '@/store/modules/tabSlice';
-import Left from '@assets/img/btn_main_top_left.svg?react';
-import Right from '@assets/img/btn_main_top_right.svg?react';
 import logout from '@assets/img/logout.png';
-import down from '@assets/img/top_menu_down.png';
-import notice from '@assets/img/notice.png';
-import setting from '@assets/img/setitng.png';
-import menu from '@assets/img/menu.png';
 import Clock from './Clock';
 
 function TopMenu() {
@@ -30,25 +24,8 @@ function TopMenu() {
 
   return (
     <TopMenuContainer>
-      <ArrowWrap>
-        <StyledLeft />
-        <StyledRight />
-      </ArrowWrap>
       <Clock name={username || '세종대'} />
       <LogoutBtn onClick={handleLogout} />
-      <DropdownWrap>
-        PC
-        <img src={down} />
-      </DropdownWrap>
-      <DropdownWrap>
-        KOR
-        <img src={down} />
-      </DropdownWrap>
-      <GroupWrap>
-        <img src={notice} />
-        <img src={setting} />
-        <img src={menu} />
-      </GroupWrap>
     </TopMenuContainer>
   );
 }
@@ -59,35 +36,15 @@ const TopMenuContainer = styled.div`
   column-gap: 1rem;
 `;
 
-const ArrowWrap = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 1.2rem;
-  margin-right: 1.5rem;
-`;
-
-const StyledLeft = styled(Left)`
-  fill: ${props => props.theme.colors.neutral4};
-  &:hover {
-    fill: ${props => props.theme.colors.primary};
-  }
-`;
-
-const StyledRight = styled(Right)`
-  fill: ${props => props.theme.colors.neutral4};
-  &:hover {
-    fill: ${props => props.theme.colors.primary};
-  }
-`;
-
 const LogoutBtn = styled.button`
-  background-image: url(${logout});
-  width: 1.4rem;
-  height: 1.4rem;
+    background-image: url(${logout});
+    background-size: 1.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
 
-  &:hover {
-    filter: brightness(20%);
-  }
+    &:hover {
+        filter: brightness(20%);
+    }
 `;
 
 const DropdownWrap = styled.div`

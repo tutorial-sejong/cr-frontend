@@ -113,10 +113,6 @@ function Filters({onSearch}: FiltersProps) {
           ROTC과목은 개설학과전공을 대양휴머니티칼리지(또는 교양학부)로 하여
           조회하시기 바랍니다.
         </p>
-        <p>
-          ※ 과목에 대한 문의는 개설학과가 아닌 주관학과에 문의하시기 바라며,
-          영어과목에 대한 문의는 교양영어실로 문의하시기 바랍니다.
-        </p>
       </WarningWrap>
     </FilterContainer>
   );

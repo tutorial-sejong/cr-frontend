@@ -15,7 +15,7 @@ import reloadIcon from '@/assets/img/refresh-line.png';
 
 export type setType = string | number | undefined;
 
-function LoginForm() {
+function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
   const [id, setId] = useState<setType>('');
   const [password, setPassword] = useState<setType>('');
   const [error, setError] = useState<string | null>(null);
@@ -42,35 +42,50 @@ function LoginForm() {
       return;
     }
 
-    try {
-      const response = await login({
-        studentId: id.toString(),
-        password: password.toString(),
-      });
-      console.log('Login successful');
-
-      Cookies.set('accessToken', response.accessToken, {expires: 0.5 / 24});
-      baseAPI.defaults.headers.common['Authorization'] =
-        `Bearer ${response.accessToken}`;
-
-      dispatch(
-        setUserInfo({
-          username: response.username,
-        }),
-      );
-
-      navigate('/');
-    } catch (error) {
-      console.error('Login failed', error);
-      setError('로그인에 실패했습니다. 다시 시도해주세요.');
+    if (id.length < 11) {
+      setError('11자리 이상의 임의 학번을 입력해주세요!');
+      return;
     }
+
+    if (!isTermsCheck) {
+      setError('이용약관에 동의하지 않으셨습니다.');
+
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth'
+      });
+      return;
+    }
+
+      try {
+        const response = await login({
+          studentId: id.toString(),
+          password: password.toString(),
+        });
+        console.log('Login successful');
+
+        Cookies.set('accessToken', response.accessToken, {expires: 0.5 / 24});
+        baseAPI.defaults.headers.common['Authorization'] =
+          `Bearer ${response.accessToken}`;
+
+        dispatch(
+          setUserInfo({
+            username: response.username,
+          }),
+        );
+
+        navigate('/');
+      } catch (error) {
+        console.error('Login failed', error);
+        setError('로그인에 실패했습니다. 다시 시도해주세요.');
+      }
   };
 
   return (
     <FormContainer>
       <InputContainer>
         <InputBox>
-          <LabelWrap>임의 학번 생성</LabelWrap>
+          <LabelWrap>임의 학번, 비밀번호 생성</LabelWrap>
           <RandomStudentIdContainer>
             <RandomStudentIdInput>{randomStudentId}</RandomStudentIdInput>
             <GenerateButton onClick={handleRandomStudentId}><img src={reloadIcon} alt="reload" /></GenerateButton>
@@ -85,12 +100,8 @@ function LoginForm() {
           <LabelWrap>비밀번호</LabelWrap>
           <FormInput value={password} setValue={setPassword} type="password" />
         </InputBox>
-        <CheckboxWrap>
-          <input type="checkbox" id="keyboardSecurity" checked readOnly />
-          <label htmlFor="keyboardSecurity">키보드 보안</label>
-        </CheckboxWrap>
       </InputContainer>
-      <FindWrap>아이디 찾기 | 비밀번호 찾기</FindWrap>
+      {/*<FindWrap>아이디 찾기 | 비밀번호 찾기</FindWrap>*/}
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <LoginBtnWrap onClick={handleLogin} type="button">
         로그인
@@ -134,8 +145,8 @@ const GenerateButton = styled.button`
     padding: 10px;
     font-size: 1.7rem;
     font-weight: 700;
-    
-    >img {
+
+    > img {
         width: 20px;
     }
 `;
@@ -145,10 +156,6 @@ const LabelWrap = styled.div`
     margin-bottom: 0.7rem;
 `;
 
-const CheckboxWrap = styled.div`
-    margin-left: -0.5rem;
-    margin-top: 1rem;
-`;
 
 const FindWrap = styled.div`
     ${props => props.theme.texts.tableTitle};
@@ -160,7 +167,7 @@ const FindWrap = styled.div`
 const LoginBtnWrap = styled.button`
     width: 100%;
     height: 5rem;
-    background-color: #c3002f;
+    background-color: #46515b;
     border: none;
     border-radius: 5rem;
     color: ${props => props.theme.colors.white};
