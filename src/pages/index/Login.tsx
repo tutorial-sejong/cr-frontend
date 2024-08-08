@@ -1,9 +1,19 @@
 import styled from 'styled-components';
-import Bg from '@assets/img/login_bg.png';
-import Logo from '@assets/img/logo.png';
+import Bg from '@assets/img/login_bg.webp';
+import Logo from '@assets/img/tutorial_sejong_logo.webp';
+
 import LoginForm from '@components/LoginForm/index';
 import githubIcon from '@assets/img/github-fill.svg';
+import {useState} from 'react';
+
 function Login() {
+
+  const [isTermsCheck, setTermsCheck] = useState(false);
+
+  const handleTermsCheck = (e) => {
+    setTermsCheck(e.target.checked);
+  };
+
   return (
     <Container>
       <Box>
@@ -11,26 +21,62 @@ function Login() {
           <img src={Logo} />
         </LogoWrap>
         <TitleWrap>
-          <Title>통합 로그인</Title>
+          <Title>로그인</Title>
+          <SubTitle>본 서비스는 실제 수강신청 시스템이 아닙니다.</SubTitle>
           <p>
-            서비스 이용을 끝낸 후에는 개인정보보호를 위하여 꼭 <em>로그아웃</em>
-            을 해주시기 바랍니다.
-            <br /> 아이디는 학생은 <em>학번</em>, 교수/직원은{' '}
-            <em>포털 아이디(이메일아이디)</em>
-            또는 <em>직번</em>입니다.
+            수강신청 연습사이트 <em>tutorial-sejong</em> 입니다.
+            <br />
+            <em>임의</em>의 <em>학번</em>을 입력해주시면 됩니다.
+            <br />
+            동일한 학번으로 로그인하면 <em>이전</em>의 <em>관심과목</em>을 불러옵니다.
+            {/*서비스 이용을 끝낸 후에는 개인정보보호를 위하여 꼭 <em>로그아웃</em>*/}
+            {/*을 해주시기 바랍니다.*/}
+            {/*<br /> 아이디는 학생은 <em>학번</em>, 교수/직원은{' '}*/}
+            {/*<em>포털 아이디(이메일아이디)</em>*/}
+            {/*또는 <em>직번</em>입니다.*/}
           </p>
         </TitleWrap>
         <FormWrap>
-          <LoginForm />
-          <WarningWrap>
-            동일한 학번으로 로그인하면 이전의 관심과목을 불러옵니다.
-          </WarningWrap>
-          <WarningWrap>
-            비밀번호도 임의의 비밀번호를 입력해주시면 됩니다.
-          </WarningWrap>
+          <LoginForm isTermsCheck={isTermsCheck} />
+          {/*<WarningWrap>*/}
+          {/*</WarningWrap>*/}
+          {/*<WarningWrap>*/}
+          {/*</WarningWrap>*/}
           <FaqWrap>[ 장애 문의 ]: tutorialsejong@gmail.com</FaqWrap>
-          <FaqWrap><img src={githubIcon} alt="github" onClick={() =>  window.open('https://github.com/tutorial-sejong')}/></FaqWrap>
+          <FaqWrap><img src={githubIcon} alt="github"
+                        onClick={() => window.open('https://github.com/tutorial-sejong')} /></FaqWrap>
         </FormWrap>
+        <TermsContainer>
+          <TermsTitle>서비스 이용약관 동의</TermsTitle>
+          <List>
+            <ListItem>
+              본 서비스는 <Highlight>실제 수강신청 사이트가 아닙니다.</Highlight>
+            </ListItem>
+            <ListItem>
+              본 서비스에서의 학번은 <Highlight>실제 학번이 아닌 11자리 이상의 임의의 학번</Highlight>을 입력하셔야 됩니다.
+            </ListItem>
+            <ListItem>
+              본 서비스는 사용자가 입력한 학번만을 수집하며, 이 정보는 <Highlight>암호화 기술</Highlight>을 사용하여 보호됩니다.
+            </ListItem>
+            <ListItem>
+              암호화된 학번은 사용자의 관심과목 목록을 저장하는 데만 사용되며, 다른 용도로는 사용되지 않습니다.
+            </ListItem>
+            <ListItem>
+              저장된 정보는 <Highlight>매주 일요일에 자동으로 삭제</Highlight>됩니다.
+            </ListItem>
+            <ListItem>
+              일요일 전에 관심과목 목록을 삭제하고 싶으시면, <Highlight>https://tutorial-sejong.com/delete</Highlight>로 접속하여 로그인 시 입력한 학번을
+              입력하시면 됩니다.
+            </ListItem>
+            <ListItem>
+              학번을 기억하지 못하실 경우, 메일(<Highlight>tutorialsejong@gmail.com</Highlight>)로 문의 주시면, 관심과목 목록을 기준으로 삭제를 도와드리겠습니다.
+            </ListItem>
+          </List>
+          <CheckboxWrap>
+            <input type="checkbox" id="keyboardSecurity" checked={isTermsCheck} onChange={handleTermsCheck} />
+            <label htmlFor="keyboardSecurity">이용약관동의</label>
+          </CheckboxWrap>
+        </TermsContainer>
         {/*<FooterWrap>*/}
         {/*  <em>세종대학교</em> 05006 서울특별시 광진구 능동로 209 (군자동) |{' '}*/}
         {/*  <em>TEL </em>*/}
@@ -46,52 +92,65 @@ function Login() {
 const Container = styled.div`
     background: url(${Bg}) 50% 50% no-repeat;
     background-size: cover;
-    height: 480px;
+    height: 700px;
     background-color: #fafafa;
     width: 100%;
 `;
 
 const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const LogoWrap = styled.div`
-  margin: 3rem 0;
+    margin: 3rem 0;
+
+    > img {
+        width: 150px;
+    }
 `;
 
 const TitleWrap = styled.div`
-  color: ${props => props.theme.colors.white};
-  text-align: center;
-  margin-bottom: 2.5rem;
-  > p {
-    line-height: 2.5rem;
-    font-weight: 600;
-    font-size: 1.35rem;
-  }
-  > p > em {
-    color: #ffea9b;
-  }
+    color: ${props => props.theme.colors.white};
+    text-align: center;
+    margin-bottom: 2.5rem;
+
+    > p {
+        line-height: 2.5rem;
+        font-weight: 600;
+        font-size: 1.35rem;
+    }
+
+    > p > em {
+        color: #ffea9b;
+    }
 `;
 
 const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+`;
+
+const SubTitle = styled.h2`
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
 `;
 
 const FormWrap = styled.div`
-  margin-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
 `;
 
-const WarningWrap = styled.p`
-  ${props => props.theme.texts.loginContent};
-  margin-bottom: 2.5rem;
-`;
+// const WarningWrap = styled.p`
+//     ${props => props.theme.texts.loginContent};
+//     margin-bottom: 2.5rem;
+// `;
 
 const FaqWrap = styled.div`
-  ${props => props.theme.texts.loginContent};
+    ${props => props.theme.texts.loginContent};
+
     > img {
         width: 30px;
         cursor: pointer;
@@ -116,4 +175,53 @@ const FaqWrap = styled.div`
   }
 `;*/
 
+const TermsContainer = styled.div`
+    max-width: 880px;
+    margin: 0 auto 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const CheckboxWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -0.5rem;
+    margin-top: 1rem;
+`;
+
+const TermsTitle = styled.h1`
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+`;
+
+const List = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+`;
+
+const ListItem = styled.li`
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+
+    &::before {
+        content: '•';
+        color: #007bff;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+`;
+
+const Highlight = styled.span`
+    font-weight: bold;
+    color: #007bff;
+`;
 export default Login;

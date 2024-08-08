@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logo from '@assets/img/main_logo.png';
+import logo from '@assets/img/tutorial_sejong_logo.webp';
 import TopNav from './TopNav';
 import TopMenu from './TopMenu';
 
@@ -25,6 +25,11 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
+    > div >img {
+        height: 60px;
+        padding-left: 5rem;
+        padding-right: 3.5rem;
+    }
 `;
 
 const HeaderBox = styled.div`

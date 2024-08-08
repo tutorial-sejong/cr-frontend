@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import search from '@assets/img/search.png';
 import styled from 'styled-components';
 import SelectBox from '@components/common/SelectBox';
 import FilterInput from '@components/common/FilterInput';
@@ -185,7 +184,6 @@ function Filters({setSearchResults}: FiltersProps) {
           {renderSearchForm()}
         </FilterBox>
         <SearchButton onClick={handleSearch}>
-          <img src={search} />
           검색
         </SearchButton>
       </FilterArea>
@@ -230,21 +228,22 @@ const FilterWrap = styled.div`
 `;
 
 const SearchButton = styled.button`
-  ${props => props.theme.texts.content};
-  background: linear-gradient(
-    90deg,
-    rgba(163, 20, 50, 1) 0%,
-    rgba(51, 77, 97, 1) 100%
-  );
-  color: ${props => props.theme.colors.white};
-  min-width: 6.5rem;
-  height: 2.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  border: none;
-  cursor: pointer;
+    ${props => props.theme.texts.content};
+    //background: linear-gradient(
+    //  90deg,
+    //  rgba(163, 20, 50, 1) 0%,
+    //  rgba(51, 77, 97, 1) 100%
+    //);
+    background-color: #46515b;
+    color: ${props => props.theme.colors.white};
+    min-width: 6.5rem;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    border: none;
+    cursor: pointer;
 `;
 
 export default Filters;

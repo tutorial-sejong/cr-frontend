@@ -1,26 +1,15 @@
 import styled from 'styled-components';
-import {useState} from 'react';
 import BarTitle from './BarTitle';
 import Menu from './Menu';
-import close from '@assets/img/menu_close.png';
 
 function Menubar() {
-  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <BarContainer>
-      {isOpen ? (
         <OpendBar>
-          <BarTitle setIsOpen={setIsOpen} />
+          <BarTitle />
           <Menu />
         </OpendBar>
-      ) : (
-        <ClosedBar>
-          <OpenBtn onClick={() => setIsOpen(true)}>
-            <img src={close} />
-          </OpenBtn>
-        </ClosedBar>
-      )}
     </BarContainer>
   );
 }

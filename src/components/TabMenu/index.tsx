@@ -1,8 +1,6 @@
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import styled from 'styled-components';
 import Tab from './Tab';
-import closeAll from '@assets/img/tab_close_all.png';
-import up from '@assets/img/btn_gnb_cu.png';
 import {deleteAll, setFocused} from '@/store/modules/tabSlice';
 
 function TabMenu() {
@@ -31,10 +29,6 @@ function TabMenu() {
           />
         ))}
       </TabWrap>
-      <ButtonWrap>
-        <CloseAllBtn onClick={handleCloseAll} />
-        <img src={up} />
-      </ButtonWrap>
     </TabMenuContainer>
   );
 }
@@ -54,19 +48,5 @@ const TabWrap = styled.div`
   display: flex;
 `;
 
-const ButtonWrap = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 1rem;
-  column-gap: 0.8rem;
-`;
-
-const CloseAllBtn = styled.button`
-  width: 1.2rem;
-  height: 100%;
-  background-image: url(${closeAll});
-  background-repeat: no-repeat;
-  background-position-y: center;
-`;
 
 export default TabMenu;

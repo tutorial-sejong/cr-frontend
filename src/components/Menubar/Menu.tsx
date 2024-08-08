@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
-import arrow from '@assets/img/arrow_up.png';
-import hyphen from '@assets/img/menu2_close.png';
 import MenuItem from './MenuItem';
 import {addTab, setFocused} from '@/store/modules/tabSlice';
 
@@ -12,8 +10,8 @@ interface ItemProps {
 }
 
 const menuItems: ItemProps[] = [
-  {id: 0, name: '강의시간표/수업계획서조회', type: 'view'},
-  {id: 1, name: '관심과목 담기', type: 'study'},
+  {id: 0, name: '강의시간표/수업계획서조회', type: 'search'},
+  {id: 1, name: '관심과목 담기', type: 'bookmark'},
   {id: 2, name: '수강신청', type: 'study'},
 ];
 
@@ -28,12 +26,11 @@ function Menu() {
 
   return (
     <MenuContainer>
-      <MenuTitleBox>
-        <MenuTitleWrap>수강 및 변동신청</MenuTitleWrap>
-        <img src={arrow} />
-      </MenuTitleBox>
+      {/*<MenuTitleBox>*/}
+      {/*  <MenuTitleWrap>수강 및 변동신청</MenuTitleWrap>*/}
+      {/*  <img src={arrow} />*/}
+      {/*</MenuTitleBox>*/}
       <MenuSubtitleBox>
-        <img src={hyphen} />
         수강신청 및 기타
       </MenuSubtitleBox>
       <DetailBox>

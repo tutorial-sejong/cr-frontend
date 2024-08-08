@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import dropdown from '@assets/img/table_drodown.gif';
+import dropdown from '@assets/img/arrow-down-s-fill.png';
 import {useEffect, useRef, useState} from 'react';
 
 interface HeadProps {
@@ -136,9 +136,10 @@ const Resizer = styled.div`
 `;
 
 const DropdownBtn = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
-  background: url(${dropdown}) no-repeat center;
+    width: 1.8rem;
+    height: 1.8rem;
+    background: url(${dropdown}) no-repeat center;
+    background-size: 1.8rem;
 `;
 
 const OptionBox = styled.ul`

@@ -2,12 +2,16 @@ import {Route, Routes} from 'react-router-dom';
 import {ThemeProvider} from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
 import {theme} from './styles/theme/Theme';
-import Home from '@pages/index/Home';
-import Login from '@pages/index/Login';
-import ProtectedRoute from './components/ProtectedRoute';
+// import Home from '@pages/index/Home';
+// import Login from '@pages/index/Login';
+// import ProtectedRoute from './components/ProtectedRoute';
 import {useEffect} from 'react';
 
 import ReactGA from 'react-ga4';
+import Maintenance from '@pages/Maintenance.tsx';
+import ProtectedRoute from '@components/ProtectedRoute.tsx';
+import Home from '@pages/index/Home.tsx';
+import Login from '@pages/index/Login.tsx';
 
 function initializeAnalytics() {
   ReactGA.initialize(import.meta.env.VITE_GTM_ID);
@@ -28,6 +32,7 @@ function App() {
             <ProtectedRoute>
               <Home />
             </ProtectedRoute>
+            // <Maintenance />
           }
         />
       </Routes>
