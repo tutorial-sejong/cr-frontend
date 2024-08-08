@@ -63,9 +63,9 @@ const MenuTitleWrap = styled.div`
 `;
 
 const MenuSubtitleBox = styled(MenuTitleBox)`
-  ${props => props.theme.texts.menuTitle};
-  justify-content: flex-start;
-  column-gap: 1rem;
+    ${props => props.theme.texts.menuTitle};
+    justify-content: flex-start;
+    column-gap: 1rem;
 `;
 
 const DetailBox = styled.div`
@@ -73,6 +73,8 @@ const DetailBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 `;
 
 export default Menu;

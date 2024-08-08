@@ -45,8 +45,8 @@ const TabContainer = styled.a<{$isactive: boolean}>`
     border: 1px solid #ccc;
     border-bottom: none;
     border-left: none;
-    //border-top-right-radius: 5px;
-    //border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     padding: 0 1rem;
     display: flex;
     align-items: center;
@@ -63,7 +63,9 @@ const TabContainer = styled.a<{$isactive: boolean}>`
         right: 0;
         top: 0;
         height: 3px;
-        background-color: ${props => props.theme.colors.primary};
+        ${props => props.$isactive && css`
+            background-color: ${props => props.theme.colors.primary};
+        `}
     }
 
     > p {

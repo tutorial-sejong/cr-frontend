@@ -12,10 +12,6 @@ function TabMenu() {
     dispatch(setFocused(id));
   };
 
-  const handleCloseAll = () => {
-    dispatch(deleteAll());
-  };
-
   return (
     <TabMenuContainer>
       <TabWrap>

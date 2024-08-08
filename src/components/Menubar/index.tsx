@@ -6,35 +6,17 @@ function Menubar() {
 
   return (
     <BarContainer>
-        <OpendBar>
-          <BarTitle />
-          <Menu />
-        </OpendBar>
+      <BarTitle />
+      <Menu />
     </BarContainer>
   );
 }
 
 const BarContainer = styled.div`
-  height: 100vh;
+    width: 210px;
+    margin-left: 10px;
+    margin-right: 10px;
 `;
 
-const OpendBar = styled.div`
-  width: 23rem;
-`;
-
-const ClosedBar = styled.div`
-  width: 2rem;
-  height: 100%;
-  background-color: ${props => props.theme.colors.neutral4};
-`;
-
-const OpenBtn = styled.button`
-  width: 100%;
-  height: 4rem;
-  background-color: ${props => props.theme.colors.primary};
-  > img {
-    transform: rotate(180deg);
-  }
-`;
 
 export default Menubar;
