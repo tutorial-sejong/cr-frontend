@@ -5,10 +5,13 @@ import Logo from '@assets/img/tutorial_sejong_logo.webp';
 import LoginForm from '@components/LoginForm/index';
 import githubIcon from '@assets/img/github-fill.svg';
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function Login() {
 
   const [isTermsCheck, setTermsCheck] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleTermsCheck = (e) => {
     setTermsCheck(e.target.checked);
@@ -65,7 +68,7 @@ function Login() {
               저장된 정보는 <Highlight>매주 일요일에 자동으로 삭제</Highlight>됩니다.
             </ListItem>
             <ListItem>
-              일요일 전에 관심과목 목록을 삭제하고 싶으시면, <Highlight>https://tutorial-sejong.com/delete</Highlight>로 접속하여 로그인 시 입력한 학번을
+              일요일 전에 관심과목 목록을 삭제하고 싶으시면, <Highlight onClick={() => navigate('/delete')}>https://tutorial-sejong.com/delete</Highlight>로 접속하여 로그인 시 입력한 학번을
               입력하시면 됩니다.
             </ListItem>
             <ListItem>
@@ -221,6 +224,7 @@ const ListItem = styled.li`
 `;
 
 const Highlight = styled.span`
+    cursor: pointer;
     font-weight: bold;
     color: #007bff;
 `;
