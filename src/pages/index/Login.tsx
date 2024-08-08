@@ -13,7 +13,8 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleTermsCheck = (e) => {
+  const handleTermsCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+
     setTermsCheck(e.target.checked);
   };
 
@@ -56,25 +57,35 @@ function Login() {
               본 서비스는 <Highlight>실제 수강신청 사이트가 아닙니다.</Highlight>
             </ListItem>
             <ListItem>
-              본 서비스에서의 학번은 <Highlight>실제 학번이 아닌 11자리 이상의 임의의 학번</Highlight>을 입력하셔야 됩니다.
+              본 서비스에서 사용하는 학번은 <Highlight>실제 학번이 아닌 11자리 이상의 임의의 학번</Highlight>입니다.
             </ListItem>
             <ListItem>
-              본 서비스는 사용자가 입력한 학번만을 수집하며, 이 정보는 <Highlight>암호화 기술</Highlight>을 사용하여 보호됩니다.
+              입력하신 비밀번호는 <Highlight>암호화 기술을 사용하여 보호</Highlight>됩니다. <Highlight>실제 사용하는 비밀번호가 아닌 임의의 비밀번호</Highlight>를
+              사용하는 것이 좋습니다.
             </ListItem>
             <ListItem>
-              암호화된 학번은 사용자의 관심과목 목록을 저장하는 데만 사용되며, 다른 용도로는 사용되지 않습니다.
+              본 서비스에서는 사용자가 입력한 학번, 비밀번호, 관심과목, 수강신청 목록이 저장됩니다.
+            </ListItem>
+            <ListItem>
+              수집된 정보는 <Highlight>저장된 과목들을 사용자에게 불러오는 용도</Highlight>로만 사용되며, 다른 용도로는 사용되지 않습니다.
             </ListItem>
             <ListItem>
               저장된 정보는 <Highlight>매주 일요일에 자동으로 삭제</Highlight>됩니다.
             </ListItem>
             <ListItem>
-              일요일 전에 관심과목 목록을 삭제하고 싶으시면, <Highlight onClick={() => navigate('/delete')}>https://tutorial-sejong.com/delete</Highlight>로 접속하여 로그인 시 입력한 학번을
+              일요일 전에 관심과목 목록을 삭제하고 싶으시면, <Highlight
+              onClick={() => navigate('/delete')}>https://tutorial-sejong.com/delete</Highlight>로 접속하여 로그인 시 입력한 학번을
               입력하시면 됩니다.
             </ListItem>
             <ListItem>
-              학번을 기억하지 못하실 경우, 메일(<Highlight>tutorialsejong@gmail.com</Highlight>)로 문의 주시면, 관심과목 목록을 기준으로 삭제를 도와드리겠습니다.
+              학번을 기억하지 못하실 경우, <Highlight>tutorialsejong@gmail.com</Highlight>으로 메일 주시면, 관심과목 목록 및 로그인 시간을 기준으로 삭제를
+              도와드리겠습니다.
+            </ListItem>
+            <ListItem>
+              만약 관심과목 목록과 로그인 시간으로 확인할 수 없는 경우, 모든 정보를 삭제하도록 하겠습니다.
             </ListItem>
           </List>
+
           <CheckboxWrap>
             <input type="checkbox" id="keyboardSecurity" checked={isTermsCheck} onChange={handleTermsCheck} />
             <label htmlFor="keyboardSecurity">이용약관동의</label>
