@@ -60,17 +60,17 @@ function Login() {
               본 서비스에서 사용하는 학번은 <Highlight>실제 학번이 아닌 11자리 이상의 임의의 학번</Highlight>입니다.
             </ListItem>
             <ListItem>
-              입력하신 비밀번호는 <Highlight>암호화 기술을 사용하여 보호</Highlight>됩니다. <Highlight>실제 사용하는 비밀번호가 아닌 임의의 비밀번호</Highlight>를
-              사용하는 것이 좋습니다.
+              입력하신 비밀번호는 <Highlight>암호화 기술을 사용하여 보호</Highlight>됩니다만, <Highlight>실제 사용하는 비밀번호가 아닌 임의의 비밀번호</Highlight>를
+              사용하는 것을 추천드립니다.
             </ListItem>
             <ListItem>
-              본 서비스에서는 사용자가 입력한 학번, 비밀번호, 관심과목, 수강신청 목록이 저장됩니다.
+              본 서비스에서는 사용자가 입력한 <Highlight>학번, 비밀번호, 관심과목, 수강신청 목록</Highlight>이 저장됩니다.
             </ListItem>
             <ListItem>
               수집된 정보는 <Highlight>저장된 과목들을 사용자에게 불러오는 용도</Highlight>로만 사용되며, 다른 용도로는 사용되지 않습니다.
             </ListItem>
             <ListItem>
-              저장된 정보는 <Highlight>매주 일요일에 자동으로 삭제</Highlight>됩니다.
+              저장된 정보는 <Highlight>매일 자정에 삭제</Highlight>됩니다.
             </ListItem>
             <ListItem>
               일요일 전에 관심과목 목록을 삭제하고 싶으시면, <Highlight
@@ -78,17 +78,17 @@ function Login() {
               입력하시면 됩니다.
             </ListItem>
             <ListItem>
-              학번을 기억하지 못하실 경우, <Highlight>tutorialsejong@gmail.com</Highlight>으로 메일 주시면, 관심과목 목록 및 로그인 시간을 기준으로 삭제를
+              학번을 기억하지 못하실 경우, <Highlight>tutorialsejong@gmail.com</Highlight>으로 메일 주시면 관심과목 목록 및 로그인 시간을 기준으로 삭제를
               도와드리겠습니다.
             </ListItem>
             <ListItem>
-              만약 관심과목 목록과 로그인 시간으로 확인할 수 없는 경우, 모든 정보를 삭제하도록 하겠습니다.
+              만약 관심과목 목록과 로그인 시간으로 확인할 수 없는 경우, <Highlight>모든 정보를 삭제하도록 하겠습니다.</Highlight>
             </ListItem>
           </List>
 
           <CheckboxWrap>
             <input type="checkbox" id="keyboardSecurity" checked={isTermsCheck} onChange={handleTermsCheck} />
-            <label htmlFor="keyboardSecurity">이용약관동의</label>
+            <label htmlFor="keyboardSecurity">안내사항을 확인하였고, 개인정보 수집에 동의합니다.</label>
           </CheckboxWrap>
         </TermsContainer>
         {/*<FooterWrap>*/}
@@ -190,7 +190,7 @@ const FaqWrap = styled.div`
 `;*/
 
 const TermsContainer = styled.div`
-    max-width: 880px;
+    max-width: 890px;
     margin: 0 auto 20px;
     padding: 20px;
     background-color: #f9f9f9;
@@ -223,7 +223,7 @@ const ListItem = styled.li`
     margin-bottom: 10px;
     font-size: 16px;
     color: #555;
-
+    line-height: 2rem;
     &::before {
         content: '•';
         color: #007bff;
