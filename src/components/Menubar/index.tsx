@@ -12,8 +12,7 @@ function Menubar() {
 }
 
 const BarContainer = styled.div`
-  width: 21rem;
-  margin: 0 1rem;
+  width: 23rem;
 `;
 
 export default Menubar;
