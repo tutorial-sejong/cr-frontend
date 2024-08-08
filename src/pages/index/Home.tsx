@@ -14,6 +14,7 @@ import WaitingModal from '@components/common/Modal/WaitingModal.tsx';
 import {useDispatch} from 'react-redux';
 import {clearModalInfo} from '@store/modalSlice.ts';
 import ErrorModal from '@components/common/Modal/ErrorModal.tsx';
+import {useEffect} from 'react';
 
 function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
@@ -30,6 +31,11 @@ function Home() {
   window.addEventListener('beforeunload', () => {
     dispatch(clearModalInfo());
   });
+
+  useEffect(() => {
+    alert('※ 본 사이트는 실제 수강신청 사이트가 아닙니다. ※');
+  }, []);
+
   const renderContent = () => {
     switch (focused) {
       case 0:

@@ -41,7 +41,7 @@ const LogoutBtn = styled.button`
   background-size: 1.8rem;
   width: 1.8rem;
   height: 1.8rem;
-
+    margin-right: 1rem;
   &:hover {
     filter: brightness(20%);
   }
