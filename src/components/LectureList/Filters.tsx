@@ -42,7 +42,6 @@ function Filters({onSearch}: FiltersProps) {
             <span>조직분류</span>
             <SelectBox
               options={[{id: 0, value: '학부'}]}
-              tagged={true}
               disabled={true}
               sizes='m'
               onSelect={value => handleSelect('curiTypeCdNm', value)}
@@ -52,7 +51,6 @@ function Filters({onSearch}: FiltersProps) {
             <span>년도/학기</span>
             <SelectBox
               options={term}
-              tagged={true}
               disabled={true}
               sizes='m'
               onSelect={value => handleSelect('curiTypeCdNm', value)}
@@ -62,7 +60,6 @@ function Filters({onSearch}: FiltersProps) {
             <span>이수구분</span>
             <SelectBox
               options={completion}
-              tagged={false}
               sizes='m'
               onSelect={value => handleSelect('curiTypeCdNm', value)}
             />
@@ -71,7 +68,6 @@ function Filters({onSearch}: FiltersProps) {
             <span>선택영역</span>
             <SelectBox
               options={optional}
-              tagged={false}
               sizes='m'
               onSelect={value => handleSelect('sltDomainCdNm', value)}
             />
@@ -80,7 +76,6 @@ function Filters({onSearch}: FiltersProps) {
             <span>학과전공</span>
             <SelectBox
               options={major}
-              tagged={false}
               sizes='xl'
               onSelect={value => handleSelect('schDeptAlias', value)}
             />
@@ -100,10 +95,10 @@ function Filters({onSearch}: FiltersProps) {
             />
           </FilterWrap>
         </FilterBox>
-        <FilterButton 
-          label='조회' 
-          filter={filter} 
-          onSearch={onSearch} 
+        <FilterButton
+          label='조회'
+          filter={filter}
+          onSearch={onSearch}
           searchOption='강좌조회'
         />
       </FilterArea>

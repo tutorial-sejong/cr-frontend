@@ -2,7 +2,7 @@ import {DefaultTheme} from 'styled-components';
 
 const colors = {
   primary: '#a31432',
-  secondary: '#334D61',
+  secondary: '#46515b',
   neutral1: '#222',
   neutral2: '#333',
   neutral3: '#444',

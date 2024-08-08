@@ -24,7 +24,7 @@ function TopMenu() {
 
   return (
     <TopMenuContainer>
-      <Clock name={username || '세종대'} />
+      <Clock name={username || '종이'} />
       <LogoutBtn onClick={handleLogout} />
     </TopMenuContainer>
   );
@@ -37,38 +37,13 @@ const TopMenuContainer = styled.div`
 `;
 
 const LogoutBtn = styled.button`
-    background-image: url(${logout});
-    background-size: 1.8rem;
-    width: 1.8rem;
-    height: 1.8rem;
+  background-image: url(${logout});
+  background-size: 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
 
-    &:hover {
-        filter: brightness(20%);
-    }
-`;
-
-const DropdownWrap = styled.div`
-  ${props => props.theme.texts.tableTitle};
-  font-size: 1.3rem;
-  display: flex;
-  align-items: center;
-  column-gap: 1.5rem;
-
-  > img {
-    &:hover {
-      filter: brightness(20%);
-    }
-  }
-`;
-
-const GroupWrap = styled.div`
-  display: flex;
-  column-gap: 1rem;
-
-  > img {
-    &:hover {
-      filter: brightness(20%);
-    }
+  &:hover {
+    filter: brightness(20%);
   }
 `;
 

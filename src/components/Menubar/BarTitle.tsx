@@ -12,17 +12,11 @@ function BarTitle() {
 }
 
 const BarTitleContainer = styled.div`
-  background: linear-gradient(
-    90deg,
-    rgba(163, 20, 50, 1) 0%,
-    rgba(51, 77, 97, 1) 100%
-  );
+  background: ${props => props.theme.colors.secondary};
   height: 4rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 `;
 
 const BarTitleWrap = styled.div`

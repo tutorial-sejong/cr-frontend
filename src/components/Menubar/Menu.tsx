@@ -26,13 +26,7 @@ function Menu() {
 
   return (
     <MenuContainer>
-      {/*<MenuTitleBox>*/}
-      {/*  <MenuTitleWrap>수강 및 변동신청</MenuTitleWrap>*/}
-      {/*  <img src={arrow} />*/}
-      {/*</MenuTitleBox>*/}
-      <MenuSubtitleBox>
-        수강신청 및 기타
-      </MenuSubtitleBox>
+      <MenuSubtitleBox>수강신청 및 기타</MenuSubtitleBox>
       <DetailBox>
         {menuItems.map(item => (
           <MenuItem
@@ -58,14 +52,11 @@ const MenuTitleBox = styled.div`
   padding: 0 15px;
   border-bottom: 1px solid ${props => props.theme.colors.neutral5};
 `;
-const MenuTitleWrap = styled.div`
-  ${props => props.theme.texts.menuTitle};
-`;
 
 const MenuSubtitleBox = styled(MenuTitleBox)`
-    ${props => props.theme.texts.menuTitle};
-    justify-content: flex-start;
-    column-gap: 1rem;
+  ${props => props.theme.texts.menuTitle};
+  justify-content: flex-start;
+  column-gap: 1rem;
 `;
 
 const DetailBox = styled.div`
@@ -73,8 +64,8 @@ const DetailBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 `;
 
 export default Menu;

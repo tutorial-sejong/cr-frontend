@@ -34,68 +34,52 @@ function Tab({id, label, isActive, onClick}: TabProps) {
 }
 
 const TabContainer = styled.a<{$isactive: boolean}>`
-    ${props =>
-            props.$isactive
-                    ? props.theme.texts.tabTitleFocus
-                    : props.theme.texts.tabTitle};
-    background-color: ${props =>
-            props.$isactive ? props.theme.colors.white : 'transparent'};
-    width: calc(99% / 7);
-    height: 100%;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    border-left: none;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    cursor: pointer;
-    filter: ${props => (props.$isactive ? 'grayscale(0)' : 'grayscale(100%)')};
-    position: relative; // 위치 상대 설정 추가
-    overflow: hidden; // 가상 요소가 밖으로 나가지 않도록 설정
+  ${props =>
+    props.$isactive
+      ? props.theme.texts.tabTitleFocus
+      : props.theme.texts.tabTitle};
+  background-color: ${props =>
+    props.$isactive ? props.theme.colors.white : 'transparent'};
+  width: calc(99% / 7);
+  height: 102%;
+  border-bottom: none;
+  border-right: 1px solid #ccc;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  filter: ${props => (props.$isactive ? 'grayscale(0)' : 'grayscale(100%)')};
+  position: relative;
+  overflow: hidden;
 
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        height: 3px;
-        ${props => props.$isactive && css`
-            background-color: ${props => props.theme.colors.primary};
-        `}
-    }
+  > p {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    margin-right: 1rem;
+  }
 
-    > p {
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        word-break: break-all;
-        margin-right: 1rem;
-    }
-
-    ${props =>
-            !props.$isactive &&
-            css`
-                &:hover {
-                    background-color: white;
-                    filter: grayscale(0);
-                }
-            `}
+  ${props =>
+    !props.$isactive &&
+    css`
+      &:hover {
+        color: ${props => props.theme.colors.primary};
+        filter: grayscale(0);
+      }
+    `}
 `;
 
-
 const CloseBtn = styled.button`
-    z-index: 5;
-    width: 1.8rem;
-    height: 100%;
-    background-image: url(${close});
-    background-size: 1.8rem;
-    background-repeat: no-repeat;
-    background-position-y: center;
+  z-index: 5;
+  width: 1.8rem;
+  height: 100%;
+  background-image: url(${close});
+  background-size: 1.8rem;
+  background-repeat: no-repeat;
+  background-position-y: center;
 `;
 
 export default Tab;

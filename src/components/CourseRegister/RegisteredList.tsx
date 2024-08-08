@@ -25,7 +25,7 @@ interface RegisteredListProps {
   refreshAll: () => Promise<void>;
 }
 
-function RegisteredList({ list, refreshAll }: RegisteredListProps) {
+function RegisteredList({list, refreshAll}: RegisteredListProps) {
   const handleAction = async (
     _action: string,
     scheduleId: number | undefined,
@@ -64,16 +64,15 @@ const ListContainer = styled.div`
 `;
 
 const ButtonWrap = styled.button`
-    ${props => props.theme.texts.content};
-        // background-color: ${props => props.theme.colors.primary};
-    background-color: #46515b;
-    color: ${props => props.theme.colors.white};
-    width: 6rem;
-    height: 2.4rem;
+  ${props => props.theme.texts.content};
+  background-color: ${props => props.theme.colors.secondary};
+  color: ${props => props.theme.colors.white};
+  width: 6rem;
+  height: 2.4rem;
 
-    &:hover {
-        filter: grayscale(15%);
-    }
+  &:hover {
+    filter: grayscale(15%);
+  }
 `;
 
 export default RegisteredList;
