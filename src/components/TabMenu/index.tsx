@@ -1,7 +1,7 @@
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import styled from 'styled-components';
 import Tab from './Tab';
-import {deleteAll, setFocused} from '@/store/modules/tabSlice';
+import {setFocused} from '@/store/modules/tabSlice';
 
 function TabMenu() {
   const dispatch = useAppDispatch();
@@ -43,6 +43,5 @@ const TabWrap = styled.div`
   width: 100%;
   display: flex;
 `;
-
 
 export default TabMenu;

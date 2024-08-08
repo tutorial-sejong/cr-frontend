@@ -19,13 +19,13 @@ interface ButtonProps {
 }
 
 function FilterButton({
-                        label,
-                        filter,
-                        onSearch,
-                        searchOption,
-                        isRegister = false,
-                        isRegistrationStarted,
-                      }: ButtonProps) {
+  label,
+  filter,
+  onSearch,
+  searchOption,
+  isRegister = false,
+  isRegistrationStarted,
+}: ButtonProps) {
   const dispatch = useAppDispatch();
   const studentId = useAppSelector(state => state.userInfo.username);
 
@@ -68,28 +68,19 @@ function FilterButton({
     return;
   };
 
-  return (
-    <ButtonWrap onClick={handleClick}>
-      {label}
-    </ButtonWrap>
-  );
+  return <ButtonWrap onClick={handleClick}>{label}</ButtonWrap>;
 }
 
 const ButtonWrap = styled.button`
-    ${props => props.theme.texts.content};
-    //background: linear-gradient(
-    //        90deg,
-    //        rgba(163, 20, 50, 1) 0%,
-    //        rgba(51, 77, 97, 1) 100%
-    //);
-    background-color: #46515b;
-    color: ${props => props.theme.colors.white};
-    min-width: 6.5rem;
-    height: 2.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
+  ${props => props.theme.texts.content};
+  background-color: ${props => props.theme.colors.secondary};
+  color: ${props => props.theme.colors.white};
+  min-width: 6.5rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
 `;
 
 export default FilterButton;

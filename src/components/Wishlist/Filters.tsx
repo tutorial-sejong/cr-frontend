@@ -59,7 +59,6 @@ function Filters({setSearchResults}: FiltersProps) {
         } else {
           // filter.curiNm = searchParams.curiNm;
           filter.curiNo = searchParams.curiNo;
-
         }
         if (!searchParams.classNo || searchParams.classNo.length < 2) {
           setError('분반');
@@ -87,8 +86,6 @@ function Filters({setSearchResults}: FiltersProps) {
     }
 
     try {
-
-      console.log(filter);
       const data = await getCourseList(filter);
       setSearchResults(Array.isArray(data) ? data : []);
     } catch (error) {
@@ -155,7 +152,6 @@ function Filters({setSearchResults}: FiltersProps) {
             <span>조직분류</span>
             <SelectBox
               options={[{id: 0, value: '학부'}]}
-              tagged={true}
               disabled={true}
               sizes='m'
               onSelect={() => {}}
@@ -165,7 +161,6 @@ function Filters({setSearchResults}: FiltersProps) {
             <span>년도/학기</span>
             <SelectBox
               options={[{id: 0, value: '2024/2학기'}]}
-              tagged={true}
               disabled={true}
               sizes='m'
               onSelect={() => {}}
@@ -176,16 +171,13 @@ function Filters({setSearchResults}: FiltersProps) {
             <span>검색구분</span>
             <SelectBox
               options={searchOptions}
-              tagged={false}
               sizes='s'
               onSelect={value => handleInputChange('searchType', value || '')}
             />
           </FilterWrap>
           {renderSearchForm()}
         </FilterBox>
-        <SearchButton onClick={handleSearch}>
-          검색
-        </SearchButton>
+        <SearchButton onClick={handleSearch}>검색</SearchButton>
       </FilterArea>
     </FilterContainer>
   );
@@ -228,22 +220,17 @@ const FilterWrap = styled.div`
 `;
 
 const SearchButton = styled.button`
-    ${props => props.theme.texts.content};
-    //background: linear-gradient(
-    //  90deg,
-    //  rgba(163, 20, 50, 1) 0%,
-    //  rgba(51, 77, 97, 1) 100%
-    //);
-    background-color: #46515b;
-    color: ${props => props.theme.colors.white};
-    min-width: 6.5rem;
-    height: 2.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    border: none;
-    cursor: pointer;
+  ${props => props.theme.texts.content};
+  background-color: ${props => props.theme.colors.secondary};
+  color: ${props => props.theme.colors.white};
+  min-width: 6.5rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  border: none;
+  cursor: pointer;
 `;
 
 export default Filters;

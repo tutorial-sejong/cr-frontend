@@ -35,3 +35,14 @@ export const refreshAccessToken = async (): Promise<string> => {
     throw error;
   }
 };
+
+
+export const withdrawal = async (studentId: string)=> {
+  try {
+    const {data} = await baseAPI.delete(`/api/auth/withdrawal/${studentId}`);
+    return data;
+  } catch (error) {
+    console.log('Failed User withdrawal');
+    throw error;
+  }
+};

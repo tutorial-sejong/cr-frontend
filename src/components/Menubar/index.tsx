@@ -3,7 +3,6 @@ import BarTitle from './BarTitle';
 import Menu from './Menu';
 
 function Menubar() {
-
   return (
     <BarContainer>
       <BarTitle />
@@ -13,10 +12,8 @@ function Menubar() {
 }
 
 const BarContainer = styled.div`
-    width: 210px;
-    margin-left: 10px;
-    margin-right: 10px;
+  width: 21rem;
+  margin: 0 1rem;
 `;
-
 
 export default Menubar;
