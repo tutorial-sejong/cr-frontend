@@ -1,44 +1,30 @@
 import {useState} from 'react';
 import styled from 'styled-components';
-import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {login} from '@/apis/api/auth';
-import {clearUserInfo} from '@/store/userSlice';
+import {withdrawal} from '@/apis/api/auth';
 import FormInput from '@components/LoginForm/FormInput.tsx';
 
-export type setType = string | number | undefined;
-
 function DeleteAccountForm() {
-  const [id, setId] = useState<setType>('');
-  const [password, setPassword] = useState<setType>('');
+  const [id, setId] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const handleDelete = async () => {
-    if (!id || !password) {
-      setError('학번과 비밀번호를 모두 입력해주세요.');
-      return;
-    }
-
-    if (typeof id === 'string' && id.length < 11) {
+    if (id.length < 11) {
       setError('11자리 이상의 임의 학번을 입력해주세요!');
       return;
     }
 
     try {
-      const response = await login({
-        studentId: id.toString(),
-        password: password.toString(),
-      });
+      const response = await withdrawal(id);
       console.log(response);
-
-      dispatch(clearUserInfo());
+      console.log('Withdrawal successful');
 
       navigate('/');
     } catch (error) {
-      console.error('Login failed', error);
-      setError('정보 제거에 실패했습니다. 다시 시도해주세요.');
+      console.error('Withdrawal failed', error);
+      setError('제거 실패');
     }
   };
 
@@ -48,10 +34,6 @@ function DeleteAccountForm() {
         <InputBox>
           <LabelWrap>학번</LabelWrap>
           <FormInput value={id} setValue={setId} type='number' />
-        </InputBox>
-        <InputBox>
-          <LabelWrap>비밀번호</LabelWrap>
-          <FormInput value={password} setValue={setPassword} type='text' />
         </InputBox>
         <FindWrap onClick={() => navigate('/login')}>로그인 페이지</FindWrap>
       </InputContainer>
