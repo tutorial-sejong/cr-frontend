@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import styled, {css} from 'styled-components';
-import arrow from '@assets/img/input_dropdown.png';
-import tag from '@assets/img/tag.png';
+import arrow from '@assets/img/arrow-down-s-fill.png';
 
 interface OptionsInterface {
   id: number;
@@ -10,19 +9,12 @@ interface OptionsInterface {
 
 interface SelectProps {
   options: OptionsInterface[];
-  tagged: boolean;
   disabled?: boolean;
   sizes: string;
   onSelect: (value: string) => void;
 }
 
-function SelectBox({
-  options,
-  tagged,
-  disabled = false,
-  sizes,
-  onSelect,
-}: SelectProps) {
+function SelectBox({options, disabled = false, sizes, onSelect}: SelectProps) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState(options[0].value);
   const [selected, setSelected] = useState(options[0].value);
@@ -73,7 +65,6 @@ function SelectBox({
   return (
     <SelectContainer ref={dropdownRef} sizes={sizes}>
       <InputContainer disabled={disabled}>
-        {tagged && <TagWrap src={tag} disabled={disabled} />}
         <InputWrap readOnly={disabled} value={input} onChange={handleInput} />
         <ArrowWrap src={arrow} onClick={handleBtnClick} />
       </InputContainer>
@@ -132,12 +123,6 @@ const InputContainer = styled.div<{disabled: boolean}>`
   }
 `;
 
-const TagWrap = styled.img<{disabled: boolean}>`
-  position: absolute;
-  z-index: 2;
-  filter: ${props => (props.disabled ? 'grayscale(100%)' : 'none')};
-`;
-
 const InputWrap = styled.input`
   ${props => props.theme.texts.content};
   width: calc(100% - 1rem);
@@ -156,13 +141,6 @@ const InputWrap = styled.input`
 const ArrowWrap = styled.img`
   position: absolute;
   right: 0.3rem;
-  top: 10%;
-  border: 1px solid transparent;
-  border-radius: 5px;
-
-  &:hover {
-    border: 1px solid ${props => props.theme.colors.neutral5};
-  }
 `;
 
 const SelectWrap = styled.ul`

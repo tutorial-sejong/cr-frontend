@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import dropdown from '@assets/img/table_drodown.gif';
+import dropdown from '@assets/img/arrow-down-s-fill.png';
 import {useEffect, useRef, useState} from 'react';
 
 interface HeadProps {
@@ -7,6 +7,7 @@ interface HeadProps {
   index: number;
   width: number;
   options: string[];
+  type?: string;
   handleMouseDown: (index: number) => (event: React.MouseEvent) => void;
   selectedOptions: string[];
   onFilterChange: (index: number, selectedOptions: string[]) => void;
@@ -17,6 +18,7 @@ function TableHead({
   index,
   width,
   options,
+  type,
   selectedOptions,
   onFilterChange,
   handleMouseDown,
@@ -67,30 +69,37 @@ function TableHead({
     <Wrap width={width}>
       <div>
         <span>{label}</span>
-        <DropdownBtn ref={buttonRef} onClick={() => setOpen(prev => !prev)} />
-        {open && (
-          <OptionBox ref={dropdownRef}>
-            <OptionWrap>
-              <input
-                type='checkbox'
-                id='all'
-                checked={selectedOptions.length === options.length}
-                onChange={handleSelectAll}
-              />
-              <label htmlFor='all'>전체선택</label>
-            </OptionWrap>
-            {options?.map((option, index) => (
-              <OptionWrap key={index}>
-                <input
-                  type='checkbox'
-                  id={option}
-                  checked={selectedOptions.includes(option)}
-                  onChange={() => handleCheckboxChange(option)}
-                />
-                <label htmlFor={option}>{option}</label>
-              </OptionWrap>
-            ))}
-          </OptionBox>
+        {type !== 'action' && (
+          <>
+            <DropdownBtn
+              ref={buttonRef}
+              onClick={() => setOpen(prev => !prev)}
+            />
+            {open && (
+              <OptionBox ref={dropdownRef}>
+                <OptionWrap>
+                  <input
+                    type='checkbox'
+                    id='all'
+                    checked={selectedOptions.length === options.length}
+                    onChange={handleSelectAll}
+                  />
+                  <label htmlFor='all'>전체선택</label>
+                </OptionWrap>
+                {options?.map((option, index) => (
+                  <OptionWrap key={index}>
+                    <input
+                      type='checkbox'
+                      id={option}
+                      checked={selectedOptions.includes(option)}
+                      onChange={() => handleCheckboxChange(option)}
+                    />
+                    <label htmlFor={option}>{option}</label>
+                  </OptionWrap>
+                ))}
+              </OptionBox>
+            )}
+          </>
         )}
         <Resizer onMouseDown={handleMouseDown(index + 1)} />
       </div>
@@ -127,9 +136,10 @@ const Resizer = styled.div`
 `;
 
 const DropdownBtn = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
-  background: url(${dropdown}) no-repeat center;
+    width: 1.8rem;
+    height: 1.8rem;
+    background: url(${dropdown}) no-repeat center;
+    background-size: 1.8rem;
 `;
 
 const OptionBox = styled.ul`

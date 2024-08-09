@@ -1,14 +1,16 @@
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface InputInterface {
+  disabled?: boolean;
   sizes: string;
   onChange: (value: string) => void;
 }
 
-function FilterInput({sizes, onChange}: InputInterface) {
+function FilterInput({ disabled, sizes, onChange }: InputInterface) {
   return (
     <>
       <InputWrap
+        disabled={disabled}
         sizes={sizes}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChange(e.target.value)
@@ -18,7 +20,7 @@ function FilterInput({sizes, onChange}: InputInterface) {
   );
 }
 
-const InputWrap = styled.input<{sizes: string}>`
+const InputWrap = styled.input<{ sizes: string }>`
   ${props => props.theme.texts.content};
 
   ${props =>
@@ -31,6 +33,16 @@ const InputWrap = styled.input<{sizes: string}>`
     css`
       width: 19.5rem;
     `};
+    ${props =>
+    props.sizes === 'l' &&
+    css`
+        width: 25rem;
+      `};
+  ${props =>
+    props.sizes === 'l' &&
+    css`
+      width: 38.5rem;
+    `};
   ${props =>
     props.sizes === 'xl' &&
     css`
@@ -40,6 +52,10 @@ const InputWrap = styled.input<{sizes: string}>`
   height: 2.4rem;
   border: 1px solid ${props => props.theme.colors.neutral5};
   padding-left: 0.8rem;
+    
+    &:disabled {
+        background: ${props => props.theme.colors.neutral5};
+    }
 `;
 
 export default FilterInput;

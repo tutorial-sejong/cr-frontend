@@ -1,77 +1,14 @@
 import styled from 'styled-components';
 import Filters from './Filters';
 import Table from '@components/common/Table';
-
-const data = [
-  {
-    schDeptAlias: '대양휴머니티칼리지',
-    curiNo: '011312',
-    class_: '001',
-    schCollegeAlias: '대양휴머니티칼리지',
-    curiNm: '경영학',
-    curiLangNm: null,
-    curiTypeCdNm: '균형교양필수',
-    sltDomainCdNm: '경제와사회',
-    tmNum: '3.0 / 3 / 0',
-    studentYear: '2',
-    corsUnitGrpCdNm: '학사',
-    manageDeptNm: '대양휴머니티칼리지',
-    lesnEmp: '이지훈',
-    lesnTime: '목 18:00~19:00',
-    lesnRoom: '집301',
-    cyberTypeCdNm: '본교 e-러닝강의',
-    internshipTypeCdNm: null,
-    inoutSubCdtExchangeYn: null,
-    remark: '사회과학,경영경제,호텔관광대학2 제외',
-  },
-  {
-    schDeptAlias: '대양휴머니티칼리지',
-    curiNo: '011312',
-    class_: '001',
-    schCollegeAlias: '대양휴머니티칼리지',
-    curiNm: '경영학',
-    curiLangNm: null,
-    curiTypeCdNm: '균형교양필수',
-    sltDomainCdNm: '경제와사회',
-    tmNum: '3.0 / 3 / 0',
-    studentYear: '2',
-    corsUnitGrpCdNm: '학사',
-    manageDeptNm: '대양휴머니티칼리지',
-    lesnEmp: '이지훈',
-    lesnTime: '목 18:00~19:00',
-    lesnRoom: '집301',
-    cyberTypeCdNm: '본교 e-러닝강의',
-    internshipTypeCdNm: null,
-    inoutSubCdtExchangeYn: null,
-    remark: '사회과학,경영경제,호텔관광대학2 제외',
-  },
-  {
-    schDeptAlias: '대양휴머니티칼리지',
-    curiNo: '011312',
-    class_: '001',
-    schCollegeAlias: '대양휴머니티칼리지',
-    curiNm: '경제학',
-    curiLangNm: null,
-    curiTypeCdNm: '균형교양필수',
-    sltDomainCdNm: '경제와사회',
-    tmNum: '3.0 / 3 / 0',
-    studentYear: '2',
-    corsUnitGrpCdNm: '학사',
-    manageDeptNm: '대양휴머니티칼리지',
-    lesnEmp: '이지훈',
-    lesnTime: '목 18:00~19:00',
-    lesnRoom: '집301',
-    cyberTypeCdNm: '본교 e-러닝강의',
-    internshipTypeCdNm: null,
-    inoutSubCdtExchangeYn: null,
-    remark: '사회과학,경영경제,호텔관광대학2 제외',
-  },
-];
+import {useCallback, useEffect, useState} from 'react';
+import {CourseTypes} from '@assets/types/tableType';
+import {getCourseList} from '@/apis/api/course';
 
 const colData = [
   {name: 'schDeptAlias', value: '개설학과전공', initialWidth: 167},
   {name: 'curiNo', value: '학수번호', initialWidth: 92},
-  {name: 'class_', value: '분반', initialWidth: 58},
+  {name: 'classNo', value: '분반', initialWidth: 58},
   {name: 'curiNm', value: '교과목명', initialWidth: 232},
   {name: 'curiLangNm', value: '강의언어', initialWidth: 73},
   {name: 'curiTypeCdNm', value: '이수구분'},
@@ -90,19 +27,44 @@ const colData = [
 ];
 
 function LectureList() {
+  const [list, setList] = useState<CourseTypes[]>([]);
+
+  useEffect(() => {
+    const getList = async () => {
+      const res = await getCourseList({});
+      if (res) {
+        setList(res);
+      }
+    };
+
+    getList();
+  }, []);
+
+  const handleSearch = useCallback(async (newList: CourseTypes[]) => {
+    setList(newList);
+  }, []);
+
   return (
     <ListContainer>
-      <Filters />
-      <Table
-        colData={colData}
-        data={data}
-        initialWidth='126.9rem'
-        height='57.2rem'
-      />
+      <Filters onSearch={handleSearch} />
+      <TableTitleWrap>
+        <TableTitle>개설강좌</TableTitle>
+      </TableTitleWrap>
+      <Table colData={colData} data={list} width='100%' height='57.2rem' />
     </ListContainer>
   );
 }
 
 const ListContainer = styled.div``;
+
+export const TableTitleWrap = styled.div`
+  margin-bottom: 1rem;
+`;
+
+export const TableTitle = styled.div`
+  ${props => props.theme.texts.subtitle};
+  border-left: 4px solid ${props => props.theme.colors.primary};
+  padding-left: 0.5rem;
+`;
 
 export default LectureList;

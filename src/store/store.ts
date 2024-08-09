@@ -1,26 +1,35 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import userSlice, { UserInfo } from '@store/userSlice.ts';
-
-export interface RootState {
-    userInfo: UserInfo
-}
+import userSlice from '@store/userSlice.ts';
+import modalSlice from '@store/modalSlice.ts';
+import courseRegisteredSlice from '@store/courseRegisteredSlice.ts';
+import tabSlice from './modules/tabSlice';
+import errorSlice from './modules/errorSlice';
 
 const reducers = combineReducers({
-    userInfo: userSlice.reducer
+  userInfo: userSlice,
+  modalInfo: modalSlice,
+  courseRegistered: courseRegisteredSlice,
+  tabs: tabSlice,
+  error: errorSlice,
 });
 
 const persistConfig = {
-    key: 'root', // localStorage key
-    storage, // localStorage
-    whitelist: ['userInfo'] // target (reducer name)
+  key: 'root', // localStorage key
+  storage, // localStorage
+  whitelist: ['userInfo', 'modalInfo', 'courseRegistered'],
+  blacklist: ['tabs', 'error'],
 };
 
 const persistStore = persistReducer(persistConfig, reducers);
 
-export default configureStore({
-    reducer: persistStore,
-    middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false })
+export const store = configureStore({
+  reducer: persistStore,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({serializableCheck: false}),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

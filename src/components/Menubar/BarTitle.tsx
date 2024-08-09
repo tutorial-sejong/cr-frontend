@@ -1,33 +1,18 @@
 import styled from 'styled-components';
-import Star from '@assets/img/fav_white.png';
-import Search from '@assets/img/search.png';
-import Close from '@assets/img/menu_close.png';
 
-interface OpenProps {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-function BarTitle({setIsOpen}: OpenProps) {
+function BarTitle() {
   return (
     <BarTitleContainer>
       <BarTitleWrap>학부생수강시스템</BarTitleWrap>
       <IconBox>
-        <img src={Star} />
-        <img src={Search} />
-        <CloseBtn onClick={() => setIsOpen(false)}>
-          <img src={Close} />
-        </CloseBtn>
+        <CloseBtn />
       </IconBox>
     </BarTitleContainer>
   );
 }
 
 const BarTitleContainer = styled.div`
-  background: linear-gradient(
-    90deg,
-    rgba(163, 20, 50, 1) 0%,
-    rgba(51, 77, 97, 1) 100%
-  );
+  background: ${props => props.theme.colors.secondary};
   height: 4rem;
   display: flex;
   align-items: center;

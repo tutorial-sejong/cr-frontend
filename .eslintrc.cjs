@@ -27,7 +27,7 @@ module.exports = {
     "semi": ["error", "always"],
     "no-duplicate-imports": "error",
     "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "no-multiple-empty-lines": "error"
   },
 }

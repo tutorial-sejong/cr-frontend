@@ -1,29 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 export interface UserInfo {
-    userName: string,
-    accessToken: string
+  username: string;
 }
 
 const userInfo = createSlice({
-    name: 'userInfo',
-    initialState: {
-        userName: '',
-        accessToken: ''
+  name: 'userInfo',
+  initialState: {
+    username: '',
+  },
+  reducers: {
+    setUsername(state: UserInfo, {payload}: {payload: string}) {
+      state.username = payload;
     },
-    reducers: {
-        setUserName(state: UserInfo, { payload }: { payload: string }) {
-            state.userName = payload;
-        },
-        setAccessToken(state: UserInfo, { payload }: { payload: string }) {
-            state.accessToken = payload;
-        }
-    }
+
+    setUserInfo(state: UserInfo, {payload}: {payload: UserInfo}) {
+      state.username = payload.username;
+    },
+
+    clearUserInfo(state: UserInfo) {
+      state.username = '';
+    },
+  },
 });
 
-export const {
-    setUserName,
-    setAccessToken
-} = userInfo.actions;
+export const {setUsername, setUserInfo, clearUserInfo} = userInfo.actions;
 
-export default userInfo;
+export default userInfo.reducer;

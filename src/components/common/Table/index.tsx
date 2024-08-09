@@ -1,23 +1,34 @@
 import {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import TableHead from './TableHead';
-import {TableHeadTypes, TableTypes} from '@assets/types/tableType';
+import {CourseTypes, TableHeadTypes} from '@assets/types/tableType';
 
 interface TableProps {
   colData: TableHeadTypes[];
-  data: TableTypes[];
-  initialWidth: string;
+  data: CourseTypes[];
+  width: string;
   height: string;
+  onAction?: (
+    action: string,
+    scheduleId: number | undefined,
+    curiNm: string | undefined,
+  ) => void;
 }
 
-function Table({data, colData, initialWidth, height}: TableProps) {
+function Table({data, colData, width, height, onAction}: TableProps) {
+  const widthRef = useRef<HTMLTableElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
+  const [tableWidth, setTableWidth] = useState(0);
   const [columnWidths, setColumnWidths] = useState<number[]>([]);
+  let uniqueOptions: string[] = [];
   const [filters, setFilters] = useState<string[][]>(
     colData.map(col => {
-      const uniqueOptions = Array.from(
-        new Set(data.map(row => row[col.name])),
-      ).filter(option => option !== null) as string[];
+      if (col.name !== 'action') {
+        uniqueOptions = Array.from(
+          new Set(data?.map(row => row[col.name as keyof CourseTypes])),
+        ).filter(option => option !== null) as string[];
+      }
+
       return uniqueOptions.length === 0 ? ['빈값'] : uniqueOptions.sort();
     }),
   );
@@ -28,6 +39,10 @@ function Table({data, colData, initialWidth, height}: TableProps) {
         tableRef.current.querySelectorAll('th'),
       ).map(th => th.getBoundingClientRect().width);
       setColumnWidths(initialWidths);
+    }
+
+    if (widthRef.current) {
+      setTableWidth(widthRef.current.offsetWidth);
     }
   }, [tableRef]);
 
@@ -52,9 +67,11 @@ function Table({data, colData, initialWidth, height}: TableProps) {
   };
 
   const getOptions = colData.map(col => {
-    const uniqueOptions = Array.from(
-      new Set(data.map(row => row[col.name])),
-    ).filter(option => option !== null) as string[];
+    if (col.name !== 'action') {
+      uniqueOptions = Array.from(
+        new Set(data?.map(row => row[col.name as keyof CourseTypes])),
+      ).filter(option => option !== null) as string[];
+    }
     return uniqueOptions.length === 0 ? ['빈값'] : uniqueOptions.sort();
   });
 
@@ -66,76 +83,89 @@ function Table({data, colData, initialWidth, height}: TableProps) {
     });
   };
 
-  const filteredData = data.filter(row =>
+  const filteredData = data?.filter(row =>
     colData.every(
       (col, index) =>
         filters[index].includes('빈값') ||
-        filters[index].includes(row[col.name] ?? ''),
+        filters[index].includes(
+          String(
+            col.name !== 'action' && (row[col.name as keyof CourseTypes] ?? ''),
+          ),
+        ),
     ),
   );
 
+  const handleActionClick = (row: CourseTypes, action: string) => {
+    if (onAction) {
+      onAction(action, row.scheduleId, row.curiNm);
+    } else {
+      console.log(`${action} action for scheduleId: ${row.scheduleId}`);
+    }
+  };
+
+  const renderCell = (row: CourseTypes, col: TableHeadTypes) => {
+    if (col.name === 'action') {
+      return (
+        <ActionButton onClick={() => handleActionClick(row, col.value)}>
+          {col.value}
+        </ActionButton>
+      );
+    }
+    return row[col.name as keyof CourseTypes];
+  };
+
   return (
-    <TableContainer>
-      <TableTitleWrap>
-        <TableTitle>개설강좌</TableTitle>
-      </TableTitleWrap>
-      <TableBox width={initialWidth} height={height}>
-        <TableWrap ref={tableRef}>
-          <colgroup>
-            <col style={{width: 'auto'}} />
+    <TableBox width={width} height={height} ref={widthRef}>
+      <TableWrap ref={tableRef}>
+        <colgroup>
+          <col style={{width: 'auto'}} />
+          {colData.map((item, index) => (
+            <col
+              key={index}
+              style={{
+                minWidth: item.initialWidth ? `${item.initialWidth}px` : 'auto',
+              }}
+            />
+          ))}
+        </colgroup>
+        <thead>
+          <RowWrap>
+            <th style={{minWidth: columnWidths[0]}}>순번</th>
             {colData.map((item, index) => (
-              <col
+              <TableHead
                 key={index}
-                style={{
-                  minWidth: item.initialWidth ? item.initialWidth : 'auto',
-                }}
+                label={item.value}
+                type={item.name}
+                width={columnWidths[index + 1]}
+                index={index}
+                options={getOptions[index]}
+                selectedOptions={filters[index]}
+                onFilterChange={handleFilterChange}
+                handleMouseDown={handleMouseDown}
               />
             ))}
-          </colgroup>
-          <thead>
-            <RowWrap>
-              <th style={{minWidth: columnWidths[0]}}>순번</th>
-              {colData.map((item, index) => (
-                <TableHead
-                  key={index}
-                  label={item.value}
-                  width={columnWidths[index + 1]}
-                  index={index}
-                  options={getOptions[index]}
-                  selectedOptions={filters[index]}
-                  onFilterChange={handleFilterChange}
-                  handleMouseDown={handleMouseDown}
-                />
-              ))}
-            </RowWrap>
-          </thead>
-          <tbody>
-            {filteredData.map((row, rowIdx) => (
+          </RowWrap>
+        </thead>
+        <tbody>
+          {filteredData?.length === 0 ? (
+            <NoresultWrap width={tableWidth} height={height}>
+              <Noresult>조회된 내역이 없습니다.</Noresult>
+            </NoresultWrap>
+          ) : (
+            filteredData?.map((row, rowIdx) => (
               <ContentWrap key={rowIdx} $isEven={rowIdx % 2 !== 0}>
                 <IndexWrap>{rowIdx + 1}</IndexWrap>
                 {colData.map((col, colIdx) => (
-                  <td key={colIdx}>{row[col.name]}</td>
+                  <td key={colIdx}>{renderCell(row, col)}</td>
                 ))}
               </ContentWrap>
-            ))}
-          </tbody>
-        </TableWrap>
-      </TableBox>
-    </TableContainer>
+            ))
+          )}
+        </tbody>
+      </TableWrap>
+    </TableBox>
   );
 }
-
-const TableContainer = styled.div``;
-
-const TableTitleWrap = styled.div`
-  margin-bottom: 1rem;
-`;
-
-const TableTitle = styled.div`
-  ${props => props.theme.texts.subtitle};
-  border-left: 4px solid ${props => props.theme.colors.primary};
-  padding-left: 0.5rem;
-`;
 
 const TableBox = styled.div<{width: string; height: string}>`
   width: ${props => props.width};
@@ -143,18 +173,17 @@ const TableBox = styled.div<{width: string; height: string}>`
   overflow: scroll;
   border-left: 1px solid #c3c3c3;
   border-bottom: 1px solid #c3c3c3;
+  border-top: 1px solid ${props => props.theme.colors.black};
 `;
 
 const TableWrap = styled.table`
   ${props => props.theme.texts.content};
-  border-top: 1px solid ${props => props.theme.colors.black};
   white-space: nowrap;
   border-collapse: collapse;
 
   > thead > tr > th {
     ${props => props.theme.texts.tableTitle};
     position: relative;
-    border-top: 1px solid black;
     background-color: ${props => props.theme.colors.neutral5};
   }
 `;
@@ -186,6 +215,37 @@ const ContentWrap = styled(RowWrap)<{$isEven: boolean}>`
   &:focus {
     background-color: rgb(252, 248, 227);
   }
+`;
+
+const ActionButton = styled.button`
+  ${props => props.theme.texts.content};
+  width: 4rem;
+  height: 2.4rem;
+  background-color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.white};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.primary};
+  }
+`;
+
+const NoresultWrap = styled.tr<{width: number; height: string}>`
+  width: ${props => props.width}px;
+  height: calc(${props => props.height} - 5rem);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Noresult = styled.td`
+  ${props => props.theme.texts.content};
+  background-color: ${props => props.theme.colors.neutral6};
+  border: 1px solid #c3c3c3;
+  text-align: center;
+  padding: 0.7rem 0;
+  width: 30rem;
 `;
 
 export default Table;
