@@ -20,14 +20,14 @@ export const getCourseList = async (filter: object) => {
   }
 };
 
-export const saveWishlist = async (
+export const saveWishlistItem = async (
   studentId: string,
-  wishListIdList: number[],
+  scheduleId: number,
 ) => {
   try {
     const {data} = await baseAPI.post('/wishlist/save', {
       studentId,
-      wishListIdList,
+      scheduleId,
     });
     return data;
   } catch (error) {

@@ -3,7 +3,11 @@ import Table from '@components/common/Table';
 import Filters from './Filters';
 import {CourseTypes} from '@/assets/types/tableType';
 import {useCallback, useEffect, useState} from 'react';
-import {deleteWishlistItem, getWishlist, saveWishlist} from '@/apis/api/course';
+import {
+  deleteWishlistItem,
+  getWishlist,
+  saveWishlistItem,
+} from '@/apis/api/course';
 import {RootState} from '@/store/store';
 import {useSelector} from 'react-redux';
 import {TableTitle, TableTitleWrap} from '../LectureList';
@@ -74,7 +78,7 @@ function Wishlist() {
   ) => {
     if (action === '신청' && scheduleId) {
       try {
-        await saveWishlist(username, [scheduleId]);
+        await saveWishlistItem(username, scheduleId);
         console.log('관심과목 담기 성공');
         fetchWishlist();
       } catch (error) {
