@@ -13,7 +13,7 @@ function LoadingModal({scheduleId}: {scheduleId: number}) {
   const endCount = useAppSelector(state => state.courseRegistered.endCount);
 
   useEffect(() => {
-    const endRandomCount = getRandomInt(0.5, 1.5) * 1000;
+    const endRandomCount = getRandomInt(0.5, 1) * 1000;
 
     // 시간 이내여도 10%의 확률로 실패
     const randomFailNumber = getRandomInt(1, 10);
