@@ -42,7 +42,7 @@ function Login() {
           <FaqWrap>
             <img
               src={githubIcon}
-              alt="github"
+              alt='github'
               onClick={() => window.open('https://github.com/tutorial-sejong')}
             />
           </FaqWrap>
