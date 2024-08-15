@@ -83,7 +83,7 @@ function Login() {
             <ListTitle>4. 개인정보의 파기</ListTitle>
             <List>
               <ListItem>수집된 개인정보는 <Highlight>매일 자정에 자동으로 서버에서 삭제</Highlight>됩니다. 만약 자정 전에 정보를 삭제하고 싶으신 경우,
-              <Highlight>https://tutorial-sejong.com/delete</Highlight> 페이지에서 로그인 시 입력한 <Highlight>학번을 입력하여 직접 삭제</Highlight>할 수 있습니다.</ListItem>
+                <Highlight onClick={() => navigate('/delete')}>https://tutorial-sejong.com/delete</Highlight> 페이지에서 로그인 시 입력한 <Highlight>학번을 입력하여 직접 삭제</Highlight>할 수 있습니다.</ListItem>
               <ListItem>학번을 기억하지 못할 경우, <Highlight>tutorialsejong@gmail.com</Highlight>으로 메일을 보내주시면 관심과목 목록 및 로그인 시간을 기준으로 삭제를 도와드리겠습니다. 만약 확인이
                 불가능한 경우, <Highlight>모든 정보를 일괄적으로 삭제 처리</Highlight>하겠습니다.</ListItem>
             </List>
