@@ -5,12 +5,16 @@ import Table from '../common/Table';
 import {TableTitle, TableTitleWrap} from '../LectureList';
 import RegisteredList from './RegisteredList';
 import {useDispatch} from 'react-redux';
-import {setCourseName, setModalName, setScheduleId} from '@store/modalSlice.ts';
+import {
+  setCourseName,
+  setModalName,
+  setScheduleId,
+} from '@/store/modules/modalSlice';
 import StartButton from '@components/CourseRegister/StartButton.tsx';
 import {getCourseList, getRegisterdList, getWishlist} from '@/apis/api/course';
 import {useAppSelector} from '@/store/hooks';
 import {openModalHandler} from '../common/Modal/handlers/handler';
-import {setEndCount} from '@store/courseRegisteredSlice.ts';
+import {setEndCount} from '@/store/modules/courseRegisteredSlice';
 
 const colData = [
   {name: 'action', value: '신청', initialWidth: 30, enableFilters: false},
@@ -32,8 +36,10 @@ function CourseRegister() {
   const [list, setList] = useState<CourseTypes[]>([]);
   const [registeredList, setRegisteredList] = useState<CourseTypes[]>([]);
   const [currentFilter, setCurrentFilter] = useState<CourseTypes>({});
-  const [currentSearchOption, setCurrentSearchOption] = useState<string>('관심과목');
-  const [isRegistrationStarted, setIsRegistrationStarted] = useState<boolean>(false);
+  const [currentSearchOption, setCurrentSearchOption] =
+    useState<string>('관심과목');
+  const [isRegistrationStarted, setIsRegistrationStarted] =
+    useState<boolean>(false);
   const [isFirstSearch, setIsFirstSearch] = useState<boolean>(true);
 
   const dispatch = useDispatch();
@@ -56,7 +62,11 @@ function CourseRegister() {
     setList(searchResult);
   }, [currentFilter, currentSearchOption, studentId]);
 
-  const handleSearch = async (newList: CourseTypes[], filter: CourseTypes, searchOption: string) => {
+  const handleSearch = async (
+    newList: CourseTypes[],
+    filter: CourseTypes,
+    searchOption: string,
+  ) => {
     if (isRegistrationStarted && isFirstSearch) {
       openModalHandler(dispatch, 'waiting');
       setIsFirstSearch(false);
@@ -79,7 +89,6 @@ function CourseRegister() {
       console.log('35초 지남');
       dispatch(setEndCount(true));
     }, 35000);
-
   };
 
   const handleAction = async (
@@ -96,10 +105,11 @@ function CourseRegister() {
 
   return (
     <>
-      <StartButton
-        onClick={handleStartButtonClick}
+      <StartButton onClick={handleStartButtonClick} />
+      <RegisterFilters
+        onSearch={handleSearch}
+        isRegistrationStarted={isRegistrationStarted}
       />
-      <RegisterFilters onSearch={handleSearch} isRegistrationStarted={isRegistrationStarted} />
       <TableTitleWrap>
         <TableTitle>수강대상교과목</TableTitle>
       </TableTitleWrap>
@@ -110,10 +120,7 @@ function CourseRegister() {
         height='35rem'
         onAction={handleAction}
       />
-      <RegisteredList
-        list={registeredList}
-        refreshAll={refreshAll}
-      />
+      <RegisteredList list={registeredList} refreshAll={refreshAll} />
     </>
   );
 }

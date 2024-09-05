@@ -69,7 +69,7 @@ function SelectBox({options, disabled = false, sizes, onSelect}: SelectProps) {
         <ArrowWrap src={arrow} onClick={handleBtnClick} />
       </InputContainer>
       {open && (
-        <SelectWrap>
+        <SelectWrap style={{width: dropdownRef.current?.offsetWidth}}>
           {filtered.map(option => (
             <OptionWrap
               key={option.id}
@@ -92,17 +92,30 @@ const SelectContainer = styled.div<{sizes: string}>`
     props.sizes === 's' &&
     css`
       width: 15rem;
+
+      @media ${props => props.theme.device.mobile} {
+        max-width: 15rem;
+      }
     `};
   ${props =>
     props.sizes === 'm' &&
     css`
       width: 20.5rem;
+
+      @media ${props => props.theme.device.mobile} {
+        max-width: 20.5rem;
+      }
     `};
   ${props =>
     props.sizes === 'xl' &&
     css`
       width: 50rem;
+
+      @media ${props => props.theme.device.mobile} {
+        max-width: 50rem;
+      }
     `};
+  min-width: 7rem;
   height: 2.4rem;
   position: relative;
   display: inline-block;
@@ -144,7 +157,7 @@ const ArrowWrap = styled.img`
 `;
 
 const SelectWrap = styled.ul`
-  width: inherit;
+  min-width: 15rem;
   max-height: 12rem;
   position: absolute;
   top: 100%;

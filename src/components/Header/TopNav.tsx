@@ -12,6 +12,10 @@ const TopNavContatiner = styled.div`
   display: flex;
   flex-shrink: 0;
   align-items: center;
+
+  @media ${props => props.theme.device.mobile} {
+    display: none;
+  }
 `;
 
 const TopNavWrap = styled.div`

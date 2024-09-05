@@ -7,6 +7,12 @@ import {CourseTypes} from '@/assets/types/tableType';
 import {openModalHandler} from '../common/Modal/handlers/handler';
 import {useDispatch} from 'react-redux';
 import {setField, setType} from '@/store/modules/errorSlice';
+import {
+  FilterArea,
+  FilterBox,
+  FilterContainer,
+  FilterWrap,
+} from '@/styles/FilterLayout';
 
 const searchOptions = [
   {id: 0, value: '학수번호 검색'},
@@ -148,7 +154,7 @@ function Filters({setSearchResults}: FiltersProps) {
     <FilterContainer>
       <FilterArea>
         <FilterBox>
-          <FilterWrap>
+          <WishFilterWrap>
             <span>조직분류</span>
             <SelectBox
               options={[{id: 0, value: '학부'}]}
@@ -156,8 +162,8 @@ function Filters({setSearchResults}: FiltersProps) {
               sizes='m'
               onSelect={() => {}}
             />
-          </FilterWrap>
-          <FilterWrap>
+          </WishFilterWrap>
+          <WishFilterWrap>
             <span>년도/학기</span>
             <SelectBox
               options={[{id: 0, value: '2024/2학기'}]}
@@ -165,16 +171,16 @@ function Filters({setSearchResults}: FiltersProps) {
               sizes='m'
               onSelect={() => {}}
             />
-          </FilterWrap>
+          </WishFilterWrap>
           <FilterBreak />
-          <FilterWrap>
+          <WishFilterWrap>
             <span>검색구분</span>
             <SelectBox
               options={searchOptions}
               sizes='s'
               onSelect={value => handleInputChange('searchType', value || '')}
             />
-          </FilterWrap>
+          </WishFilterWrap>
           {renderSearchForm()}
         </FilterBox>
         <SearchButton onClick={handleSearch}>검색</SearchButton>
@@ -183,31 +189,12 @@ function Filters({setSearchResults}: FiltersProps) {
   );
 }
 
-const FilterContainer = styled.div`
-  border: 0.1rem solid #714656;
-  border-radius: 2px;
-  padding: 0.5rem 1.5rem;
-  margin-bottom: 2rem;
-`;
-
-const FilterBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem 3rem;
-`;
-
-const FilterArea = styled.div`
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 1rem;
-`;
-
 const FilterBreak = styled.div`
   flex-basis: 100%;
   height: 0;
 `;
 
-const FilterWrap = styled.div`
+const WishFilterWrap = styled(FilterWrap)`
   ${props => props.theme.texts.tableTitle};
   display: flex;
   align-items: center;

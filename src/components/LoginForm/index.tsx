@@ -4,7 +4,7 @@ import FormInput from './FormInput';
 import {login} from '@/apis/api/auth';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {setUserInfo} from '@/store/userSlice';
+import {setUserInfo} from '@/store/modules/userSlice';
 import {baseAPI} from '@/apis/utils/instance';
 import Cookies from 'js-cookie';
 import {generateRandomStudentId} from '@/utils/randomUtils.ts';
@@ -107,7 +107,6 @@ function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
           <FormInput value={password} setValue={setPassword} type='password' />
         </InputBox>
       </InputContainer>
-      {/*<FindWrap>아이디 찾기 | 비밀번호 찾기</FindWrap>*/}
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <LoginBtnWrap onClick={handleLogin} type='button'>
         로그인
@@ -117,7 +116,9 @@ function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
 }
 
 const FormContainer = styled.div`
-  padding: 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: ${props => props.theme.colors.white};
   border-radius: 0.3rem;
   margin-bottom: 2rem;
@@ -162,7 +163,7 @@ const LabelWrap = styled.div`
 `;
 
 const LoginBtnWrap = styled.button`
-  width: 100%;
+  width: 90%;
   height: 5rem;
   background-color: ${props => props.theme.colors.secondary};
   border: none;

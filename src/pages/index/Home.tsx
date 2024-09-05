@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Menubar from '@components/Menubar';
 import Header from '@components/Header';
@@ -12,12 +13,14 @@ import EnrollmentInfoModal from '@components/common/Modal/EnrollmentInfoModal.ts
 import LoadingModal from '@components/common/Modal/LoadingModal.tsx';
 import WaitingModal from '@components/common/Modal/WaitingModal.tsx';
 import {useDispatch} from 'react-redux';
-import {clearModalInfo} from '@store/modalSlice.ts';
+import {clearModalInfo} from '@/store/modules/modalSlice';
 import ErrorModal from '@components/common/Modal/ErrorModal.tsx';
-import {useEffect} from 'react';
+import {useMediaQuery} from 'react-responsive';
 
 function Home() {
+  const isPc = useMediaQuery({query: '(min-width: 1024px)'});
   const {tab, focused} = useAppSelector(state => state.tabs);
+  const [barOpen, setBarOpen] = useState(isPc);
 
   const {modalName, scheduleId, courseName} = useAppSelector(
     state => state.modalInfo,
@@ -82,8 +85,8 @@ function Home() {
       {renderModal()}
       <Header />
       <Box>
-        <Menubar />
-        <Main>
+        <Menubar open={barOpen} setOpen={setBarOpen} />
+        <Main $isOpen={barOpen}>
           <TabMenu />
           <Article>
             <p>{focusedTabName}</p>
@@ -101,10 +104,18 @@ const Container = styled.div`
 
 const Box = styled.div`
   display: flex;
+  max-width: 100vw;
 `;
 
-const Main = styled.div`
-  width: calc(100% - 23rem);
+const Main = styled.div<{$isOpen: boolean}>`
+  width: ${props =>
+    props.$isOpen ? 'calc(100% - 23rem)' : 'calc(100% - 2rem)'};
+
+  @media ${props => props.theme.device.mobile} {
+    width: calc(100% - 2rem);
+    position: absolute;
+    left: 2rem;
+  }
 `;
 
 const Article = styled.div`

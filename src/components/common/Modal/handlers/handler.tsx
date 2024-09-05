@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import {clearModalInfo, setModalName} from '@store/modalSlice';
+import {clearModalInfo, setModalName} from '@/store/modules/modalSlice';
 
 export const closeHandler = (dispatch: Dispatch) => {
   dispatch(clearModalInfo());

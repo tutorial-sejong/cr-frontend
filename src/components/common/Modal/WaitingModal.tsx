@@ -3,7 +3,7 @@ import logo from '@/assets/img/logo.webp';
 import close from '@/assets/img/close-line.png';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {clearModalInfo} from '@store/modalSlice.ts';
+import {clearModalInfo} from '@/store/modules/modalSlice';
 import {getRandomInt} from '@/utils/randomUtils.ts';
 
 function WaitingModal() {

@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import Cookies from 'js-cookie';
 import {baseAPI} from '@/apis/utils/instance';
 import {useAppSelector} from '@/store/hooks';
-import {clearUserInfo} from '@/store/userSlice';
+import {clearUserInfo} from '@/store/modules/userSlice';
 import {deleteAll} from '@/store/modules/tabSlice';
 import logout from '@assets/img/logout.png';
 import Clock from './Clock';
@@ -41,7 +41,7 @@ const LogoutBtn = styled.button`
   background-size: 1.8rem;
   width: 1.8rem;
   height: 1.8rem;
-    margin-right: 1rem;
+  margin-right: 1rem;
   &:hover {
     filter: brightness(20%);
   }

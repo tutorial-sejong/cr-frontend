@@ -2,9 +2,9 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import userSlice from '@store/userSlice.ts';
-import modalSlice from '@store/modalSlice.ts';
-import courseRegisteredSlice from '@store/courseRegisteredSlice.ts';
+import userSlice from '@/store/modules/userSlice';
+import modalSlice from '@/store/modules/modalSlice';
+import courseRegisteredSlice from '@/store/modules/courseRegisteredSlice';
 import tabSlice from './modules/tabSlice';
 import errorSlice from './modules/errorSlice';
 

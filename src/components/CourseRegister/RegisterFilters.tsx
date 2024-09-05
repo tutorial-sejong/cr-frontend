@@ -5,7 +5,7 @@ import FilterButton from '../common/FilterButton';
 import FilterInput from '../common/FilterInput';
 import SelectBox from '../common/SelectBox';
 import {term, searchOptions} from '@assets/data/filter';
-import {FilterBox, FilterContainer, FilterWrap} from '../LectureList/Filters';
+import {FilterBox, FilterContainer, FilterWrap} from '@/styles/FilterLayout';
 
 interface FiltersProps {
   isRegistrationStarted: boolean;
@@ -139,23 +139,27 @@ function RegisterFilters({onSearch, isRegistrationStarted}: FiltersProps) {
 const RegisterFilterContainer = styled(FilterContainer)`
   display: flex;
   align-items: flex-end;
+  gap: 0.7rem 0;
+
+  @media ${props => props.theme.device.mobile} {
+    flex-wrap: wrap;
+  }
 `;
 
 const SearchBox = styled.div`
   display: flex;
-  gap: 0 3rem;
+  flex-wrap: wrap;
+  gap: 0.7rem 3rem;
 `;
 
 const SearchWrap = styled(FilterWrap)`
   > div {
     margin-right: 0.7rem;
   }
-  display: flex;
   align-items: center;
 `;
 
-const CuriNoWrap = styled.div`
-  display: flex;
+const CuriNoWrap = styled(FilterBox)`
   align-items: center;
 `;
 

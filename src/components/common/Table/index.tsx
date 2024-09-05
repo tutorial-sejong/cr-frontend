@@ -237,6 +237,10 @@ const NoresultWrap = styled.tr<{width: number; height: string}>`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media ${props => props.theme.device.mobile} {
+    max-width: auto;
+  }
 `;
 
 const Noresult = styled.td`
