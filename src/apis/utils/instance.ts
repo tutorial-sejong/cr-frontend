@@ -1,4 +1,4 @@
-import {setModalName} from '@/store/modalSlice';
+import {setModalName} from '@/store/modules/modalSlice';
 import {setType} from '@/store/modules/errorSlice';
 import {store} from '@/store/store';
 import axios, {AxiosError, AxiosResponse} from 'axios';

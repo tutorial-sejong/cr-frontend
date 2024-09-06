@@ -8,9 +8,9 @@ function Header() {
     <HeaderContainer>
       <LogoBox>
         <img src={logo} />
+        <TopNav />
       </LogoBox>
       <HeaderBox>
-        <TopNav />
         <TopMenu />
       </HeaderBox>
     </HeaderContainer>
@@ -18,30 +18,29 @@ function Header() {
 }
 
 const HeaderContainer = styled.div`
-    border-top: 0.5rem solid ${props => props.theme.colors.primary};
-    max-width: 100%;
-    height: 7rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  border-top: 0.5rem solid ${props => props.theme.colors.primary};
+  max-width: 100%;
+  height: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const LogoBox = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 23rem;
-    > img {
-        height: 6rem;
-        display: block;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  > img {
+    height: 6rem;
+    display: block;
+  }
 `;
 
 const HeaderBox = styled.div`
-    display: flex;
-    flex-grow: 1;
-    height: 100%;
-    justify-content: space-between;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
 `;
 
 export default Header;

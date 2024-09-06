@@ -62,10 +62,18 @@ const texts = {
   },
 };
 
+const device = {
+  mobile: 'screen and (max-width: 767px)',
+  tablet: 'screen and (min-width: 768px) and (max-width: 1023px)',
+  pc: 'screen and (min-width: 1024px)',
+};
+
 export type ColorsType = typeof colors;
 export type TextsType = typeof texts;
+export type DeviceType = typeof device;
 
 export const theme: DefaultTheme = {
   colors,
   texts,
+  device,
 };

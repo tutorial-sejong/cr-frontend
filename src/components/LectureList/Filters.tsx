@@ -5,6 +5,12 @@ import FilterInput from '@components/common/FilterInput';
 import SelectBox from '@components/common/SelectBox';
 import {completion, major, optional, term} from '@assets/data/filter';
 import {CourseTypes} from '@/assets/types/tableType';
+import {
+  FilterArea,
+  FilterBox,
+  FilterContainer,
+  FilterWrap,
+} from '@/styles/FilterLayout';
 
 interface FiltersProps {
   onSearch: (newList: CourseTypes[]) => Promise<void>;
@@ -112,35 +118,6 @@ function Filters({onSearch}: FiltersProps) {
     </FilterContainer>
   );
 }
-
-export const FilterContainer = styled.div`
-  border: 0.1rem solid #714656;
-  border-radius: 2px;
-  padding: 0.5rem 1.5rem;
-  margin-bottom: 2rem;
-`;
-
-const FilterArea = styled.div`
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 1rem;
-`;
-
-export const FilterBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem 3rem;
-`;
-
-export const FilterWrap = styled.div`
-  ${props => props.theme.texts.tableTitle};
-  > span {
-    display: inline-block;
-    margin-right: 1rem;
-    text-align: right;
-    min-width: 4.5rem;
-  }
-`;
 
 const WarningWrap = styled.div`
   ${props => props.theme.texts.warning};
