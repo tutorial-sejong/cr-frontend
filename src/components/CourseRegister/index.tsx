@@ -17,19 +17,19 @@ import {openModalHandler} from '../common/Modal/handlers/handler';
 import {setEndCount} from '@/store/modules/courseRegisteredSlice';
 
 const colData = [
-  {name: 'action', value: '신청', initialWidth: 30, enableFilters: false},
+  {name: 'action', value: '신청', initialWidth: 50, enableFilters: false},
   {name: 'curiNo', value: '학수번호', initialWidth: 92},
   {name: 'classNo', value: '분반', initialWidth: 58},
-  {name: 'schDeptAlias', value: '개설학과', initialWidth: 167},
-  {name: 'curiNm', value: '교과목명', initialWidth: 232},
+  {name: 'schDeptAlias', value: '개설학과', initialWidth: 177},
+  {name: 'curiNm', value: '교과목명', initialWidth: 242},
   {name: 'curiLangNm', value: '강의언어', initialWidth: 73},
-  {name: 'tmNum', value: '학점/이론/실습', initialWidth: 134},
+  {name: 'tmNum', value: '학점/이론/실습', initialWidth: 144},
   {name: 'curiTypeCdNm', value: '이수구분'},
   {name: 'studentYear', value: '학년 (학기)'},
-  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 130},
-  {name: 'lesnEmp', value: '교수명'},
+  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 183},
+  {name: 'lesnEmp', value: '교수명', initialWidth: 238},
   {name: 'lesnRoom', value: '강의실', initialWidth: 114},
-  {name: 'remark', value: '수강대상및유의사항', initialWidth: 230},
+  {name: 'remark', value: '수강대상및유의사항', initialWidth: 610},
 ];
 
 function CourseRegister() {

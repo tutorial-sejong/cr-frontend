@@ -13,28 +13,28 @@ import {useSelector} from 'react-redux';
 import {TableTitle, TableTitleWrap} from '../LectureList';
 
 const searchResultColData = [
-  {name: 'action', value: '신청', initialWidth: 30, enableFilters: false},
-  {name: 'schDeptAlias', value: '개설학과전공', initialWidth: 167},
+  {name: 'action', value: '신청', initialWidth: 50, enableFilters: false},
+  {name: 'schDeptAlias', value: '개설학과전공', initialWidth: 276},
   {name: 'curiNo', value: '학수번호', initialWidth: 92},
   {name: 'classNo', value: '분반', initialWidth: 58},
-  {name: 'curiNm', value: '교과목명', initialWidth: 232},
+  {name: 'curiNm', value: '교과목명', initialWidth: 242},
   {name: 'curiTypeCdNm', value: '이수구분'},
   {name: 'tmNum', value: '학점/이론/실습', initialWidth: 134},
-  {name: 'lesnEmp', value: '교수명'},
-  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 130},
+  {name: 'lesnEmp', value: '교수명', initialWidth: 238},
+  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 183},
   {name: 'lesnRoom', value: '강의실', initialWidth: 114},
 ];
 
 const wishlistColData = [
-  {name: 'action', value: '삭제', initialWidth: 30, enableFilters: false},
-  {name: 'schDeptAlias', value: '개설학과전공', initialWidth: 167},
+  {name: 'action', value: '삭제', initialWidth: 50, enableFilters: false},
+  {name: 'schDeptAlias', value: '개설학과전공', initialWidth: 276},
   {name: 'curiNo', value: '학수번호', initialWidth: 92},
   {name: 'classNo', value: '분반', initialWidth: 58},
-  {name: 'curiNm', value: '교과목명', initialWidth: 232},
+  {name: 'curiNm', value: '교과목명', initialWidth: 242},
   {name: 'curiTypeCdNm', value: '이수구분'},
   {name: 'tmNum', value: '학점/이론/실습', initialWidth: 134},
-  {name: 'lesnEmp', value: '교수명'},
-  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 130},
+  {name: 'lesnEmp', value: '교수명', initialWidth: 238},
+  {name: 'lesnTime', value: '요일 및 강의시간', initialWidth: 183},
   {name: 'lesnRoom', value: '강의실', initialWidth: 114},
 ];
 

@@ -8,7 +8,6 @@ interface HeadProps {
   width: number;
   options: string[];
   type?: string;
-  handleMouseDown: (index: number) => (event: React.MouseEvent) => void;
   selectedOptions: string[];
   onFilterChange: (index: number, selectedOptions: string[]) => void;
 }
@@ -21,7 +20,6 @@ function TableHead({
   type,
   selectedOptions,
   onFilterChange,
-  handleMouseDown,
 }: HeadProps) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -101,13 +99,12 @@ function TableHead({
             )}
           </>
         )}
-        <Resizer onMouseDown={handleMouseDown(index + 1)} />
       </div>
     </Wrap>
   );
 }
 
-const Wrap = styled.th<{width: number}>`
+const Wrap = styled.div<{width: number}>`
   min-width: ${props => props.width}px;
   text-align: ${props => (props.width > 100 ? 'center' : 'left')};
 
@@ -123,23 +120,11 @@ const Wrap = styled.th<{width: number}>`
   }
 `;
 
-const Resizer = styled.div`
-  width: 5px;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  cursor: col-resize;
-  background-color: transparent;
-  z-index: 1;
-`;
-
 const DropdownBtn = styled.button`
-    width: 1.8rem;
-    height: 1.8rem;
-    background: url(${dropdown}) no-repeat center;
-    background-size: 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: url(${dropdown}) no-repeat center;
+  background-size: 1.8rem;
 `;
 
 const OptionBox = styled.ul`
@@ -149,6 +134,7 @@ const OptionBox = styled.ul`
   position: absolute;
   top: 3rem;
   left: 0;
+  z-index: 1;
 `;
 
 const OptionWrap = styled.li`
