@@ -8,6 +8,7 @@ import ProtectedRoute from '@components/ProtectedRoute.tsx';
 import Home from '@pages/index/Home.tsx';
 import Login from '@pages/index/Login.tsx';
 import DeleteAccount from '@pages/DeleteAccount.tsx';
+import ScrollToTop from './utils/scrollToTop';
 
 function initializeAnalytics() {
   ReactGA.initialize(import.meta.env.VITE_GTM_ID);
@@ -21,6 +22,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <ScrollToTop />
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/delete' element={<DeleteAccount />} />
