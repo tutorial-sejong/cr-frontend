@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import styled from 'styled-components';
 import Menubar from '@components/Menubar';
 import Header from '@components/Header';
@@ -34,10 +34,6 @@ function Home() {
   window.addEventListener('beforeunload', () => {
     dispatch(clearModalInfo());
   });
-
-  useEffect(() => {
-    alert('※ 본 사이트는 실제 수강신청 사이트가 아닙니다. ※');
-  }, []);
 
   const renderContent = () => {
     switch (focused) {
