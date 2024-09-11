@@ -9,6 +9,7 @@ import Home from '@pages/index/Home.tsx';
 import Login from '@pages/index/Login.tsx';
 import DeleteAccount from '@pages/DeleteAccount.tsx';
 import ScrollToTop from './utils/scrollToTop';
+import NotFound from './pages/index/NotFound';
 
 function initializeAnalytics() {
   ReactGA.initialize(import.meta.env.VITE_GTM_ID);
@@ -34,6 +35,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path='/*' element={<NotFound />} />
       </Routes>
     </ThemeProvider>
   );
