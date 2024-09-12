@@ -5,7 +5,6 @@ import Cookies from 'js-cookie';
 import {baseAPI} from '@/apis/utils/instance';
 import {useAppSelector} from '@/store/hooks';
 import {clearUserInfo} from '@/store/modules/userSlice';
-import {deleteAll} from '@/store/modules/tabSlice';
 import logout from '@assets/img/logout.png';
 import Clock from './Clock';
 
@@ -16,7 +15,6 @@ function TopMenu() {
 
   const handleLogout = () => {
     dispatch(clearUserInfo());
-    dispatch(deleteAll());
     delete baseAPI.defaults.headers.common['Authorization'];
     Cookies.remove('accessToken');
     navigate('/login');

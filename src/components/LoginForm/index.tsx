@@ -11,6 +11,7 @@ import {generateRandomStudentId} from '@/utils/randomUtils.ts';
 
 import copyIcon from '@/assets/img/file-copy-line.png';
 import reloadIcon from '@/assets/img/refresh-line.png';
+import {resetTab} from '@/store/modules/tabSlice';
 
 export type setType = string | number | undefined;
 
@@ -76,6 +77,9 @@ function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
         }),
       );
 
+      dispatch(resetTab());
+
+      alert('※ 본 사이트는 실제 수강신청 사이트가 아닙니다. ※');
       navigate('/');
     } catch (error) {
       console.error('Login failed', error);

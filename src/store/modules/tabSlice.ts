@@ -38,11 +38,11 @@ const tabSlice = createSlice({
     setFocused(state, action: PayloadAction<number>) {
       state.focused = action.payload;
     },
-    deleteAll: () => {
-      return {tab: [], focused: 0};
+    resetTab: () => {
+      return initialState;
     },
   },
 });
 
-export const {addTab, delTab, setFocused, deleteAll} = tabSlice.actions;
+export const {addTab, delTab, setFocused, resetTab} = tabSlice.actions;
 export default tabSlice.reducer;
