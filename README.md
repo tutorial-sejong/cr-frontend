@@ -120,97 +120,50 @@
 
 ```
 cs-frontend
-├─ .eslintrc.cjs
-├─ .gitignore
-├─ .prettierrc
-├─ .vite
-│  └─ deps
+├─ .eslintrc.cjs : lint 규칙
+├─ .prettierrc : prettier 설정
 ├─ index.html
 ├─ package-lock.json
 ├─ package.json
-├─ public
-│  ├─ favicon.ico
-│  └─ vite.svg
 ├─ README.md
 ├─ src
 │  ├─ apis
 │  │  ├─ api : api 요청/응답 코드 폴더
 │  │  │  ├─ auth.ts : 로그인 및 인증 관련 코드
 │  │  │  └─ course.ts : 강의 및 수강신청 관련 코드
-│  │  └─ utils : 인스턴스/공통 함수 폴더
-│  │     └─ instance.ts
+│  │  └─ utils : 인스턴스 / 공통 함수 폴더
 │  ├─ App.tsx
 │  ├─ assets
 │  │  ├─ data
-│  │  │  └─ filter.ts : 필터 데이터
-│  │  ├─ img : 아이콘이나 로고 등 필요한 이미지
-│  │  │  ├─ arrow-down-s-fill.png
-│  │  │  ├─ bookmark-3-line.svg
-│  │  │  ├─ check.png
-│  │  │  ├─ close-line-red.png
-│  │  │  ├─ close-line.png
-│  │  │  ├─ close-sidebar.svg
-│  │  │  ├─ delete_bg.webp
-│  │  │  ├─ edit-line.png
-│  │  │  ├─ edit-line.svg
-│  │  │  ├─ file-copy-line.png
-│  │  │  ├─ github-fill.svg
-│  │  │  ├─ login_bg.webp
-│  │  │  ├─ logo.webp
-│  │  │  ├─ logout.png
-│  │  │  ├─ refresh-line.png
-│  │  │  ├─ search-line.svg
-│  │  │  ├─ tutorial_sejong_logo.webp
-│  │  │  └─ warning.png
-│  │  └─ types : 자주 쓰이는 타입 분리
-│  │     └─ tableType.ts
+│  │  │  └─ filter.ts : 필터 옵션 데이터
+│  │  ├─ img : 아이콘이나 로고 등 필요한 이미지 폴더
+│  │  └─ types : 자주 쓰이는 타입 분리 폴더
 │  ├─ components
-│  │  ├─ common : 여러 곳에서 쓰이는 컴포넌트들
+│  │  ├─ common : 여러 곳에서 쓰이는 컴포넌트 폴더
 │  │  │  ├─ FilterButton.tsx : 검색, 조회 등 필터 적용 버튼
 │  │  │  ├─ FilterInput.tsx
 │  │  │  ├─ Modal
+│  │  │  │  ├─ handlers
+│  │  │  │  │  └─ handler.tsx
 │  │  │  │  ├─ AntiMacroCodeModal.tsx : 매크로 모달
 │  │  │  │  ├─ EnrollmentInfoModal.tsx : 수강인원 등 강의 정보 모달
 │  │  │  │  ├─ ErrorModal.tsx
-│  │  │  │  ├─ handlers
-│  │  │  │  │  └─ handler.tsx
 │  │  │  │  ├─ InfoModal.tsx : 수강신청 모달
 │  │  │  │  ├─ LoadingModal.tsx
 │  │  │  │  └─ WaitingModal.tsx : 접속 대기 모달
 │  │  │  ├─ SelectBox.tsx : 필터 드롭다운
 │  │  │  └─ Table : 강의 목록 테이블
-│  │  │     ├─ index.tsx
-│  │  │     └─ TableHead.tsx
 │  │  ├─ CourseRegister : 수강신청 탭
-│  │  │  ├─ index.tsx
-│  │  │  ├─ RegisteredList.tsx
-│  │  │  ├─ RegisterFilters.tsx
-│  │  │  └─ StartButton.tsx
 │  │  ├─ DeleteAccount
-│  │  │  └─ DeleteAccountForm.tsx
 │  │  ├─ Header
-│  │  │  ├─ Clock.tsx
-│  │  │  ├─ index.tsx
-│  │  │  ├─ TopMenu.tsx
+│  │  │  ├─ ...
 │  │  │  └─ TopNav.tsx : 타이틀
 │  │  ├─ LectureList : 시간표 검색 탭
-│  │  │  ├─ Filters.tsx
-│  │  │  └─ index.tsx
 │  │  ├─ LoginForm
-│  │  │  ├─ FormInput.tsx
-│  │  │  └─ index.tsx
 │  │  ├─ Menubar : 사이드바
-│  │  │  ├─ BarTitle.tsx
-│  │  │  ├─ index.tsx
-│  │  │  ├─ Menu.tsx
-│  │  │  └─ MenuItem.tsx
 │  │  ├─ ProtectedRoute.tsx : 사용자 인증 여부에 따른 접근 제한
 │  │  ├─ TabMenu
-│  │  │  ├─ index.tsx
-│  │  │  └─ Tab.tsx
 │  │  └─ Wishlist : 관심과목 탭
-│  │     ├─ Filters.tsx
-│  │     └─ index.tsx
 │  ├─ custom.d.ts : svg 관련 설정 파일
 │  ├─ main.tsx
 │  ├─ pages
@@ -224,18 +177,10 @@ cs-frontend
 │  │  ├─ hooks
 │  │  │  └─ index.ts
 │  │  ├─ modules
-│  │  │  ├─ courseRegisteredSlice.ts
-│  │  │  ├─ errorSlice.ts : 에러 모달에 띄울 정보 저장
-│  │  │  ├─ modalSlice.ts
-│  │  │  ├─ tabSlice.ts
-│  │  │  └─ userSlice.ts
+│  │  │  ├─ ...
+│  │  │  └─ errorSlice.ts : 에러 모달에 띄울 정보 저장
 │  │  └─ store.ts
 │  ├─ styles : 공통 스타일
-│  │  ├─ FilterLayout.tsx
-│  │  ├─ GlobalStyle.tsx
-│  │  └─ theme
-│  │     ├─ style.d.ts
-│  │     └─ Theme.ts
 │  ├─ utils
 │  │  ├─ randomUtils.ts : 랜덤 학번 및 숫자 생성
 │  │  └─ scrollToTop.ts : 페이지 이동 시 스크롤 초기화
