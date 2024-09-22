@@ -44,7 +44,7 @@
   <tr>
     <td>안정현</br> <a href="https://github.com/Anhye0n">깃허브</a><br/> </td>
     <td>오지현</br> <a href="https://github.com/zhy2on">깃허브</a><br/> </td>
-    <td>문지원</br> <a href="https://github.com/hs03130">깃허브</a><br/> </td>
+    <td>문지원</br> <a href="https://github.com/jeewonMoon">깃허브</a><br/> </td>
   </tr>
 </tbody>
 </table>
