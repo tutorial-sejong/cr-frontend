@@ -1,16 +1,16 @@
 import styled from 'styled-components';
-import logo from '@assets/img/main_logo.png';
+import logo from '@assets/img/tutorial_sejong_logo.webp';
 import TopNav from './TopNav';
 import TopMenu from './TopMenu';
 
 function Header() {
   return (
     <HeaderContainer>
-      <div>
+      <LogoBox>
         <img src={logo} />
-      </div>
-      <HeaderBox>
         <TopNav />
+      </LogoBox>
+      <HeaderBox>
         <TopMenu />
       </HeaderBox>
     </HeaderContainer>
@@ -20,18 +20,27 @@ function Header() {
 const HeaderContainer = styled.div`
   border-top: 0.5rem solid ${props => props.theme.colors.primary};
   max-width: 100%;
-  height: 6rem;
+  height: 7rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
+`;
+
+const LogoBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  > img {
+    height: 6rem;
+    display: block;
+  }
 `;
 
 const HeaderBox = styled.div`
   display: flex;
-  flex-grow: 1;
+  height: 100%;
   justify-content: space-between;
-  margin-left: 7.5rem;
 `;
 
 export default Header;

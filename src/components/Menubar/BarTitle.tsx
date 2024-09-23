@@ -1,37 +1,28 @@
 import styled from 'styled-components';
-import Star from '@assets/img/fav_white.png';
-import Search from '@assets/img/search.png';
-import Close from '@assets/img/menu_close.png';
+import Close from '@assets/img/close-sidebar.svg?react';
 
-interface OpenProps {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+interface TitleProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function BarTitle({setIsOpen}: OpenProps) {
+function BarTitle({setOpen}: TitleProps) {
   return (
     <BarTitleContainer>
       <BarTitleWrap>학부생수강시스템</BarTitleWrap>
-      <IconBox>
-        <img src={Star} />
-        <img src={Search} />
-        <CloseBtn onClick={() => setIsOpen(false)}>
-          <img src={Close} />
-        </CloseBtn>
-      </IconBox>
+      <CloseBtn onClick={prev => setOpen(!prev)}>
+        <Close />
+      </CloseBtn>
     </BarTitleContainer>
   );
 }
 
 const BarTitleContainer = styled.div`
-  background: linear-gradient(
-    90deg,
-    rgba(163, 20, 50, 1) 0%,
-    rgba(51, 77, 97, 1) 100%
-  );
+  background: ${props => props.theme.colors.secondary};
   height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0 1.5rem;
 `;
 
 const BarTitleWrap = styled.div`
@@ -40,15 +31,11 @@ const BarTitleWrap = styled.div`
   color: ${props => props.theme.colors.white};
 `;
 
-const IconBox = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 0.5rem;
-`;
-
 const CloseBtn = styled.button`
   display: flex;
   align-items: center;
+  height: 100%;
+  width: 1.5rem;
 `;
 
 export default BarTitle;
