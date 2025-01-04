@@ -15,6 +15,10 @@ const GlobalStyle = createGlobalStyle`
         -moz-appearance: textfield;
     }
 
+    *{
+        box-sizing: border-box;
+    }
+
     html {
         font-size: 62.5%;
     }
