@@ -120,7 +120,7 @@ function Login() {
               <ListItem>
                 수집된 개인정보는{' '}
                 <Highlight>매일 자정에 자동으로 서버에서 삭제</Highlight>됩니다.
-                만약 자정 전에 정보를 삭제하고 싶으신 경우,
+                만약 자정 전에 정보를 삭제하고 싶으신 경우,{' '}
                 <Highlight onClick={() => navigate('/delete')}>
                   https://tutorial-sejong.com/delete
                 </Highlight>{' '}
