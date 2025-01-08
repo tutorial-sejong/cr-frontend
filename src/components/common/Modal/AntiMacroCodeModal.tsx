@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import close from '@assets/img/close-line.png';
 import {useEffect, useState} from 'react';
 import {getMacroCode} from '@apis/api/course.ts';
-import Cookies from 'js-cookie';
 import {useDispatch} from 'react-redux';
 import {
   openModalHandler,
@@ -19,7 +18,6 @@ function AntiMacroCodeModal() {
     url: '',
     answer: 0,
   });
-  const baseURL = import.meta.env.VITE_BASE_URL;
   const [inputCode, setInputCode] = useState<number | string>();
   const [imageSrc, setImageSrc] = useState<string>('');
 
@@ -28,22 +26,12 @@ function AntiMacroCodeModal() {
   const fetchMacroCode = async () => {
     try {
       const {data} = await getMacroCode();
-      const response = await fetch(`${baseURL}${data.url}`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('accessToken')}`,
-        },
-      });
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-
       setMacroCode(prev => ({
         ...prev,
-        url: `${baseURL}${data.url}`,
+        url: data.url,
         answer: data.answer,
       }));
-      console.log(data);
-
-      setImageSrc(url);
+      setImageSrc(data.url);
     } catch (error) {
       console.error('매크로 코드 불러오기 실패: ', error);
     }
