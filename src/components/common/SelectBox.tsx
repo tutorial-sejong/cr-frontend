@@ -12,9 +12,16 @@ interface SelectProps {
   disabled?: boolean;
   sizes: string;
   onSelect: (value: string) => void;
+  restricted?: boolean;
 }
 
-function SelectBox({options, disabled = false, sizes, onSelect}: SelectProps) {
+function SelectBox({
+  options,
+  disabled = false,
+  sizes,
+  onSelect,
+  restricted = false,
+}: SelectProps) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState(options[0].value);
   const [selected, setSelected] = useState(options[0].value);
@@ -65,7 +72,11 @@ function SelectBox({options, disabled = false, sizes, onSelect}: SelectProps) {
   return (
     <SelectContainer ref={dropdownRef} sizes={sizes}>
       <InputContainer disabled={disabled}>
-        <InputWrap readOnly={disabled} value={input} onChange={handleInput} />
+        <InputWrap
+          readOnly={disabled}
+          value={restricted ? '전체학년 (학과제한 없음)' : input}
+          onChange={handleInput}
+        />
         <ArrowWrap src={arrow} onClick={handleBtnClick} />
       </InputContainer>
       {open && (
@@ -138,8 +149,8 @@ const InputContainer = styled.div<{disabled: boolean}>`
 
 const InputWrap = styled.input`
   ${props => props.theme.texts.content};
-  width: calc(100% - 1rem);
-  height: inherit;
+  width: 100%;
+  height: 100%;
   padding: 0 0 0 1rem;
 
   &:hover {

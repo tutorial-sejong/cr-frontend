@@ -15,6 +15,7 @@ import {getCourseList, getRegisterdList, getWishlist} from '@/apis/api/course';
 import {useAppSelector} from '@/store/hooks';
 import {openModalHandler} from '../common/Modal/handlers/handler';
 import {setEndCount} from '@/store/modules/courseRegisteredSlice';
+import RegisterInfo from './RegisterInfo';
 
 const colData = [
   {name: 'action', value: '신청', initialWidth: 50, enableFilters: false},
@@ -33,6 +34,7 @@ const colData = [
 ];
 
 function CourseRegister() {
+  const [isConfirm, setIsConfirm] = useState(false);
   const [list, setList] = useState<CourseTypes[]>([]);
   const [registeredList, setRegisteredList] = useState<CourseTypes[]>([]);
   const [currentFilter, setCurrentFilter] = useState<CourseTypes>({});
@@ -105,22 +107,28 @@ function CourseRegister() {
 
   return (
     <>
-      <StartButton onClick={handleStartButtonClick} />
-      <RegisterFilters
-        onSearch={handleSearch}
-        isRegistrationStarted={isRegistrationStarted}
-      />
-      <TableTitleWrap>
-        <TableTitle>수강대상교과목</TableTitle>
-      </TableTitleWrap>
-      <Table
-        colData={colData}
-        data={list}
-        width='100%'
-        height='35rem'
-        onAction={handleAction}
-      />
-      <RegisteredList list={registeredList} refreshAll={refreshAll} />
+      {!isConfirm ? (
+        <RegisterInfo onClickNext={() => setIsConfirm(true)} />
+      ) : (
+        <>
+          <StartButton onClick={handleStartButtonClick} />
+          <RegisterFilters
+            onSearch={handleSearch}
+            isRegistrationStarted={isRegistrationStarted}
+          />
+          <TableTitleWrap>
+            <TableTitle>수강대상교과목</TableTitle>
+          </TableTitleWrap>
+          <Table
+            colData={colData}
+            data={list}
+            width='100%'
+            height='35rem'
+            onAction={handleAction}
+          />
+          <RegisteredList list={registeredList} refreshAll={refreshAll} />
+        </>
+      )}
     </>
   );
 }

@@ -24,7 +24,6 @@ const InputWrap = styled.input`
   height: 4rem;
   width: 38rem;
   font-size: 1.9rem;
-  padding: 0 1rem;
 `;
 
 export default FormInput;
