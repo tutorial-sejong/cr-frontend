@@ -44,10 +44,11 @@ function CourseRegister() {
 
   const dispatch = useDispatch();
   const studentId = useAppSelector(state => state.userInfo.username);
+  const timeout = useAppSelector(state => state.courseRegistered.time);
 
   useEffect(() => {
     dispatch(setEndCount(false));
-  }, []);
+  }, [dispatch]);
 
   const refreshAll = useCallback(async () => {
     const registeredCourses = await getRegisterdList();
@@ -86,9 +87,9 @@ function CourseRegister() {
     dispatch(setEndCount(false));
 
     setTimeout(() => {
-      console.log('35초 지남');
+      console.log('제한 시간 초과');
       dispatch(setEndCount(true));
-    }, 35000);
+    }, timeout * 1000);
   };
 
   const handleAction = async (

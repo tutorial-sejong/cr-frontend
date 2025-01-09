@@ -7,6 +7,7 @@ import {useAppSelector} from '@/store/hooks';
 import {clearUserInfo} from '@/store/modules/userSlice';
 import logout from '@assets/img/logout.png';
 import Clock from './Clock';
+import {resetCourseRegistered} from '@/store/modules/courseRegisteredSlice';
 
 function TopMenu() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function TopMenu() {
 
   const handleLogout = () => {
     dispatch(clearUserInfo());
+    dispatch(resetCourseRegistered());
     delete baseAPI.defaults.headers.common['Authorization'];
     Cookies.remove('accessToken');
     navigate('/login');
