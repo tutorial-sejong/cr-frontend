@@ -7,9 +7,20 @@ import {useAppSelector} from '@store/hooks';
 import {postCourse} from '@apis/api/course.ts';
 import {setType} from '@/store/modules/errorSlice';
 
-function LoadingModal({scheduleId}: {scheduleId: number}) {
-  const dispatch = useDispatch();
+interface LoadingModalProps {
+  scheduleId: number;
+  schDeptAlias: string;
+  curiTypeCdNm: string;
+}
 
+function LoadingModal({
+  scheduleId,
+  schDeptAlias,
+  curiTypeCdNm,
+}: LoadingModalProps) {
+  const dispatch = useDispatch();
+  const userMajor = useAppSelector(state => state.dateMode.userMajor);
+  const selectedDate = useAppSelector(state => state.dateMode.selectedDate);
   const endCount = useAppSelector(state => state.courseRegistered.endCount);
 
   useEffect(() => {
@@ -26,8 +37,27 @@ function LoadingModal({scheduleId}: {scheduleId: number}) {
         return;
       }
 
-      // 수강신청 요청
+      // 본인학년 (학과 제한 있음) 선택 시 학과 제한
+      if (
+        selectedDate === '본인학년 (학과 제한 있음)' &&
+        schDeptAlias !== '대양휴머니티칼리지' &&
+        schDeptAlias !== userMajor
+      ) {
+        dispatch(setType(500));
+        openModalHandler(dispatch, 'fail');
+        return;
+      }
 
+      //교직은 교육학과만 수강가능
+      if (curiTypeCdNm === '교직') {
+        if (schDeptAlias !== '교육학과') {
+          dispatch(setType(500));
+          openModalHandler(dispatch, 'fail');
+          return;
+        }
+      }
+
+      // 수강신청 요청
       try {
         const res = await postCourse(scheduleId);
         if (res === 'Course already registered') {

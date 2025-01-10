@@ -13,6 +13,8 @@ interface TableProps {
     action: string,
     scheduleId: number | undefined,
     curiNm: string | undefined,
+    schDeptAlias: string | undefined,
+    curiTypeCdNm: string | undefined,
   ) => void;
 }
 
@@ -84,7 +86,13 @@ function Table({data, colData, width, height, onAction}: TableProps) {
 
   const handleActionClick = (row: CourseTypes, action: string) => {
     if (onAction) {
-      onAction(action, row.scheduleId, row.curiNm);
+      onAction(
+        action,
+        row.scheduleId,
+        row.curiNm,
+        row.schDeptAlias,
+        row.curiTypeCdNm,
+      );
     } else {
       console.log(`${action} action for scheduleId: ${row.scheduleId}`);
     }
@@ -189,7 +197,6 @@ const TableBox = styled.div<{width: string; height: string}>`
   border-bottom: 1px solid #c3c3c3;
   border-top: 1px solid ${props => props.theme.colors.black};
   white-space: nowrap;
-  overflow:;
 `;
 
 const RowWrap = styled.div`

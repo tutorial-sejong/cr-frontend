@@ -2,6 +2,7 @@ import styled, {css} from 'styled-components';
 import close from '@assets/img/close-line-red.png';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import {delTab, setFocused} from '@/store/modules/tabSlice';
+import {resetDateMode} from '@/store/modules/dateModeSlice';
 
 interface TabProps {
   id: number;
@@ -23,6 +24,9 @@ function Tab({id, label, isActive, onClick}: TabProps) {
       dispatch(setFocused(tabs[idx - 1].id));
     }
     dispatch(delTab(id));
+    if (label === '수강신청') {
+      dispatch(resetDateMode());
+    }
   };
 
   return (

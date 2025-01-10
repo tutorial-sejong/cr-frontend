@@ -7,7 +7,9 @@ import RegisteredList from './RegisteredList';
 import {useDispatch} from 'react-redux';
 import {
   setCourseName,
+  setCuriTypeCdNm,
   setModalName,
+  setSchDeptAlias,
   setScheduleId,
 } from '@/store/modules/modalSlice';
 import StartButton from '@components/CourseRegister/StartButton.tsx';
@@ -15,6 +17,8 @@ import {getCourseList, getRegisterdList, getWishlist} from '@/apis/api/course';
 import {useAppSelector} from '@/store/hooks';
 import {openModalHandler} from '../common/Modal/handlers/handler';
 import {setEndCount} from '@/store/modules/courseRegisteredSlice';
+import RegisterInfo from './RegisterInfo';
+import {setIsConfirm} from '@/store/modules/dateModeSlice';
 
 const colData = [
   {name: 'action', value: '신청', initialWidth: 50, enableFilters: false},
@@ -44,6 +48,7 @@ function CourseRegister() {
 
   const dispatch = useDispatch();
   const studentId = useAppSelector(state => state.userInfo.username);
+  const isConfirm = useAppSelector(state => state.dateMode.isConfirm);
   const timeout = useAppSelector(state => state.courseRegistered.time);
 
   useEffect(() => {
@@ -96,32 +101,42 @@ function CourseRegister() {
     _action: string,
     scheduleId: number | undefined,
     curiNm: string | undefined,
+    schDeptAlias: string | undefined,
+    curiTypeCdNm: string | undefined,
   ) => {
-    if (scheduleId && curiNm) {
+    if (scheduleId && curiNm && schDeptAlias && curiTypeCdNm) {
       dispatch(setScheduleId(scheduleId));
       dispatch(setCourseName(curiNm));
       dispatch(setModalName('macro'));
+      dispatch(setSchDeptAlias(schDeptAlias));
+      dispatch(setCuriTypeCdNm(curiTypeCdNm));
     }
   };
 
   return (
     <>
-      <StartButton onClick={handleStartButtonClick} />
-      <RegisterFilters
-        onSearch={handleSearch}
-        isRegistrationStarted={isRegistrationStarted}
-      />
-      <TableTitleWrap>
-        <TableTitle>수강대상교과목</TableTitle>
-      </TableTitleWrap>
-      <Table
-        colData={colData}
-        data={list}
-        width='100%'
-        height='35rem'
-        onAction={handleAction}
-      />
-      <RegisteredList list={registeredList} refreshAll={refreshAll} />
+      {!isConfirm ? (
+        <RegisterInfo onClickNext={() => dispatch(setIsConfirm())} />
+      ) : (
+        <>
+          <StartButton onClick={handleStartButtonClick} />
+          <RegisterFilters
+            onSearch={handleSearch}
+            isRegistrationStarted={isRegistrationStarted}
+          />
+          <TableTitleWrap>
+            <TableTitle>수강대상교과목</TableTitle>
+          </TableTitleWrap>
+          <Table
+            colData={colData}
+            data={list}
+            width='100%'
+            height='35rem'
+            onAction={handleAction}
+          />
+          <RegisteredList list={registeredList} refreshAll={refreshAll} />
+        </>
+      )}
     </>
   );
 }
