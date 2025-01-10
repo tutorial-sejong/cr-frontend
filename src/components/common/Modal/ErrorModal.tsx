@@ -34,6 +34,8 @@ function ErrorModal() {
           default:
             return '422 알 수 없는 오류';
         }
+      case 500:
+        return '대상학년 또는 대상학과가 아니므로 수강신청할 수 없습니다!';
       default:
         return '알 수 없는 오류';
     }
@@ -95,12 +97,12 @@ const ModalHeader = styled.div`
 const CloseImage = styled.img.attrs({
   src: `${close}`,
 })`
-    display: block;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-right: 10px;
+  display: block;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 10px;
 `;
 
 const WarningImage = styled.img.attrs({

@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 export interface dateMode {
+  isConfirm: boolean;
   userMajor: string;
   selectedDate: string;
 }
@@ -8,10 +9,15 @@ export interface dateMode {
 const dateMode = createSlice({
   name: 'dateMode',
   initialState: {
+    isConfirm: false,
     userMajor: '-전체-',
-    selectedDate: '전체학년 (학과 제한 없음)',
+    selectedDate: '전학년 (학과 제한 없음)',
   },
   reducers: {
+    setIsConfirm(state: dateMode) {
+      state.isConfirm = true;
+    },
+
     setUserMajor(state: dateMode, {payload}: {payload: string}) {
       state.userMajor = payload;
     },
@@ -19,9 +25,16 @@ const dateMode = createSlice({
     setSelectedDate(state: dateMode, {payload}: {payload: string}) {
       state.selectedDate = payload;
     },
+
+    resetDateMode(state: dateMode) {
+      state.isConfirm = false;
+      state.userMajor = '-전체-';
+      state.selectedDate = '전학년 (학과 제한 없음)';
+    },
   },
 });
 
-export const {setUserMajor, setSelectedDate} = dateMode.actions;
+export const {setIsConfirm, setUserMajor, setSelectedDate, resetDateMode} =
+  dateMode.actions;
 
 export default dateMode.reducer;

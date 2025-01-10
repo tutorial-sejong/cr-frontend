@@ -74,7 +74,7 @@ function SelectBox({
       <InputContainer disabled={disabled}>
         <InputWrap
           readOnly={disabled}
-          value={restricted ? '전체학년 (학과제한 없음)' : input}
+          value={restricted ? '전학년 (학과 제한 없음)' : input}
           onChange={handleInput}
         />
         <ArrowWrap src={arrow} onClick={handleBtnClick} />

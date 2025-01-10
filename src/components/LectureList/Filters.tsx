@@ -119,7 +119,7 @@ function Filters({onSearch}: FiltersProps) {
   );
 }
 
-const WarningWrap = styled.div`
+export const WarningWrap = styled.div`
   ${props => props.theme.texts.warning};
   color: #c30e2e;
   margin-bottom: -1.5rem;
