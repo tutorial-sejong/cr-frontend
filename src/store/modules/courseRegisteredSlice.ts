@@ -18,6 +18,8 @@ const courseRegistered = createSlice({
     setTime(state: CourseRegistered, {payload}: {payload: number}) {
       if (payload <= 10) {
         state.time = 10;
+      } else if (payload >= 3600) {
+        state.time = 3600;
       } else {
         state.time = payload;
       }

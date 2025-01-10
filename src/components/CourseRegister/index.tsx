@@ -49,7 +49,6 @@ function CourseRegister() {
   const dispatch = useDispatch();
   const studentId = useAppSelector(state => state.userInfo.username);
   const isConfirm = useAppSelector(state => state.dateMode.isConfirm);
-  const timeout = useAppSelector(state => state.courseRegistered.time);
 
   useEffect(() => {
     dispatch(setEndCount(false));
@@ -90,11 +89,6 @@ function CourseRegister() {
     setIsRegistrationStarted(true);
     setIsFirstSearch(true);
     dispatch(setEndCount(false));
-
-    setTimeout(() => {
-      console.log('제한 시간 초과');
-      dispatch(setEndCount(true));
-    }, timeout * 1000);
   };
 
   const handleAction = async (
