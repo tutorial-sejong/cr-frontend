@@ -22,9 +22,8 @@ function Home() {
   const {tab, focused} = useAppSelector(state => state.tabs);
   const [barOpen, setBarOpen] = useState(isPc);
 
-  const {modalName, scheduleId, courseName} = useAppSelector(
-    state => state.modalInfo,
-  );
+  const {modalName, scheduleId, courseName, schDeptAlias, curiTypeCdNm} =
+    useAppSelector(state => state.modalInfo);
 
   const focusedTab = tab.find(tab => tab.id === focused);
   const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';
@@ -57,7 +56,13 @@ function Home() {
       case 'check':
         return <InfoModal curiNm={courseName} type={'check'} />;
       case 'loading':
-        return <LoadingModal scheduleId={scheduleId} />;
+        return (
+          <LoadingModal
+            scheduleId={scheduleId}
+            schDeptAlias={schDeptAlias}
+            curiTypeCdNm={curiTypeCdNm}
+          />
+        );
       case 'reload':
         return <InfoModal curiNm={courseName} type={'reload'} />;
       case 'fail':

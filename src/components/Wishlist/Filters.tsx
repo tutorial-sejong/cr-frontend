@@ -202,7 +202,7 @@ const WishFilterWrap = styled(FilterWrap)`
     display: inline-block;
     margin-right: 1rem;
     text-align: right;
-    min-width: 4.5rem;
+    min-width: 5rem;
   }
 `;
 

@@ -7,6 +7,7 @@ import modalSlice from '@/store/modules/modalSlice';
 import courseRegisteredSlice from '@/store/modules/courseRegisteredSlice';
 import tabSlice from './modules/tabSlice';
 import errorSlice from './modules/errorSlice';
+import dateModeSlice from './modules/dateModeSlice';
 
 const reducers = combineReducers({
   userInfo: userSlice,
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   courseRegistered: courseRegisteredSlice,
   tabs: tabSlice,
   error: errorSlice,
+  dateMode: dateModeSlice,
 });
 
 const persistConfig = {

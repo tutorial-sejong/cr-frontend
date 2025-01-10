@@ -34,6 +34,7 @@ export const FilterWrap = styled.div`
   > span {
     margin-right: 1rem;
     text-align: right;
-    min-width: 4.5rem;
+    min-width: 5rem;
+    flex-basis: 5rem;
   }
 `;
