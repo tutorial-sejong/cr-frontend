@@ -52,7 +52,7 @@ function CourseRegister() {
 
   useEffect(() => {
     dispatch(setEndCount(false));
-  }, []);
+  }, [dispatch]);
 
   const refreshAll = useCallback(async () => {
     const registeredCourses = await getRegisterdList();
@@ -89,11 +89,6 @@ function CourseRegister() {
     setIsRegistrationStarted(true);
     setIsFirstSearch(true);
     dispatch(setEndCount(false));
-
-    setTimeout(() => {
-      console.log('35초 지남');
-      dispatch(setEndCount(true));
-    }, 35000);
   };
 
   const handleAction = async (
