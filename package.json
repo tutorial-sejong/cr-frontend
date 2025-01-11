@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc && vite build && echo /* /index.html 200 > dist/_redirects",
     "format": "prettier --write --cache .",
     "lint": "eslint src/**/*.{ts,tsx} --fix",
     "preview": "vite preview"
