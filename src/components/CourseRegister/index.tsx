@@ -54,6 +54,11 @@ function CourseRegister() {
     dispatch(setEndCount(false));
   }, [dispatch]);
 
+  const handleNextButtonClick = () => {
+    dispatch(setIsConfirm());
+    window.scrollTo(0, 0);
+  };
+
   const refreshAll = useCallback(async () => {
     const registeredCourses = await getRegisterdList();
     setRegisteredList(registeredCourses || []);
@@ -110,7 +115,7 @@ function CourseRegister() {
   return (
     <>
       {!isConfirm ? (
-        <RegisterInfo onClickNext={() => dispatch(setIsConfirm())} />
+        <RegisterInfo onClickNext={handleNextButtonClick} />
       ) : (
         <>
           <StartButton onClick={handleStartButtonClick} />
