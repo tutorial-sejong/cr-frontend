@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Menubar from '@components/Menubar';
 import Header from '@components/Header';
@@ -21,6 +21,10 @@ function Home() {
   const isPc = useMediaQuery({query: '(min-width: 1024px)'});
   const {tab, focused} = useAppSelector(state => state.tabs);
   const [barOpen, setBarOpen] = useState(isPc);
+
+  useEffect(() => {
+    setBarOpen(isPc);
+  }, [isPc]);
 
   const {modalName, scheduleId, courseName, schDeptAlias, curiTypeCdNm} =
     useAppSelector(state => state.modalInfo);

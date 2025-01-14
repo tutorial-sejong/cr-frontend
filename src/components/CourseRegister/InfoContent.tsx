@@ -128,6 +128,7 @@ const Table = styled.table`
   max-width: 70rem;
   border-collapse: collapse;
   border: 1.6px solid #000;
+  background-color: white;
 
   th {
     ${props => props.theme.texts.tableTitle};
