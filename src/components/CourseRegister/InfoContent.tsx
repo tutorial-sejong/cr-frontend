@@ -5,7 +5,7 @@ function InfoContent() {
   return (
     <>
       <Container>
-        <SubTitle>2025-1학기 수강신청 연습 안내</SubTitle> <br />
+        <SubTitle>2025-1학기 수강신청 연습 안내</SubTitle>
         <p>
           <span>1. 시간표 업데이트 일정:</span> 1.24.(금)
         </p>
@@ -119,7 +119,7 @@ const Container = styled.div`
 const SubTitle = styled.div`
   ${props => props.theme.texts.subtitle};
   font-size: 1.6rem;
-  margin-bottom: 15px;
+  margin-bottom: 2rem;
 `;
 
 const Table = styled.table`
@@ -128,7 +128,6 @@ const Table = styled.table`
   max-width: 70rem;
   border-collapse: collapse;
   border: 1.6px solid #000;
-  background-color: white;
 
   th {
     ${props => props.theme.texts.tableTitle};
@@ -147,6 +146,7 @@ const Table = styled.table`
     line-height: 1.4;
     letter-spacing: 0.01em;
     word-break: break-all;
+    background-color: white;
   }
 `;
 
