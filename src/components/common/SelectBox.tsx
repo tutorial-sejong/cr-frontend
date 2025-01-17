@@ -27,6 +27,7 @@ function SelectBox({
   const [selected, setSelected] = useState(options[0].value);
   const [filtered, setFiltered] = useState<OptionsInterface[]>(options);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleBtnClick = () => {
     if (!disabled) {
@@ -35,12 +36,25 @@ function SelectBox({
     }
   };
 
+  const handleInputFocus = () => {
+    setInput(''); // 입력값 초기화
+    setFiltered(options); // 전체 목록 표시
+    setOpen(true);
+  };
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
-    setFiltered(
-      options.filter(option => option.value.includes(e.target.value)),
-    );
     setOpen(true);
+
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current); // 이전 타이머 취소
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      setFiltered(
+        options.filter(option => option.value.includes(e.target.value)),
+      );
+    }, 500);
   };
 
   const handleOptionClick = (value: string) => {
@@ -75,6 +89,7 @@ function SelectBox({
         <InputWrap
           readOnly={disabled}
           value={restricted ? '전학년 (학과 제한 없음)' : input}
+          onFocus={handleInputFocus}
           onChange={handleInput}
         />
         <ArrowWrap src={arrow} onClick={handleBtnClick} />
@@ -169,7 +184,7 @@ const ArrowWrap = styled.img`
 
 const SelectWrap = styled.ul`
   min-width: 15rem;
-  max-height: 12rem;
+  max-height: 14.5rem;
   position: absolute;
   top: 100%;
   z-index: 5;

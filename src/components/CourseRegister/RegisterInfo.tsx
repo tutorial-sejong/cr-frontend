@@ -31,7 +31,6 @@ function RegisterInfo({onClickNext}: RegisterInfoProps) {
       <TableTitleWrap>
         <TableTitle>안내문</TableTitle>
       </TableTitleWrap>
-      <InfoContent />
       <Container>
         <SelectArea>
           <SelectBoxWrap>
@@ -57,9 +56,12 @@ function RegisterInfo({onClickNext}: RegisterInfoProps) {
               />
             </SelectWrap>
           </SelectBoxWrap>
-          <ButtonWrap onClick={onClickNext}>저장/NEXT</ButtonWrap>
         </SelectArea>
       </Container>
+      <InfoContent />
+      <ButtonContainer>
+        <ButtonWrap onClick={onClickNext}>저장/NEXT</ButtonWrap>
+      </ButtonContainer>
     </>
   );
 }
@@ -67,8 +69,8 @@ function RegisterInfo({onClickNext}: RegisterInfoProps) {
 const Container = styled.div`
   border: 0.1rem solid #714656;
   border-radius: 2px;
-  padding: 1.5rem 1.5rem;
-  margin-bottom: 2rem;
+  padding: 1.5rem 1rem;
+  margin: 1.5rem 0;
 `;
 
 export const SelectArea = styled.div`
@@ -117,6 +119,12 @@ const ButtonWrap = styled.button`
   &:hover {
     filter: grayscale(15%);
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 `;
 
 export default RegisterInfo;
