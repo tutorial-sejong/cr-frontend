@@ -60,7 +60,8 @@ function LoadingModal({
       // 수강신청 요청
       try {
         const res = await postCourse(scheduleId);
-        if (res === 'Course already registered') {
+
+        if (res.status === 409) {
           return;
         }
       } catch (error) {

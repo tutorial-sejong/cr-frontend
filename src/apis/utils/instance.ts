@@ -1,8 +1,10 @@
+import axios, {AxiosError, AxiosResponse} from 'axios';
+import Cookies from 'js-cookie';
 import {setModalName} from '@/store/modules/modalSlice';
 import {setType} from '@/store/modules/errorSlice';
 import {store} from '@/store/store';
-import axios, {AxiosError, AxiosResponse} from 'axios';
-import Cookies from 'js-cookie';
+import {clearUserInfo} from '@/store/modules/userSlice';
+import {resetCourseRegistered} from '@/store/modules/courseRegisteredSlice';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -29,7 +31,7 @@ function addSubscriber(callback: (token: string) => void) {
 baseAPI.interceptors.request.use(
   config => {
     if (!config.headers['Authorization']) {
-      config.headers['Authorization'] = Cookies.get('accessToken');
+      config.headers['Authorization'] = `Bearer ${Cookies.get('accessToken')}`;
     }
 
     return config;
@@ -46,10 +48,17 @@ baseAPI.interceptors.response.use(
   async error => {
     const {
       config,
+      response,
       response: {status},
     } = error;
     const originalRequest = config;
-    if (status === 401 && !originalRequest._retry) {
+    const code = response.data.code;
+    console.log(code);
+
+    if (
+      ((status === 401 && code === 'S001') || code === 'S002') &&
+      !originalRequest._retry
+    ) {
       if (isRefreshing) {
         return new Promise(resolve => {
           addSubscriber((token: string) => {
@@ -67,7 +76,7 @@ baseAPI.interceptors.response.use(
 
         baseAPI.defaults.headers.common['Authorization'] =
           `Bearer ${data.accessToken}`;
-        Cookies.set('accessToken', data.accessToken, {expires: 0.5 / 24});
+        Cookies.set('accessToken', data.accessToken, {expires: 1});
         onAccessTokenFetched(data.accessToken);
         isRefreshing = false;
 
@@ -78,13 +87,21 @@ baseAPI.interceptors.response.use(
         isRefreshing = false;
         return Promise.reject(err);
       }
-    } else if (status === 404) {
+    } else if (code === 'S003') {
+      store.dispatch(clearUserInfo());
+      store.dispatch(resetCourseRegistered());
+      delete baseAPI.defaults.headers.common['Authorization'];
+      Cookies.remove('accessToken');
+    } else if ((status === 404 && code === 'S001') || code === 'W003') {
+      // 검색결과 없음
       return Promise.resolve({...error.response, data: []} as AxiosResponse);
-    } else if (status === 409) {
+    } else if (code === 'C001' || code === 'W001' || code === 'W002') {
       store.dispatch(setModalName('fail'));
       store.dispatch(setType(409));
 
-      return Promise.resolve({...error.response} as AxiosError);
+      return Promise.reject({...error.response} as AxiosError);
+    } else if (code === 'G001' || code === 'G005') {
+      location.href = '/*';
     }
 
     return Promise.reject(error);
