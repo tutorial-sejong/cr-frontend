@@ -15,6 +15,7 @@ function StartButton({onClick}: StartBtnProps) {
   const time = useAppSelector(state => state.courseRegistered.time);
   const [timeLeft, setTimeLeft] = useState(time);
   const [isRunning, setIsRunning] = useState(false);
+
   useEffect(() => {
     if (!isRunning || timeLeft <= 0) return;
 
@@ -30,7 +31,6 @@ function StartButton({onClick}: StartBtnProps) {
       setIsRunning(false);
       setTimeLeft(time);
       dispatch(setEndCount(true));
-      console.log('제한 시간 초과');
     }
   }, [timeLeft, dispatch]);
 

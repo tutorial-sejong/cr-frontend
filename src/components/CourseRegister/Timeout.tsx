@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {FilterWrap} from '@/styles/FilterLayout';
 import InfoIcon from '@assets/img/info.svg?react';
 import {setTime} from '@/store/modules/courseRegisteredSlice';
+import {defaultTime, maxTime, minTime} from '@/assets/data/constant';
 
 interface TimeoutProps {
   timeLeft: number;
@@ -22,13 +23,22 @@ function Timeout({timeLeft, setTimeLeft, handleClick}: TimeoutProps) {
     const timeInput = parseInt(e.target.value);
 
     if (e.target.value) {
+      if (timeInput <= minTime) {
+        setTimeLeft(minTime);
+        dispatch(setTime(minTime));
+      } else if (timeInput >= maxTime) {
+        setTimeLeft(maxTime);
+        dispatch(setTime(maxTime));
+      } else {
+        setTimeLeft(timeInput);
+        dispatch(setTime(timeInput));
+      }
+
       setTimeout(timeInput);
-      setTimeLeft(timeInput);
-      dispatch(setTime(timeInput));
     } else {
       setTimeout('');
-      setTimeLeft(35);
-      dispatch(setTime(35));
+      setTimeLeft(defaultTime);
+      dispatch(setTime(defaultTime));
     }
   };
 
