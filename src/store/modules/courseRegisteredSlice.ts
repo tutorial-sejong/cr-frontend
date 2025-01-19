@@ -1,3 +1,4 @@
+import {defaultTime} from '@/assets/data/constant';
 import {createSlice} from '@reduxjs/toolkit';
 
 export interface CourseRegistered {
@@ -9,30 +10,24 @@ const courseRegistered = createSlice({
   name: 'courseRegistered',
   initialState: {
     endCount: false,
-    time: 35,
+    time: defaultTime,
   },
   reducers: {
     setEndCount(state: CourseRegistered, {payload}: {payload: boolean}) {
       state.endCount = payload;
     },
     setTime(state: CourseRegistered, {payload}: {payload: number}) {
-      if (payload <= 10) {
-        state.time = 10;
-      } else if (payload >= 3600) {
-        state.time = 3600;
-      } else {
-        state.time = payload;
-      }
+      state.time = payload;
     },
     clearCount(state: CourseRegistered) {
       state.endCount = false;
     },
     cleatTime(state: CourseRegistered) {
-      state.time = 35;
+      state.time = defaultTime;
     },
     resetCourseRegistered(state: CourseRegistered) {
       state.endCount = false;
-      state.time = 35;
+      state.time = defaultTime;
     },
   },
 });
