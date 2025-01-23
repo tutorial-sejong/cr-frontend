@@ -1,25 +1,29 @@
 import styled, {css} from 'styled-components';
-import close from '@assets/img/close-line.png';
+import {closeHandler} from './handlers/handler';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
+import {
+  CloseImage,
+  Modal,
+  ModalContainer,
+  ModalFooter,
+  ModalHeader,
+  Title,
+} from '@/styles/ModalLayout';
 
-interface EnrollmentsProps {
-  schDeptAlias: string;
-  curiNo: string;
-  curiNm: string;
-  classNo: string;
-}
+function EnrollmentInfoModal() {
+  const dispatch = useAppDispatch();
+  const courseData = useAppSelector(state => state.modalInfo.courseData);
 
-function EnrollmentInfoModal({
-  schDeptAlias,
-  curiNo,
-  curiNm,
-  classNo,
-}: EnrollmentsProps) {
+  const closeButton = () => {
+    closeHandler(dispatch);
+  };
+
   return (
     <ModalContainer>
       <Modal>
         <ModalHeader>
           <Title>수강인원</Title>
-          <CloseImage />
+          <CloseImage onClick={closeButton} />
         </ModalHeader>
         <ModalBody>
           <LectureInfoContainer>
@@ -46,7 +50,7 @@ function EnrollmentInfoModal({
                 <LectureInfoWrap>
                   <span>개설학과전공</span>
                   <InputWrap sizes={'l'}>
-                    <p>{schDeptAlias}</p>
+                    <p>{courseData.schDeptAlias}</p>
                   </InputWrap>
                 </LectureInfoWrap>
                 <LectureInfoWrap>
@@ -59,11 +63,11 @@ function EnrollmentInfoModal({
                   <span>교과목번호-분반</span>
                   <InputWrap sizes={'s'}>
                     <p>
-                      {curiNo}-{classNo}
+                      {courseData.curiNo}-{courseData.classNo}
                     </p>
                   </InputWrap>
-                  <InputWrap sizes={'xl'}>
-                    <p>{curiNm}</p>
+                  <InputWrap sizes={'l'}>
+                    <p>{courseData.curiNm}</p>
                   </InputWrap>
                 </LectureInfoWrap>
               </LectureInfoBox>
@@ -89,8 +93,6 @@ function EnrollmentInfoModal({
                       9
                     </p>
                   </InputWrap>
-                </LectureInfoWrap>
-                <LectureInfoWrap>
                   <span>명</span>
                 </LectureInfoWrap>
                 <LectureInfoWrap>
@@ -110,8 +112,6 @@ function EnrollmentInfoModal({
                       0
                     </p>
                   </InputWrap>
-                </LectureInfoWrap>
-                <LectureInfoWrap>
                   <span>명</span>
                 </LectureInfoWrap>
               </LectureEnrollmentBox>
@@ -119,73 +119,31 @@ function EnrollmentInfoModal({
           </LectureInfoContainer>
         </ModalBody>
         <ModalFooter>
-          <FooterBtn style={{marginRight: '20px'}}>닫기</FooterBtn>
+          <FooterBtn style={{marginRight: '20px'}} onClick={closeButton}>
+            닫기
+          </FooterBtn>
         </ModalFooter>
       </Modal>
     </ModalContainer>
   );
 }
 
-const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-`;
-
-const Modal = styled.div`
-  position: relative;
-  width: 790px;
-  height: 355px;
-  border: 2px solid #000000;
-  background: #ffffff;
-  font-weight: lighter;
-`;
-
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #ababab;
-`;
-
-const Title = styled.div`
-  font-size: 2rem;
-  font-weight: bolder;
-  padding: 15px 30px;
-`;
-
-const CloseImage = styled.img.attrs({
-  src: `${close}`,
-})`
-    display: block;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-right: 10px;
-`;
-
 const ModalBody = styled.div``;
 
 const LectureInfoContainer = styled.div`
-  width: 720px;
+  width: 72rem;
   border: 0.1rem solid #714656;
   border-radius: 2px;
   padding: 0.5rem 1.5rem;
-  margin: 30px auto;
+  margin: 3rem auto;
 `;
 
 const LectureInfoArea = styled.div``;
 
 const LectureInfoBox = styled.div`
-  width: 710px;
+  width: 71rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
   align-items: center;
   gap: 0.7rem 2.7rem;
 `;
@@ -197,28 +155,16 @@ const LectureInfoWrap = styled.div`
 
   > span {
     display: inline-block;
-    margin-right: 1rem;
     text-align: right;
-    min-width: 4.7rem;
+    min-width: 3rem;
   }
-`;
-
-const ModalFooter = styled.div`
-  background: ${props => props.theme.colors.neutral5};
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 50px;
 `;
 
 const FooterBtn = styled.div`
   font-size: 1.4rem;
   border: 1px solid #000000;
   background: #ffffff;
-  padding: 6px 15px;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
 
   &:hover {
@@ -263,12 +209,10 @@ const InputWrap = styled.div<{sizes: string}>`
 `;
 
 const LectureEnrollmentBox = styled.div`
-  width: 710px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
   align-items: center;
-  gap: 0.7rem 4.9rem;
+  gap: 0 7rem;
 `;
 
 export default EnrollmentInfoModal;

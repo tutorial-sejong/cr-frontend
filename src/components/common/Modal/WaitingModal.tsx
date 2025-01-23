@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {clearModalInfo} from '@/store/modules/modalSlice';
 import {getRandomInt} from '@/utils/randomUtils.ts';
+import {Modal, ModalContainer} from '@/styles/ModalLayout';
 
 function WaitingModal() {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function WaitingModal() {
 
   return (
     <ModalContainer>
-      <Modal>
+      <WaitingModalBox>
         <Logo />
         <Title>
           서비스{' '}
@@ -96,32 +97,19 @@ function WaitingModal() {
           <CloseImage src={close} /> 중지
         </StopButton>
         <Contents>재 접속하시면 대기시간이 더 길어집니다.</Contents>
-      </Modal>
+      </WaitingModalBox>
     </ModalContainer>
   );
 }
 
-const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 10;
-`;
-
-const Modal = styled.div`
-  width: 390px;
-  height: 430px;
-  min-width: 390px;
-  min-height: 430px;
-  border: 1px solid #000000;
-  background: #ffffff;
+const WaitingModalBox = styled(Modal)`
+  position: static;
+  width: 39rem;
+  height: 43rem;
+  min-width: 39rem;
+  min-height: 43rem;
   font-weight: lighter;
-  padding: 20px 40px;
+  padding: 2rem 4rem;
   word-break: unset;
   display: flex;
   flex-direction: column;

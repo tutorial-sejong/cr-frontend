@@ -1,9 +1,16 @@
 import styled from 'styled-components';
-import close from '@assets/img/close-line.png';
 import warning from '@assets/img/warning.png';
 import {useDispatch} from 'react-redux';
 import {closeHandler} from '@components/common/Modal/handlers/handler.tsx';
 import {useAppSelector} from '@/store/hooks';
+import {
+  CloseImage,
+  Modal,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalHeader,
+} from '@/styles/ModalLayout';
 
 function ErrorModal() {
   const dispatch = useDispatch();
@@ -43,7 +50,7 @@ function ErrorModal() {
 
   return (
     <ModalContainer>
-      <Modal>
+      <WarningModal>
         <ModalHeader>
           <CloseImage onClick={closeButton} />
         </ModalHeader>
@@ -62,47 +69,14 @@ function ErrorModal() {
             </FooterBtn>
           </>
         </ModalFooter>
-      </Modal>
+      </WarningModal>
     </ModalContainer>
   );
 }
 
-const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-`;
-
-const Modal = styled.div`
-  position: relative;
-  width: 500px;
-  height: 400px;
-  border: 1px solid #000000;
-  background: #ffffff;
-  font-weight: lighter;
-`;
-
-const ModalHeader = styled.div`
-  height: 50px;
-  display: flex;
-  justify-content: flex-end;
-  border-bottom: 1px solid #ababab;
-`;
-
-const CloseImage = styled.img.attrs({
-  src: `${close}`,
-})`
-  display: block;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
+const WarningModal = styled(Modal)`
+  width: 50rem;
+  height: 40rem;
 `;
 
 const WarningImage = styled.img.attrs({
@@ -113,26 +87,11 @@ const WarningImage = styled.img.attrs({
   margin: 0 auto 10px;
 `;
 
-const ModalBody = styled.div`
-  text-align: center;
-  margin-top: 15px;
-`;
-
 const InfoMessage = styled.p`
   font-size: 1.5rem;
   margin-bottom: 25px;
   line-height: 2.7rem;
   padding: 0 34px;
-`;
-const ModalFooter = styled.div`
-  background: ${props => props.theme.colors.neutral5};
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 50px;
 `;
 
 const FooterBtn = styled.div<{type: string}>`
