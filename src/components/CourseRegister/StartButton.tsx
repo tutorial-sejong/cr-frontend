@@ -5,6 +5,7 @@ import {deleteAllRegistrations} from '@apis/api/course.ts';
 import {setEndCount} from '@/store/modules/courseRegisteredSlice';
 import {useAppSelector} from '@/store/hooks';
 import Timeout from './Timeout';
+import ReactGA from 'react-ga4';
 
 interface StartBtnProps {
   onClick: () => void;
@@ -36,6 +37,12 @@ function StartButton({onClick}: StartBtnProps) {
 
   const handleClick = async () => {
     if (!confirm('수강신청 연습 시작하시겠습니까?')) return;
+
+    ReactGA.event({
+      category: 'Course Registration',
+      action: isRunning ? 'Restart Practice Button' : 'Start Practice Button',
+      label: isRunning ? 'PracticeButton_Restart' : 'PracticeButton_Start',
+    });
 
     //카운트다운 중에 재시작
     if (isRunning) {

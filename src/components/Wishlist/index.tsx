@@ -13,6 +13,7 @@ import {useSelector} from 'react-redux';
 import {TableTitle, TableTitleWrap} from '../LectureList';
 import {openModalHandler} from '../common/Modal/handlers/handler';
 import {useAppDispatch} from '@/store/hooks';
+import ReactGA from 'react-ga4';
 
 const searchResultColData = [
   {name: 'action', value: '신청', initialWidth: 50, enableFilters: false},
@@ -81,6 +82,11 @@ function Wishlist() {
   ) => {
     if (action === '신청' && scheduleId) {
       try {
+        ReactGA.event({
+          category: 'Wishlist',
+          action: 'Add to Wishlist',
+          label: 'Click_WishlistButton',
+        });
         await saveWishlistItem(username, scheduleId);
         console.log('관심과목 담기 성공');
         fetchWishlist();
@@ -99,6 +105,12 @@ function Wishlist() {
   };
 
   const handleClickTimetable = () => {
+    ReactGA.event({
+      category: 'Timetable',
+      action: 'View Timetable',
+      label: 'Click_ViewTimetableButton',
+    });
+
     openModalHandler(dispatch, 'timetable');
     if (wishlistData.length !== 0) {
       document.body.style.overflow = 'hidden';
