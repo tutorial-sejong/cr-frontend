@@ -11,6 +11,8 @@ import {
 import {RootState} from '@/store/store';
 import {useSelector} from 'react-redux';
 import {TableTitle, TableTitleWrap} from '../LectureList';
+import {openModalHandler} from '../common/Modal/handlers/handler';
+import {useAppDispatch} from '@/store/hooks';
 
 const searchResultColData = [
   {name: 'action', value: '신청', initialWidth: 50, enableFilters: false},
@@ -44,6 +46,7 @@ function Wishlist() {
   const [registeredCourseCount, setRegisteredCourseCount] = useState(0);
   const [registeredCredits, setRegisteredCredits] = useState(0);
   const {username} = useSelector((state: RootState) => state.userInfo);
+  const dispatch = useAppDispatch();
 
   const fetchWishlist = useCallback(async () => {
     try {
@@ -95,6 +98,13 @@ function Wishlist() {
     }
   };
 
+  const handleClickTimetable = () => {
+    openModalHandler(dispatch, 'timetable');
+    if (wishlistData.length !== 0) {
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
   return (
     <WishlistContainer>
       <Filters setSearchResults={setSearchResultsData} />
@@ -114,9 +124,9 @@ function Wishlist() {
       </WishlistInfo>
       <TableWrapper>
         <TableSection>
-          <TableTitleWrap>
+          <WishTitleWrap>
             <TableTitle>관심과목 대상교과목</TableTitle>
-          </TableTitleWrap>
+          </WishTitleWrap>
           <Table
             colData={searchResultColData}
             data={searchResultsData}
@@ -126,9 +136,10 @@ function Wishlist() {
           />
         </TableSection>
         <TableSection>
-          <TableTitleWrap>
+          <WishTitleWrap>
             <TableTitle>관심과목내역</TableTitle>
-          </TableTitleWrap>
+            <ButtonWrap onClick={handleClickTimetable}>예상시간표</ButtonWrap>
+          </WishTitleWrap>
           <Table
             colData={wishlistColData}
             data={wishlistData}
@@ -160,11 +171,19 @@ const TableSection = styled.div`
 const WishlistInfo = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 1.4rem;
 
   span {
     margin-left: 20px;
   }
+`;
+
+const WishTitleWrap = styled(TableTitleWrap)`
+  display: flex;
+  align-items: center;
+  gap: 0 1rem;
+  height: 2.4rem;
+  margin-bottom: 0.8rem;
 `;
 
 const InfoBox = styled.div`
@@ -185,6 +204,18 @@ const InfoLabel = styled.span`
 const InfoValue = styled.span`
   font-size: 12px;
   font-weight: bold;
+`;
+
+const ButtonWrap = styled.button`
+  ${props => props.theme.texts.content};
+  background-color: ${props => props.theme.colors.secondary};
+  color: ${props => props.theme.colors.white};
+  min-width: 8.5rem;
+  height: 2.4rem;
+
+  &:hover {
+    filter: grayscale(15%);
+  }
 `;
 
 export default Wishlist;
