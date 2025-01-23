@@ -17,6 +17,8 @@ import {clearModalInfo} from '@/store/modules/modalSlice';
 import ErrorModal from '@components/common/Modal/ErrorModal.tsx';
 import {useMediaQuery} from 'react-responsive';
 import TimetableModal from '@/components/common/Modal/TimetableModal';
+import WishRank from '@/components/WishRank';
+import RankInfoModal from '@/components/common/Modal/RankInfoModal';
 
 function Home() {
   const isPc = useMediaQuery({query: '(min-width: 1024px)'});
@@ -27,8 +29,7 @@ function Home() {
     setBarOpen(isPc);
   }, [isPc]);
 
-  const {modalName, scheduleId, courseName, schDeptAlias, curiTypeCdNm} =
-    useAppSelector(state => state.modalInfo);
+  const {modalName, courseData} = useAppSelector(state => state.modalInfo);
 
   const focusedTab = tab.find(tab => tab.id === focused);
   const focusedTabName = focusedTab ? focusedTab.name : '선택된 탭이 없습니다.';
@@ -59,30 +60,25 @@ function Home() {
       case 'macro':
         return <AntiMacroCodeModal />;
       case 'check':
-        return <InfoModal curiNm={courseName} type={'check'} />;
+        return <InfoModal curiNm={courseData.curiNm} type={'check'} />;
       case 'loading':
         return (
           <LoadingModal
-            scheduleId={scheduleId}
-            schDeptAlias={schDeptAlias}
-            curiTypeCdNm={curiTypeCdNm}
+            scheduleId={courseData.scheduleId}
+            schDeptAlias={courseData.schDeptAlias}
+            curiTypeCdNm={courseData.curiTypeCdNm}
           />
         );
       case 'reload':
-        return <InfoModal curiNm={courseName} type={'reload'} />;
+        return <InfoModal curiNm={courseData.curiNm} type={'reload'} />;
       case 'fail':
         return <ErrorModal />;
       case 'timetable':
         return <TimetableModal />;
       case 'enrollment':
-        return (
-          <EnrollmentInfoModal
-            schDeptAlias={''}
-            curiNo={''}
-            classNo={''}
-            curiNm={courseName}
-          />
-        );
+        return <EnrollmentInfoModal />;
+      case 'wishrank':
+        return <RankInfoModal />;
       default:
         return <></>;
     }
@@ -94,6 +90,7 @@ function Home() {
       <Header />
       <Box>
         <Menubar open={barOpen} setOpen={setBarOpen} />
+        {barOpen && <WishRank />}
         <Main $isOpen={barOpen}>
           <TabMenu />
           <Article>

@@ -20,6 +20,16 @@ export const getCourseList = async (filter: object) => {
   }
 };
 
+export const getWishRank = async () => {
+  try {
+    const {data} = await baseAPI.get('/schedules/popular?limit=5');
+
+    return data;
+  } catch (error) {
+    console.log('get wish rank fail: ', error);
+  }
+};
+
 export const saveWishlistItem = async (
   studentId: string,
   scheduleId: number,
