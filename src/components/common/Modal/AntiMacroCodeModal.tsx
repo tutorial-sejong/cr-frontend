@@ -211,7 +211,7 @@ const InfoMessage = styled.p`
   font-weight: 600;
   position: absolute;
   bottom: 60px;
-  margin-left: 10px;
+  margin: 0 10px;
 `;
 const ModalFooter = styled.div`
   background: ${props => props.theme.colors.neutral5};

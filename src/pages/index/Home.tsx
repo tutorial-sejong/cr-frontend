@@ -16,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import {clearModalInfo} from '@/store/modules/modalSlice';
 import ErrorModal from '@components/common/Modal/ErrorModal.tsx';
 import {useMediaQuery} from 'react-responsive';
+import TimetableModal from '@/components/common/Modal/TimetableModal';
 
 function Home() {
   const isPc = useMediaQuery({query: '(min-width: 1024px)'});
@@ -71,6 +72,8 @@ function Home() {
         return <InfoModal curiNm={courseName} type={'reload'} />;
       case 'fail':
         return <ErrorModal />;
+      case 'timetable':
+        return <TimetableModal />;
       case 'enrollment':
         return (
           <EnrollmentInfoModal
