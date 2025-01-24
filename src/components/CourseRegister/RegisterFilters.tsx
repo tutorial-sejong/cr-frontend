@@ -84,46 +84,48 @@ function RegisterFilters({onSearch, isRegistrationStarted}: FiltersProps) {
 
   return (
     <RegisterFilterContainer>
-      <FilterBox>
-        <FilterWrap>
-          <span>조직분류</span>
-          <SelectBox
-            options={[{id: 0, value: '학부'}]}
-            disabled={true}
-            sizes='m'
-            onSelect={value => handleInput(value)}
-          />
-        </FilterWrap>
-        <FilterWrap>
-          <span>년도/학기</span>
-          <SelectBox
-            options={term}
-            disabled={true}
-            sizes='m'
-            onSelect={value => handleInput(value)}
-          />
-        </FilterWrap>
-        <SearchBox>
+      <div>
+        <FilterBox>
           <FilterWrap>
-            <span>검색 구분</span>
-            <SelectBox
-              options={searchOptions}
-              sizes='s'
-              onSelect={value => handleSearchOptions(value)}
-            />
-          </FilterWrap>
-          <SearchWrap>
-            <span>{searchOption}</span>
+            <span>조직분류</span>
             <SelectBox
               options={[{id: 0, value: '학부'}]}
               disabled={true}
-              sizes='s'
-              onSelect={value => handleSelect('curiTypeCdNm', value)}
+              sizes='m'
+              onSelect={value => handleInput(value)}
             />
-            {renderSearchForm()}
-          </SearchWrap>
-        </SearchBox>
-      </FilterBox>
+          </FilterWrap>
+          <FilterWrap>
+            <span>년도/학기</span>
+            <SelectBox
+              options={term}
+              disabled={true}
+              sizes='m'
+              onSelect={value => handleInput(value)}
+            />
+          </FilterWrap>
+          <SearchBox>
+            <FilterWrap>
+              <span>검색 구분</span>
+              <SelectBox
+                options={searchOptions}
+                sizes='s'
+                onSelect={value => handleSearchOptions(value)}
+              />
+            </FilterWrap>
+            <SearchWrap>
+              <span>{searchOption}</span>
+              <SelectBox
+                options={[{id: 0, value: '학부'}]}
+                disabled={true}
+                sizes='s'
+                onSelect={value => handleSelect('curiTypeCdNm', value)}
+              />
+              {renderSearchForm()}
+            </SearchWrap>
+          </SearchBox>
+        </FilterBox>
+      </div>
       <FilterButton
         label='검색'
         filter={filter}
@@ -139,6 +141,7 @@ function RegisterFilters({onSearch, isRegistrationStarted}: FiltersProps) {
 const RegisterFilterContainer = styled(FilterContainer)`
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   gap: 0.7rem 0;
 
   @media ${props => props.theme.device.mobile} {
