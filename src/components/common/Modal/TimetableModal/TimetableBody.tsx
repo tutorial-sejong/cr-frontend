@@ -109,7 +109,7 @@ function TimetableBody({
               $backgroundColor={getCellColor(
                 schedule.overlaps || [schedule.subject],
               )}
-              $hasEarlierOverlap={schedule.isEarlierOverlap}
+              $isEarlierOverlap={schedule.isEarlierOverlap}
               $isHovered={isHovered}
               $isRelated={isRelated}
               onMouseEnter={e => {
@@ -148,7 +148,7 @@ const GridTimeSlot = styled.div`
   ${props => props.theme.texts.tableTitle};
   vertical-align: middle;
   text-align: center;
-  padding: 10px;
+  padding: 1rem;
   background-color: #f0f0f0;
   border: 1px solid #e5e5e5;
   grid-column: 1;
@@ -156,7 +156,7 @@ const GridTimeSlot = styled.div`
 
 const GridCell = styled.div<{
   $backgroundColor: string;
-  $hasEarlierOverlap?: boolean;
+  $isEarlierOverlap?: boolean;
   $isHovered: boolean;
   $isRelated: boolean;
 }>`
@@ -164,7 +164,7 @@ const GridCell = styled.div<{
   text-align: center;
   vertical-align: middle;
   position: relative;
-  padding: 8px;
+  padding: 0.8rem;
   text-align: center;
   border: 1px solid #f0f0f0;
   cursor: pointer;
@@ -184,10 +184,10 @@ const GridCell = styled.div<{
   }
 
   ${props =>
-    props.$hasEarlierOverlap &&
+    props.$isEarlierOverlap &&
     `
     width: 88%;
-    border-radius: 0 14px 14px 0;
+    border-radius: 0 1.4rem 1.4rem 0;
     box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
     `}
 

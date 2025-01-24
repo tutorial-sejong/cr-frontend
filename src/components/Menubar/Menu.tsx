@@ -49,7 +49,7 @@ const MenuTitleBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15px;
+  padding: 0 1.5rem;
   border-bottom: 1px solid ${props => props.theme.colors.neutral5};
 `;
 

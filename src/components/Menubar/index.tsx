@@ -28,11 +28,7 @@ function Menubar({open, setOpen}: BarProps) {
 const BarContainer = styled.div<{$open: boolean}>`
   min-width: ${props => (props.$open ? '23rem' : '2rem')};
   background-color: ${props => props.theme.colors.white};
-
-  @media ${props => props.theme.device.mobile} {
-    position: absolute;
-    z-index: 999;
-  }
+  height: 100%;
 `;
 
 const BarBox = styled.div``;

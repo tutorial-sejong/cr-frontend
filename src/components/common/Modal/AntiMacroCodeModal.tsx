@@ -135,15 +135,15 @@ const BoxTitle = styled.p`
 `;
 
 const MacroCodeInputBox = styled.div`
-  margin-right: 10px;
+  margin-right: 1rem;
 `;
 
 const MacroCodHeader = styled.div`
-  height: 30px;
+  height: 3rem;
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 1rem;
 `;
 
 const RegenerateCodeButton = styled.div`
@@ -151,9 +151,9 @@ const RegenerateCodeButton = styled.div`
   color: #ffffff;
   border-radius: 3px;
   font-size: 1.4rem;
-  padding: 8px 15px;
+  padding: 0.8rem 1.5rem;
   text-align: center;
-  margin-left: 20px;
+  margin-left: 2rem;
   cursor: pointer;
 
   &:hover {
@@ -162,32 +162,32 @@ const RegenerateCodeButton = styled.div`
 `;
 
 const MacroCodeImage = styled.img`
-  margin-top: 10px;
-  width: 120px;
+  margin-top: 1rem;
+  width: 12rem;
 `;
 
 const MacroCodeInput = styled.input`
-  width: 200px;
+  width: 20rem;
   border: 1px solid #858181;
   border-radius: 0;
   font-size: 1.3rem;
-  padding: 6px 8px;
-  margin-top: 10px;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
 `;
 
 const InfoMessage = styled.p`
   font-size: 1.3rem;
   font-weight: 600;
   position: absolute;
-  bottom: 60px;
-  margin: 0 10px;
+  bottom: 6rem;
+  margin: 0 1rem;
 `;
 
 const FooterBtn = styled.div`
   font-size: 1.4rem;
   border: 1px solid #000000;
   background: #ffffff;
-  padding: 6px 15px;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
 
   &:hover {

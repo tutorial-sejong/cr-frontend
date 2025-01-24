@@ -114,6 +114,38 @@ function Table({data, colData, width, height, onAction}: TableProps) {
     else return colData[index - 1]?.initialWidth || 80;
   };
 
+  const CellContent = ({
+    content,
+  }: {
+    content: React.ReactNode | string | number | boolean;
+  }) => {
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [isTruncated, setIsTruncated] = useState(false);
+
+    useEffect(() => {
+      const checkTruncation = () => {
+        if (contentRef.current) {
+          const {offsetWidth, scrollWidth} = contentRef.current;
+          setIsTruncated(scrollWidth > offsetWidth);
+        }
+      };
+
+      checkTruncation();
+      window.addEventListener('resize', checkTruncation);
+      return () => window.removeEventListener('resize', checkTruncation);
+    }, [content]);
+
+    return (
+      <ContentText
+        ref={contentRef}
+        $isTruncated={isTruncated}
+        data-full-content={isTruncated ? String(content) : undefined}
+      >
+        {content}
+      </ContentText>
+    );
+  };
+
   const Cell = ({
     columnIndex,
     rowIndex,
@@ -166,7 +198,7 @@ function Table({data, colData, width, height, onAction}: TableProps) {
           {columnIndex === 0 ? (
             <IndexWrap>{rowIndex}</IndexWrap>
           ) : (
-            renderCell(row, column)
+            <CellContent content={renderCell(row, column)} />
           )}
         </ContentWrap>
       );
@@ -234,6 +266,34 @@ const ContentWrap = styled.div<{$isEven: boolean}>`
   &:focus {
     background-color: rgb(252, 248, 227);
   }
+`;
+
+const ContentText = styled.div<{
+  $isTruncated: boolean;
+}>`
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  ${props =>
+    props.$isTruncated &&
+    `
+    &:hover::after {
+      content: attr(data-full-content);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: auto;
+      height: 2.8rem;
+      padding: 0 0.5rem;
+      background-color: white;
+      border: 1px solid #ddd;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+  `}
 `;
 
 const ActionButton = styled.button`

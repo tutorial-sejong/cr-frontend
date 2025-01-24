@@ -83,15 +83,15 @@ const WarningImage = styled.img.attrs({
   src: `${warning}`,
 })`
   display: block;
-  width: 50px;
-  margin: 0 auto 10px;
+  width: 5rem;
+  margin: 0 auto 1rem;
 `;
 
 const InfoMessage = styled.p`
   font-size: 1.5rem;
   margin-bottom: 25px;
   line-height: 2.7rem;
-  padding: 0 34px;
+  padding: 0 3.4rem;
 `;
 
 const FooterBtn = styled.div<{type: string}>`
@@ -100,7 +100,7 @@ const FooterBtn = styled.div<{type: string}>`
   background: ${props =>
     props.type === 'check' ? props.theme.colors.primary : '#ffffff'};
   color: ${props => (props.type === 'cancel' ? '#000000' : '#ffffff')};
-  padding: 6px 15px;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
 
   &:hover {
