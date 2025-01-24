@@ -6,6 +6,7 @@ interface HeadProps {
   label: string;
   index: number;
   width: number;
+  tableHeight: string;
   options: string[];
   type?: string;
   selectedOptions: string[];
@@ -16,6 +17,7 @@ function TableHead({
   label,
   index,
   width,
+  tableHeight,
   options,
   type,
   selectedOptions,
@@ -74,7 +76,7 @@ function TableHead({
               onClick={() => setOpen(prev => !prev)}
             />
             {open && (
-              <OptionBox ref={dropdownRef}>
+              <OptionBox ref={dropdownRef} $height={tableHeight}>
                 <OptionWrap>
                   <input
                     type='checkbox'
@@ -127,8 +129,9 @@ const DropdownBtn = styled.button`
   background-size: 1.8rem;
 `;
 
-const OptionBox = styled.ul`
+const OptionBox = styled.ul<{$height: string}>`
   width: 100%;
+  max-height: calc(${props => props.$height} - 7rem);
   overflow: scroll;
   background: white;
   position: absolute;

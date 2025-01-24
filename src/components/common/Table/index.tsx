@@ -165,6 +165,7 @@ function Table({data, colData, width, height, onAction}: TableProps) {
               label={colData[columnIndex - 1].value}
               type={colData[columnIndex - 1].name}
               width={getColumnWidth(columnIndex)}
+              tableHeight={height}
               index={columnIndex - 1}
               options={getOptions[columnIndex - 1]}
               selectedOptions={filters[columnIndex - 1]}
