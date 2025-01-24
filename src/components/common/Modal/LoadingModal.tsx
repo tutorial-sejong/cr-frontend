@@ -1,5 +1,5 @@
 import styled, {keyframes} from 'styled-components';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {getRandomInt} from '@/utils/randomUtils.ts';
 import {openModalHandler} from '@components/common/Modal/handlers/handler.tsx';
 import {useDispatch} from 'react-redux';
@@ -23,6 +23,7 @@ function LoadingModal({
   const userMajor = useAppSelector(state => state.dateMode.userMajor);
   const selectedDate = useAppSelector(state => state.dateMode.selectedDate);
   const endCount = useAppSelector(state => state.courseRegistered.endCount);
+  const isRequesting = useRef(false);
 
   useEffect(() => {
     const endRandomCount = getRandomInt(0.5, 1) * 1000;
@@ -30,49 +31,59 @@ function LoadingModal({
     // 시간 이내여도 10%의 확률로 실패
     const randomFailNumber = getRandomInt(1, 10);
 
-    setTimeout(async () => {
-      // 35초 지난 뒤 신청
-      if (endCount || randomFailNumber === 1) {
-        dispatch(setType(410));
-        openModalHandler(dispatch, 'fail');
-        return;
-      }
+    const timer = setTimeout(async () => {
+      if (isRequesting.current) return; //이미 서버에 요청 중이면 취소
+      isRequesting.current = true;
 
-      // 본인학년 (학과 제한 있음) 선택 시 학과 제한
-      if (
-        selectedDate === '본인학년 (학과 제한 있음)' &&
-        schDeptAlias !== '대양휴머니티칼리지' &&
-        schDeptAlias !== userMajor
-      ) {
-        dispatch(setType(500));
-        openModalHandler(dispatch, 'fail');
-        return;
-      }
+      try {
+        if (endCount || randomFailNumber === 1) {
+          dispatch(setType(410));
+          openModalHandler(dispatch, 'fail');
+          return;
+        }
 
-      //교직은 교육학과만 수강가능
-      if (curiTypeCdNm === '교직') {
-        if (schDeptAlias !== '교육학과') {
+        // 본인학년 (학과 제한 있음) 선택 시 학과 제한
+        if (
+          selectedDate === '본인학년 (학과 제한 있음)' &&
+          schDeptAlias !== '대양휴머니티칼리지' &&
+          schDeptAlias !== userMajor
+        ) {
           dispatch(setType(500));
           openModalHandler(dispatch, 'fail');
           return;
         }
-      }
 
-      // 수강신청 요청
-      try {
+        //교직은 교육학과만 수강가능
+        if (curiTypeCdNm === '교직') {
+          if (schDeptAlias !== '교육학과') {
+            dispatch(setType(500));
+            openModalHandler(dispatch, 'fail');
+            return;
+          }
+        }
+        // 수강신청 요청
         const res = await postCourse(scheduleId);
 
         if (res.status === 409) {
           return;
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return;
       }
 
       openModalHandler(dispatch, 'reload');
+      return () => clearTimeout(timer);
     }, endRandomCount);
-  }, []);
+  }, [
+    curiTypeCdNm,
+    dispatch,
+    endCount,
+    schDeptAlias,
+    scheduleId,
+    selectedDate,
+    userMajor,
+  ]);
 
   return (
     <ModalContainer>
