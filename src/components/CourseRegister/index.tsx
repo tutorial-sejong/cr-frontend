@@ -5,13 +5,7 @@ import Table from '../common/Table';
 import {TableTitle, TableTitleWrap} from '../LectureList';
 import RegisteredList from './RegisteredList';
 import {useDispatch} from 'react-redux';
-import {
-  setCourseName,
-  setCuriTypeCdNm,
-  setModalName,
-  setSchDeptAlias,
-  setScheduleId,
-} from '@/store/modules/modalSlice';
+import {setCourseData, setModalName} from '@/store/modules/modalSlice';
 import StartButton from '@components/CourseRegister/StartButton.tsx';
 import {getCourseList, getRegisterdList, getWishlist} from '@/apis/api/course';
 import {useAppSelector} from '@/store/hooks';
@@ -104,11 +98,15 @@ function CourseRegister() {
     curiTypeCdNm: string | undefined,
   ) => {
     if (scheduleId && curiNm && schDeptAlias && curiTypeCdNm) {
-      dispatch(setScheduleId(scheduleId));
-      dispatch(setCourseName(curiNm));
+      dispatch(
+        setCourseData({
+          scheduleId: scheduleId,
+          curiNm: curiNm,
+          schDeptAlias: schDeptAlias,
+          curiTypeCdNm: curiTypeCdNm,
+        }),
+      );
       dispatch(setModalName('macro'));
-      dispatch(setSchDeptAlias(schDeptAlias));
-      dispatch(setCuriTypeCdNm(curiTypeCdNm));
     }
   };
 

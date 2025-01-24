@@ -29,4 +29,6 @@ export interface CourseTypes {
   internshipTypeCdNm?: string | null;
   inoutSubCdtExchangeYn?: string | null;
   remark?: string;
+  rank?: number;
+  wishCount?: number;
 }

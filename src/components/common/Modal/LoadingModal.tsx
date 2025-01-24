@@ -6,15 +6,16 @@ import {useDispatch} from 'react-redux';
 import {useAppSelector} from '@store/hooks';
 import {postCourse} from '@apis/api/course.ts';
 import {setType} from '@/store/modules/errorSlice';
+import {ModalContainer} from '@/styles/ModalLayout';
 
 interface LoadingModalProps {
-  scheduleId: number;
-  schDeptAlias: string;
-  curiTypeCdNm: string;
+  scheduleId?: number;
+  schDeptAlias?: string;
+  curiTypeCdNm?: string;
 }
 
 function LoadingModal({
-  scheduleId,
+  scheduleId = 0,
   schDeptAlias,
   curiTypeCdNm,
 }: LoadingModalProps) {
@@ -84,17 +85,6 @@ function LoadingModal({
     </ModalContainer>
   );
 }
-
-const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-`;
 
 const LoadingContainer = styled.div`
   background: #ffffff;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import close from '@assets/img/close-line.png';
 import {useEffect, useState} from 'react';
 import {getMacroCode} from '@apis/api/course.ts';
 import {useDispatch} from 'react-redux';
@@ -7,6 +6,14 @@ import {
   openModalHandler,
   closeHandler,
 } from '@components/common/Modal/handlers/handler.tsx';
+import {
+  CloseImage,
+  Modal,
+  ModalContainer,
+  ModalFooter,
+  ModalHeader,
+  Title,
+} from '@/styles/ModalLayout';
 
 interface MacroTypes {
   url: string;
@@ -59,7 +66,7 @@ function AntiMacroCodeModal() {
 
   return (
     <ModalContainer>
-      <Modal>
+      <MacroModal>
         <ModalHeader>
           <Title>매크로방지 코드입력 (Anti-macro code input) </Title>
           <CloseImage onClick={closeButton} />
@@ -99,52 +106,14 @@ function AntiMacroCodeModal() {
             닫기
           </FooterBtn>
         </ModalFooter>
-      </Modal>
+      </MacroModal>
     </ModalContainer>
   );
 }
 
-const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-`;
-
-const Modal = styled.div`
-  position: relative;
-  width: 500px;
-  height: 312.5px;
-  border: 1px solid #000000;
-  background: #ffffff;
-  font-weight: lighter;
-`;
-
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #ababab;
-`;
-
-const Title = styled.div`
-  font-size: 2rem;
-  font-weight: bolder;
-  padding: 15px 30px;
-`;
-
-const CloseImage = styled.img.attrs({
-  src: `${close}`,
-})`
-  display: block;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
+const MacroModal = styled(Modal)`
+  width: 50rem;
+  height: 31.25rem;
 `;
 
 const ModalBody = styled.div`
@@ -154,7 +123,7 @@ const ModalBody = styled.div`
 `;
 
 const MacroCodeBox = styled.div`
-  margin-left: 10px;
+  margin-left: 1rem;
 `;
 
 const BoxTitle = styled.p`
@@ -212,16 +181,6 @@ const InfoMessage = styled.p`
   position: absolute;
   bottom: 60px;
   margin: 0 10px;
-`;
-const ModalFooter = styled.div`
-  background: ${props => props.theme.colors.neutral5};
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 50px;
 `;
 
 const FooterBtn = styled.div`

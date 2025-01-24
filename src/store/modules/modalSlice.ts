@@ -1,60 +1,45 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {CourseTypes} from '@/assets/types/tableType';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface ModalInfo {
   modalName: string;
-  scheduleId: number;
-  courseName: string;
-  schDeptAlias: string;
-  curiTypeCdNm: string;
+  courseData: CourseTypes;
 }
+
+const initialState: ModalInfo = {
+  modalName: '',
+  courseData: {
+    scheduleId: 0,
+    schDeptAlias: '',
+    curiTypeCdNm: '',
+    curiNo: '',
+    classNo: '',
+    curiNm: '',
+    manageDeptNm: '',
+    lesnEmp: '',
+    lesnTime: '',
+    lesnRoom: '',
+    rank: 1,
+    wishCount: 0,
+  },
+};
 
 const modalInfo = createSlice({
   name: 'modalInfo',
-  initialState: {
-    modalName: '',
-    scheduleId: 0,
-    courseName: '',
-    schDeptAlias: '',
-    curiTypeCdNm: '',
-  },
+  initialState: initialState,
   reducers: {
     setModalName(state: ModalInfo, {payload}: {payload: string}) {
       state.modalName = payload;
     },
-
-    setScheduleId(state: ModalInfo, {payload}: {payload: number}) {
-      state.scheduleId = payload;
+    setCourseData: (state, action: PayloadAction<Partial<CourseTypes>>) => {
+      state.courseData = {...state.courseData, ...action.payload};
     },
-
-    setCourseName(state: ModalInfo, {payload}: {payload: string}) {
-      state.courseName = payload;
-    },
-
-    setSchDeptAlias(state: ModalInfo, {payload}: {payload: string}) {
-      state.schDeptAlias = payload;
-    },
-
-    setCuriTypeCdNm(state: ModalInfo, {payload}: {payload: string}) {
-      state.curiTypeCdNm = payload;
-    },
-
-    clearModalInfo(state: ModalInfo) {
-      state.modalName = '';
-      state.scheduleId = 0;
-      state.courseName = '';
-      state.schDeptAlias = '';
-      state.curiTypeCdNm = '';
+    clearModalInfo: () => {
+      return initialState;
     },
   },
 });
 
-export const {
-  setModalName,
-  setScheduleId,
-  setCourseName,
-  setSchDeptAlias,
-  setCuriTypeCdNm,
-  clearModalInfo,
-} = modalInfo.actions;
+export const {setModalName, setCourseData, clearModalInfo} = modalInfo.actions;
 
 export default modalInfo.reducer;
