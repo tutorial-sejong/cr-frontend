@@ -1,4 +1,4 @@
-export const term = [{ id: 0, value: '2024/2학기' }];
+export const term = [{ id: 0, value: '2025/1학기' }];
 
 export const completion = [
   { id: 0, value: '-전체-' },
