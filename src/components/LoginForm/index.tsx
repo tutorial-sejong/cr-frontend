@@ -12,6 +12,7 @@ import {generateRandomStudentId} from '@/utils/randomUtils.ts';
 import copyIcon from '@/assets/img/file-copy-line.png';
 import reloadIcon from '@/assets/img/refresh-line.png';
 import {resetTab} from '@/store/modules/tabSlice';
+import ReactGA from 'react-ga4';
 
 export type setType = string | number | undefined;
 
@@ -40,6 +41,13 @@ function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
       });
   };
   const handleLogin = async () => {
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Login Attempt',
+      label: 'Login Page',
+    });
+
     if (!id || !password) {
       setError('학번과 비밀번호를 모두 입력해주세요.');
       return;
@@ -65,7 +73,14 @@ function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
         studentId: id.toString(),
         password: password.toString(),
       });
+
       console.log('Login successful');
+
+      ReactGA.event({
+        category: 'User',
+        action: 'Login Success',
+        label: 'Login Page',
+      });
 
       Cookies.set('accessToken', response.accessToken, {expires: 0.5 / 24});
       baseAPI.defaults.headers.common['Authorization'] =
@@ -83,6 +98,13 @@ function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
       navigate('/');
     } catch (error) {
       console.error('Login failed', error);
+
+      ReactGA.event({
+        category: 'User',
+        action: 'Login Failed',
+        label: 'Login Page',
+      });
+
       setError('로그인에 실패했습니다. 다시 시도해주세요.');
     }
   };
