@@ -46,19 +46,11 @@ baseAPI.interceptors.response.use(
     return response;
   },
   async error => {
-    const {
-      config,
-      response,
-      response: {status},
-    } = error;
+    const {config, response} = error;
     const originalRequest = config;
     const code = response.data.code;
-    console.log(code);
 
-    if (
-      ((status === 401 && code === 'S001') || code === 'S002') &&
-      !originalRequest._retry
-    ) {
+    if (code === 'A002' && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise(resolve => {
           addSubscriber((token: string) => {
@@ -87,12 +79,13 @@ baseAPI.interceptors.response.use(
         isRefreshing = false;
         return Promise.reject(err);
       }
-    } else if (code === 'S003') {
+    } else if (code === 'A001' || code === 'A003') {
       store.dispatch(clearUserInfo());
       store.dispatch(resetCourseRegistered());
       delete baseAPI.defaults.headers.common['Authorization'];
+      location.href = '/';
       Cookies.remove('accessToken');
-    } else if ((status === 404 && code === 'S001') || code === 'W003') {
+    } else if (code === 'S001' || code === 'W003') {
       // 검색결과 없음
       return Promise.resolve({...error.response, data: []} as AxiosResponse);
     } else if (code === 'C001' || code === 'W001' || code === 'W002') {
