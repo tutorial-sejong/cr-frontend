@@ -41,7 +41,6 @@ function LoginForm({isTermsCheck}: {isTermsCheck: boolean}) {
       });
   };
   const handleLogin = async () => {
-
     ReactGA.event({
       category: 'User',
       action: 'Login Attempt',
@@ -166,7 +165,7 @@ const RandomStudentIdContainer = styled.div`
 
 const RandomStudentIdInput = styled.p`
   border-bottom: 1px solid #000000;
-  padding: 5px 10px;
+  padding: 0.5rem 1rem;
   font-size: 1.7rem;
   font-weight: 700;
   flex: 1 1 0;
@@ -174,12 +173,12 @@ const RandomStudentIdInput = styled.p`
 
 const GenerateButton = styled.button`
   display: block;
-  padding: 10px;
+  padding: 1rem;
   font-size: 1.7rem;
   font-weight: 700;
 
   > img {
-    width: 20px;
+    width: 2rem;
   }
 `;
 

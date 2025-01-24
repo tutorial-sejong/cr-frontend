@@ -115,12 +115,6 @@ const Box = styled.div`
 const Main = styled.div<{$isOpen: boolean}>`
   width: ${props =>
     props.$isOpen ? 'calc(100% - 23rem)' : 'calc(100% - 2rem)'};
-
-  @media ${props => props.theme.device.mobile} {
-    width: calc(100% - 2rem);
-    position: absolute;
-    left: 2rem;
-  }
 `;
 
 const Article = styled.div`

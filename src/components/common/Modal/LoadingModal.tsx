@@ -99,16 +99,16 @@ function LoadingModal({
 
 const LoadingContainer = styled.div`
   background: #ffffff;
-  width: 300px;
-  padding: 10px;
+  width: 30rem;
+  padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
 `;
 
 const LoadingText = styled.div`
-  margin-bottom: 10px;
-  font-size: 16px;
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
 `;
 
 const move = keyframes`
@@ -116,13 +116,13 @@ const move = keyframes`
         background-position: 0 0;
     }
     100% {
-        background-position: 50px 0;
+        background-position: 5rem 0;
     }
 `;
 
 const LoadingBar = styled.div`
   width: 100%;
-  height: 20px;
+  height: 2rem;
   border-radius: 4px;
   background-color: #e0e0e0;
   overflow: hidden;

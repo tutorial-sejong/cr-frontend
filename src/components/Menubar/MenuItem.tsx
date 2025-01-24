@@ -33,9 +33,9 @@ const DetailWrap = styled.button<{$isactive: boolean}>`
   display: flex;
   align-items: center;
   column-gap: 1rem;
-  padding-left: 10px;
-  border-radius: 5px;
-  margin-top: 5px;
+  padding-left: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
   background-color: ${props =>
     props.$isactive ? props.theme.colors.primary : 'transparent'};
   color: ${props => props.$isactive && props.theme.colors.white};

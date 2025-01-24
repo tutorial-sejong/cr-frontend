@@ -6,7 +6,6 @@ import githubIcon from '@assets/img/github-fill.svg';
 import DeleteAccountForm from '@components/DeleteAccount/DeleteAccountForm.tsx';
 
 function DeleteAccount() {
-
   return (
     <Container>
       <Box>
@@ -20,8 +19,13 @@ function DeleteAccount() {
         <FormWrap>
           <DeleteAccountForm />
           <FaqWrap>[ 장애 문의 ]: tutorialsejong@gmail.com</FaqWrap>
-          <FaqWrap><img src={githubIcon} alt="github"
-                        onClick={() => window.open('https://github.com/tutorial-sejong')} /></FaqWrap>
+          <FaqWrap>
+            <img
+              src={githubIcon}
+              alt='github'
+              onClick={() => window.open('https://github.com/tutorial-sejong')}
+            />
+          </FaqWrap>
         </FormWrap>
       </Box>
     </Container>
@@ -29,70 +33,70 @@ function DeleteAccount() {
 }
 
 const Container = styled.div`
-    background: url(${Bg}) 50% 50% no-repeat;
-    background-size: cover;
-    height: 700px;
-    background-color: #fafafa;
-    width: 100%;
+  background: url(${Bg}) 50% 50% no-repeat;
+  background-size: cover;
+  height: 70rem;
+  background-color: #fafafa;
+  width: 100%;
 `;
 
 const Box = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const LogoWrap = styled.div`
-    margin: 3rem 0;
+  margin: 3rem 0;
 
-    > img {
-        width: 150px;
-    }
+  > img {
+    width: 15rem;
+  }
 `;
 
 const TitleWrap = styled.div`
-    color: ${props => props.theme.colors.white};
-    text-align: center;
-    margin-bottom: 2.5rem;
+  color: ${props => props.theme.colors.white};
+  text-align: center;
+  margin-bottom: 2.5rem;
 
-    > p {
-        line-height: 2.5rem;
-        font-weight: 600;
-        font-size: 1.35rem;
-    }
+  > p {
+    line-height: 2.5rem;
+    font-weight: 600;
+    font-size: 1.35rem;
+  }
 
-    > p > em {
-        color: #ffea9b;
-    }
+  > p > em {
+    color: #ffea9b;
+  }
 `;
 
 const Title = styled.h1`
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
 `;
 
 const SubTitle = styled.h2`
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
 `;
 
 const FormWrap = styled.div`
-    margin-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
 `;
 
 const FaqWrap = styled.div`
-    ${props => props.theme.texts.loginContent};
+  ${props => props.theme.texts.loginContent};
+  text-align: center;
+  color: #fff;
+  > img {
+    width: 3rem;
+    cursor: pointer;
+    display: block;
     text-align: center;
-    color: #fff;
-    > img {
-        width: 30px;
-        cursor: pointer;
-        display: block;
-        text-align: center;
-        margin: 20px auto;
-    }
+    margin: 2rem auto;
+  }
 `;
 
 export default DeleteAccount;

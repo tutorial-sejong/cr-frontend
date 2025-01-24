@@ -171,7 +171,7 @@ const WishlistContainer = styled.div`
 
 const TableWrapper = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 2rem;
 `;
 
 const TableSection = styled.div`
@@ -186,7 +186,7 @@ const WishlistInfo = styled.div`
   margin-bottom: 1.4rem;
 
   span {
-    margin-left: 20px;
+    margin-left: 2rem;
   }
 `;
 
@@ -202,19 +202,19 @@ const InfoBox = styled.div`
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px 10px;
-  margin: 2px;
+  padding: 0.5rem 1rem;
+  margin: 0.2rem;
   display: flex;
   align-items: center;
 `;
 
 const InfoLabel = styled.span`
-  font-size: 12px;
-  margin-right: 5px;
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
 `;
 
 const InfoValue = styled.span`
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: bold;
 `;
 

@@ -196,7 +196,7 @@ function Login() {
 const Container = styled.div`
   background: url(${Bg}) 50% 50% no-repeat;
   background-size: cover;
-  height: 700px;
+  height: 70rem;
   background-color: #fafafa;
   width: 100%;
 `;
@@ -211,7 +211,7 @@ const LogoWrap = styled.div`
   margin: 3rem 0;
 
   > img {
-    width: 150px;
+    width: 15rem;
   }
 `;
 
@@ -257,20 +257,20 @@ const FaqWrap = styled.div`
   ${props => props.theme.texts.loginContent};
 
   > img {
-    width: 30px;
+    width: 3rem;
     cursor: pointer;
     display: block;
     text-align: center;
-    margin: 20px auto;
+    margin: 2rem auto;
   }
 `;
 
 const TermsContainer = styled.div`
-  max-width: 890px;
-  margin: 0 auto 20px;
-  padding: 20px;
+  max-width: 89rem;
+  margin: 0 auto 2rem;
+  padding: 2rem;
   background-color: #f9f9f9;
-  border-radius: 10px;
+  border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
@@ -283,10 +283,10 @@ const CheckboxWrap = styled.div`
 `;
 
 const TermsTitle = styled.h1`
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
 const List = styled.ul`
@@ -296,15 +296,15 @@ const List = styled.ul`
 `;
 
 const ListTitle = styled.li`
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 `;
 
 const ListItem = styled.li`
-  margin-bottom: 5px;
-  font-size: 15px;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
   color: #555;
   line-height: 2.5rem;
 

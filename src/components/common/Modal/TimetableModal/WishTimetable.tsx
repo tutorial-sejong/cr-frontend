@@ -143,7 +143,7 @@ const GridContainer = styled.div`
   border-collapse: collapse;
   border: 1.6px solid #000;
   display: grid;
-  grid-template-columns: 100px repeat(5, 1fr);
+  grid-template-columns: 10rem repeat(5, 1fr);
   grid-template-rows: repeat(28, 1fr);
   border: 1px solid #000;
 `;
@@ -155,7 +155,7 @@ const GridHeader = styled.div`
     ${props => props.theme.texts.tableTitle};
     text-align: center;
     font-weight: bold;
-    padding: 10px;
+    padding: 1rem;
     background-color: #f0f0f0;
     border: 1px solid #e5e5e5;
   }
@@ -175,7 +175,7 @@ const Tooltip = styled.div`
   white-space: nowrap;
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
-  max-width: 300px;
+  max-width: 30rem;
   word-wrap: break-word;
   opacity: 1;
 

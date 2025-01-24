@@ -43,6 +43,7 @@ export const CloseImage = styled.img.attrs({
   cursor: pointer;
   margin-top: 1rem;
   margin-right: 1rem;
+  margin-left: auto;
 `;
 
 export const ModalBody = styled.div`

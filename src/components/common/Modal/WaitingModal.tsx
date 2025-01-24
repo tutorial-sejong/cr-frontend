@@ -105,11 +105,11 @@ function WaitingModal() {
 const WaitingModalBox = styled(Modal)`
   position: static;
   width: 39rem;
-  height: 43rem;
+  height: 45rem;
   min-width: 39rem;
   min-height: 43rem;
   font-weight: lighter;
-  padding: 2rem 4rem;
+  padding: 1rem 4rem;
   word-break: unset;
   display: flex;
   flex-direction: column;
@@ -119,17 +119,18 @@ const WaitingModalBox = styled(Modal)`
 const Logo = styled.img.attrs({
   src: `${logo}`,
 })`
-  width: 55px;
+  width: 5.5rem;
   margin-right: auto;
   display: block;
-  margin-top: 10px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const Title = styled.p`
   font-size: 2.5rem;
   font-weight: bold;
   color: #676763;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
 const SubTitle = styled.p`
@@ -141,17 +142,17 @@ const SubTitle = styled.p`
 const ProgressBarContainer = styled.div`
   width: 100%;
   background-color: #e0e0e0;
-  border-radius: 10px;
+  border-radius: 1rem;
   overflow: hidden;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const ProgressBarFill = styled.div<{$progress: number}>`
-  height: 10px;
+  height: 1rem;
   background-color: #a0a0a0;
   width: ${props => `${props.$progress}%`};
-  border-radius: 10px 0 0 10px;
+  border-radius: 1rem 0 0 1rem;
   transition: width 0.3s ease;
 `;
 
@@ -175,14 +176,14 @@ const StopButton = styled.div`
   text-align: center;
   font-size: 1.5rem;
   border: 1px solid #8d8d87;
-  padding: 8px 13px;
+  padding: 0.8rem 1.3rem;
   color: #676763;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
 
   &:hover {
     border: 1px solid #a6a69e;
@@ -193,8 +194,8 @@ const StopButton = styled.div`
 const CloseImage = styled.img.attrs({
   src: `${close}`,
 })`
-  width: 15px;
-  margin-right: 10px;
+  width: 1.5rem;
+  margin-right: 1rem;
 `;
 
 export default WaitingModal;
