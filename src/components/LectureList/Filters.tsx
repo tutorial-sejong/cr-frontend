@@ -4,22 +4,22 @@ import FilterButton from '@components/common/FilterButton';
 import FilterInput from '@components/common/FilterInput';
 import SelectBox from '@components/common/SelectBox';
 import {completion, major, optional, term} from '@assets/data/filter';
+import {CourseTypes} from '@/assets/types/tableType';
+import {
+  FilterArea,
+  FilterBox,
+  FilterContainer,
+  FilterWrap,
+} from '@/styles/FilterLayout';
 
-export interface LectureProps {
-  schCollegeAlias?: string | undefined;
-  schDeptAlias?: string | undefined;
-  curiTypeCdNm?: string | undefined;
-  sltDomainCdNm?: string | undefined;
-  curiNm?: string | undefined;
-  lesnEmp?: string | undefined;
+interface FiltersProps {
+  onSearch: (newList: CourseTypes[]) => Promise<void>;
 }
 
-function Filters() {
-  const [lecture, setLecture] = useState<LectureProps>();
-  const handleSelect = (
-    name: keyof LectureProps,
-    value: string | undefined,
-  ) => {
+function Filters({onSearch}: FiltersProps) {
+  const [filter, setFilter] = useState<CourseTypes>({});
+
+  const handleSelect = (name: keyof CourseTypes, value: string | undefined) => {
     let dept = '';
     let colledge = '';
 
@@ -27,13 +27,13 @@ function Filters() {
       dept = value!.substring(0, value!.indexOf('【'));
       colledge = value!.substring(value!.indexOf('】') + 1);
 
-      setLecture(prevState => ({
+      setFilter(prevState => ({
         ...prevState,
         schDeptAlias: dept,
         schCollegeAlias: colledge,
       }));
     } else {
-      setLecture(prevState => ({
+      setFilter(prevState => ({
         ...prevState,
         [name]: value,
       }));
@@ -48,7 +48,6 @@ function Filters() {
             <span>조직분류</span>
             <SelectBox
               options={[{id: 0, value: '학부'}]}
-              tagged={true}
               disabled={true}
               sizes='m'
               onSelect={value => handleSelect('curiTypeCdNm', value)}
@@ -58,7 +57,6 @@ function Filters() {
             <span>년도/학기</span>
             <SelectBox
               options={term}
-              tagged={true}
               disabled={true}
               sizes='m'
               onSelect={value => handleSelect('curiTypeCdNm', value)}
@@ -68,7 +66,6 @@ function Filters() {
             <span>이수구분</span>
             <SelectBox
               options={completion}
-              tagged={false}
               sizes='m'
               onSelect={value => handleSelect('curiTypeCdNm', value)}
             />
@@ -77,7 +74,6 @@ function Filters() {
             <span>선택영역</span>
             <SelectBox
               options={optional}
-              tagged={false}
               sizes='m'
               onSelect={value => handleSelect('sltDomainCdNm', value)}
             />
@@ -86,7 +82,6 @@ function Filters() {
             <span>학과전공</span>
             <SelectBox
               options={major}
-              tagged={false}
               sizes='xl'
               onSelect={value => handleSelect('schDeptAlias', value)}
             />
@@ -106,7 +101,12 @@ function Filters() {
             />
           </FilterWrap>
         </FilterBox>
-        <FilterButton label='조회' lecture={lecture} />
+        <FilterButton
+          label='조회'
+          filter={filter}
+          onSearch={onSearch}
+          searchOption='강좌조회'
+        />
       </FilterArea>
       <WarningWrap>
         <p>
@@ -114,45 +114,12 @@ function Filters() {
           ROTC과목은 개설학과전공을 대양휴머니티칼리지(또는 교양학부)로 하여
           조회하시기 바랍니다.
         </p>
-        <p>
-          ※ 과목에 대한 문의는 개설학과가 아닌 주관학과에 문의하시기 바라며,
-          영어과목에 대한 문의는 교양영어실로 문의하시기 바랍니다.
-        </p>
       </WarningWrap>
     </FilterContainer>
   );
 }
 
-const FilterContainer = styled.div`
-  border: 0.1rem solid #714656;
-  border-radius: 2px;
-  padding: 0.5rem 1.5rem;
-  margin-bottom: 2rem;
-`;
-
-const FilterBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem 3rem;
-`;
-
-const FilterArea = styled.div`
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 1rem;
-`;
-
-const FilterWrap = styled.div`
-  ${props => props.theme.texts.tableTitle};
-  > span {
-    display: inline-block;
-    margin-right: 1rem;
-    text-align: right;
-    min-width: 4.5rem;
-  }
-`;
-
-const WarningWrap = styled.div`
+export const WarningWrap = styled.div`
   ${props => props.theme.texts.warning};
   color: #c30e2e;
   margin-bottom: -1.5rem;

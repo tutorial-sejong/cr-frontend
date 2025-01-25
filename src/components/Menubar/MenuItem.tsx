@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import View from '@assets/img/view.svg?react';
-import Study from '@assets/img/study.svg?react';
+import Search from '@assets/img/search-line.svg?react';
+import BookMark from '@assets/img/bookmark-3-line.svg?react';
+import Study from '@assets/img/edit-line.svg?react';
 
 interface DetailProps {
   id: number;
@@ -13,7 +14,13 @@ interface DetailProps {
 function MenuItem({id, type, name, isActive, onClick}: DetailProps) {
   return (
     <DetailWrap $isactive={isActive} onClick={() => onClick(id)}>
-      {type === 'view' ? <View /> : <Study />}
+      {type === 'search' ? (
+        <Search style={{width: '18px', height: '18px'}} />
+      ) : type === 'bookmark' ? (
+        <BookMark style={{width: '18px', height: '18px'}} />
+      ) : (
+        <Study style={{width: '18px', height: '18px'}} />
+      )}
       {name}
     </DetailWrap>
   );
@@ -21,13 +28,14 @@ function MenuItem({id, type, name, isActive, onClick}: DetailProps) {
 
 const DetailWrap = styled.button<{$isactive: boolean}>`
   ${props => props.theme.texts.tableTitle};
-  width: 17.5rem;
+  width: 90%;
   height: 2.8rem;
   display: flex;
   align-items: center;
   column-gap: 1rem;
-  padding-left: 10px;
-
+  padding-left: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
   background-color: ${props =>
     props.$isactive ? props.theme.colors.primary : 'transparent'};
   color: ${props => props.$isactive && props.theme.colors.white};

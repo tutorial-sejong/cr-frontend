@@ -1,51 +1,46 @@
 import styled from 'styled-components';
-import {useState} from 'react';
 import BarTitle from './BarTitle';
 import Menu from './Menu';
-import close from '@assets/img/menu_close.png';
+import Open from '@assets/img/close-sidebar.svg?react';
 
-function Menubar() {
-  const [isOpen, setIsOpen] = useState(true);
+interface BarProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+function Menubar({open, setOpen}: BarProps) {
   return (
-    <BarContainer>
-      {isOpen ? (
-        <OpendBar>
-          <BarTitle setIsOpen={setIsOpen} />
+    <BarContainer $open={open}>
+      {open ? (
+        <BarBox>
+          <BarTitle setOpen={setOpen} />
           <Menu />
-        </OpendBar>
+        </BarBox>
       ) : (
-        <ClosedBar>
-          <OpenBtn onClick={() => setIsOpen(true)}>
-            <img src={close} />
-          </OpenBtn>
-        </ClosedBar>
+        <OpenBtnWrap onClick={() => setOpen(true)}>
+          <OpenBtn />
+        </OpenBtnWrap>
       )}
     </BarContainer>
   );
 }
 
-const BarContainer = styled.div`
-  height: 100vh;
-`;
-
-const OpendBar = styled.div`
-  width: 23rem;
-`;
-
-const ClosedBar = styled.div`
-  width: 2rem;
+const BarContainer = styled.div<{$open: boolean}>`
+  min-width: ${props => (props.$open ? '23rem' : '2rem')};
+  background-color: ${props => props.theme.colors.white};
   height: 100%;
-  background-color: ${props => props.theme.colors.neutral4};
 `;
 
-const OpenBtn = styled.button`
+const BarBox = styled.div``;
+
+const OpenBtnWrap = styled.button`
+  background-color: ${props => props.theme.colors.secondary};
   width: 100%;
   height: 4rem;
-  background-color: ${props => props.theme.colors.primary};
-  > img {
-    transform: rotate(180deg);
-  }
+`;
+
+const OpenBtn = styled(Open)`
+  transform: rotate(180deg);
 `;
 
 export default Menubar;

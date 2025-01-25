@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import styled, {css} from 'styled-components';
-import arrow from '@assets/img/input_dropdown.png';
-import tag from '@assets/img/tag.png';
+import arrow from '@assets/img/arrow-down-s-fill.png';
 
 interface OptionsInterface {
   id: number;
@@ -10,24 +9,25 @@ interface OptionsInterface {
 
 interface SelectProps {
   options: OptionsInterface[];
-  tagged: boolean;
   disabled?: boolean;
   sizes: string;
   onSelect: (value: string) => void;
+  restricted?: boolean;
 }
 
 function SelectBox({
   options,
-  tagged,
   disabled = false,
   sizes,
   onSelect,
+  restricted = false,
 }: SelectProps) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState(options[0].value);
   const [selected, setSelected] = useState(options[0].value);
   const [filtered, setFiltered] = useState<OptionsInterface[]>(options);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleBtnClick = () => {
     if (!disabled) {
@@ -36,12 +36,25 @@ function SelectBox({
     }
   };
 
+  const handleInputFocus = () => {
+    setInput(''); // 입력값 초기화
+    setFiltered(options); // 전체 목록 표시
+    setOpen(true);
+  };
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
-    setFiltered(
-      options.filter(option => option.value.includes(e.target.value)),
-    );
     setOpen(true);
+
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current); // 이전 타이머 취소
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      setFiltered(
+        options.filter(option => option.value.includes(e.target.value)),
+      );
+    }, 500);
   };
 
   const handleOptionClick = (value: string) => {
@@ -73,12 +86,16 @@ function SelectBox({
   return (
     <SelectContainer ref={dropdownRef} sizes={sizes}>
       <InputContainer disabled={disabled}>
-        {tagged && <TagWrap src={tag} disabled={disabled} />}
-        <InputWrap readOnly={disabled} value={input} onChange={handleInput} />
+        <InputWrap
+          readOnly={disabled}
+          value={restricted ? '전학년 (학과 제한 없음)' : input}
+          onFocus={handleInputFocus}
+          onChange={handleInput}
+        />
         <ArrowWrap src={arrow} onClick={handleBtnClick} />
       </InputContainer>
       {open && (
-        <SelectWrap>
+        <SelectWrap style={{width: dropdownRef.current?.offsetWidth}}>
           {filtered.map(option => (
             <OptionWrap
               key={option.id}
@@ -101,17 +118,30 @@ const SelectContainer = styled.div<{sizes: string}>`
     props.sizes === 's' &&
     css`
       width: 15rem;
+
+      @media ${props => props.theme.device.mobile} {
+        max-width: 15rem;
+      }
     `};
   ${props =>
     props.sizes === 'm' &&
     css`
       width: 20.5rem;
+
+      @media ${props => props.theme.device.mobile} {
+        max-width: 20.5rem;
+      }
     `};
   ${props =>
     props.sizes === 'xl' &&
     css`
       width: 50rem;
+
+      @media ${props => props.theme.device.mobile} {
+        max-width: 50rem;
+      }
     `};
+  min-width: 7rem;
   height: 2.4rem;
   position: relative;
   display: inline-block;
@@ -132,16 +162,10 @@ const InputContainer = styled.div<{disabled: boolean}>`
   }
 `;
 
-const TagWrap = styled.img<{disabled: boolean}>`
-  position: absolute;
-  z-index: 2;
-  filter: ${props => (props.disabled ? 'grayscale(100%)' : 'none')};
-`;
-
 const InputWrap = styled.input`
   ${props => props.theme.texts.content};
-  width: calc(100% - 1rem);
-  height: inherit;
+  width: 100%;
+  height: 100%;
   padding: 0 0 0 1rem;
 
   &:hover {
@@ -156,18 +180,11 @@ const InputWrap = styled.input`
 const ArrowWrap = styled.img`
   position: absolute;
   right: 0.3rem;
-  top: 10%;
-  border: 1px solid transparent;
-  border-radius: 5px;
-
-  &:hover {
-    border: 1px solid ${props => props.theme.colors.neutral5};
-  }
 `;
 
 const SelectWrap = styled.ul`
-  width: inherit;
-  max-height: 12rem;
+  min-width: 15rem;
+  max-height: 14.5rem;
   position: absolute;
   top: 100%;
   z-index: 5;

@@ -33,6 +33,7 @@
       "@plugins/*": ["plugins/*"],
       "@apis/*": ["apis/*"]
     },
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["src", "src/custom.d.ts"]

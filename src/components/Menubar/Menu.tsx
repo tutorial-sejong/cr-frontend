@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import arrow from '@assets/img/arrow_up.png';
-import hyphen from '@assets/img/menu2_close.png';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import MenuItem from './MenuItem';
-import {useState} from 'react';
+import {addTab, setFocused} from '@/store/modules/tabSlice';
 
 interface ItemProps {
   id: number;
@@ -11,28 +10,23 @@ interface ItemProps {
 }
 
 const menuItems: ItemProps[] = [
-  {id: 0, name: '강의시간표 조회', type: 'view'},
-  {id: 1, name: '관심과목 담기', type: 'study'},
+  {id: 0, name: '강의시간표/수업계획서조회', type: 'search'},
+  {id: 1, name: '관심과목 담기', type: 'bookmark'},
   {id: 2, name: '수강신청', type: 'study'},
 ];
 
 function Menu() {
-  const [focused, setFocused] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
+  const focused = useAppSelector(state => state.tabs.focused);
 
   const handleClick = (id: number) => {
-    setFocused(id);
+    dispatch(addTab({id: id, name: menuItems[id].name}));
+    dispatch(setFocused(id));
   };
 
   return (
     <MenuContainer>
-      <MenuTitleBox>
-        <MenuTitleWrap>수강 및 변동신청</MenuTitleWrap>
-        <img src={arrow} />
-      </MenuTitleBox>
-      <MenuSubtitleBox>
-        <img src={hyphen} />
-        수강신청 및 기타
-      </MenuSubtitleBox>
+      <MenuSubtitleBox>수강신청 및 기타</MenuSubtitleBox>
       <DetailBox>
         {menuItems.map(item => (
           <MenuItem
@@ -55,11 +49,8 @@ const MenuTitleBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15px;
+  padding: 0 1.5rem;
   border-bottom: 1px solid ${props => props.theme.colors.neutral5};
-`;
-const MenuTitleWrap = styled.div`
-  ${props => props.theme.texts.menuTitle};
 `;
 
 const MenuSubtitleBox = styled(MenuTitleBox)`
@@ -73,6 +64,8 @@ const DetailBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 `;
 
 export default Menu;

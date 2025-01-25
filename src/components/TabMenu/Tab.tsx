@@ -1,6 +1,8 @@
-import {useState} from 'react';
 import styled, {css} from 'styled-components';
-import close from '@assets/img/tab_close.png';
+import close from '@assets/img/close-line-red.png';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
+import {delTab, setFocused} from '@/store/modules/tabSlice';
+import {resetDateMode} from '@/store/modules/dateModeSlice';
 
 interface TabProps {
   id: number;
@@ -10,29 +12,28 @@ interface TabProps {
 }
 
 function Tab({id, label, isActive, onClick}: TabProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const dispatch = useAppDispatch();
+  const tabs = useAppSelector(state => state.tabs.tab);
+  const idx = tabs.findIndex(item => item.id === id);
 
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-
-    if (id > 0) {
-      onClick(id - 1);
+    if (idx === 0) {
+      dispatch(setFocused(tabs[idx + 1].id));
     } else {
-      onClick(1);
+      dispatch(setFocused(tabs[idx - 1].id));
     }
-
-    setIsOpen(false);
+    dispatch(delTab(id));
+    if (label === '수강신청') {
+      dispatch(resetDateMode());
+    }
   };
 
   return (
-    <>
-      {isOpen && (
-        <TabContainer onClick={() => onClick(id)} $isactive={isActive}>
-          <p>{label}</p>
-          <CloseBtn onClick={handleClose} />
-        </TabContainer>
-      )}
-    </>
+    <TabContainer onClick={() => onClick(id)} $isactive={isActive}>
+      <p>{label}</p>
+      <CloseBtn onClick={handleClose} />
+    </TabContainer>
   );
 }
 
@@ -43,18 +44,18 @@ const TabContainer = styled.a<{$isactive: boolean}>`
       : props.theme.texts.tabTitle};
   background-color: ${props =>
     props.$isactive ? props.theme.colors.white : 'transparent'};
-  width: calc(99% / 8);
-  height: 100%;
-  border-top: 0.3rem solid
-    ${props => (props.$isactive ? props.theme.colors.primary : 'none')};
+  width: calc(99% / 7);
+  height: 102%;
+  border-bottom: none;
   border-right: 1px solid #ccc;
-  border-radius: 0;
   padding: 0 1rem;
   display: flex;
   align-items: center;
   text-align: center;
   cursor: pointer;
   filter: ${props => (props.$isactive ? 'grayscale(0)' : 'grayscale(100%)')};
+  position: relative;
+  overflow: hidden;
 
   > p {
     width: 100%;
@@ -62,14 +63,14 @@ const TabContainer = styled.a<{$isactive: boolean}>`
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
-    margin-right: 1.5rem;
+    margin-right: 1rem;
   }
 
   ${props =>
     !props.$isactive &&
     css`
       &:hover {
-        background-color: white;
+        color: ${props => props.theme.colors.primary};
         filter: grayscale(0);
       }
     `}
@@ -77,9 +78,10 @@ const TabContainer = styled.a<{$isactive: boolean}>`
 
 const CloseBtn = styled.button`
   z-index: 5;
-  width: 1rem;
+  width: 1.8rem;
   height: 100%;
   background-image: url(${close});
+  background-size: 1.8rem;
   background-repeat: no-repeat;
   background-position-y: center;
 `;

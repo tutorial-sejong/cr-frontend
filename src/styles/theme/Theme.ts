@@ -2,7 +2,7 @@ import {DefaultTheme} from 'styled-components';
 
 const colors = {
   primary: '#a31432',
-  secondary: '#334D61',
+  secondary: '#46515b',
   neutral1: '#222',
   neutral2: '#333',
   neutral3: '#444',
@@ -62,10 +62,18 @@ const texts = {
   },
 };
 
+const device = {
+  mobile: 'screen and (max-width: 767px)',
+  tablet: 'screen and (min-width: 768px) and (max-width: 1023px)',
+  pc: 'screen and (min-width: 1024px)',
+};
+
 export type ColorsType = typeof colors;
 export type TextsType = typeof texts;
+export type DeviceType = typeof device;
 
 export const theme: DefaultTheme = {
   colors,
   texts,
+  device,
 };
