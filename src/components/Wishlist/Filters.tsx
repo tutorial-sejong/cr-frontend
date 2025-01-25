@@ -166,7 +166,7 @@ function Filters({setSearchResults}: FiltersProps) {
           <WishFilterWrap>
             <span>년도/학기</span>
             <SelectBox
-              options={[{id: 0, value: '2024/2학기'}]}
+              options={[{id: 0, value: '2025/1학기'}]}
               disabled={true}
               sizes='m'
               onSelect={() => {}}
