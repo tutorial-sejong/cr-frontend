@@ -198,6 +198,8 @@ function Table({data, colData, width, height, onAction}: TableProps) {
         >
           {columnIndex === 0 ? (
             <IndexWrap>{rowIndex}</IndexWrap>
+          ) : columnIndex === 1 ? (
+            renderCell(row, column)
           ) : (
             <CellContent content={renderCell(row, column)} />
           )}
@@ -299,8 +301,8 @@ const ContentText = styled.div<{
 
 const ActionButton = styled.button`
   ${props => props.theme.texts.content};
-  width: 4rem;
-  height: 2.4rem;
+  width: 40px;
+  height: 24px;
   background-color: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.white};
   cursor: pointer;
